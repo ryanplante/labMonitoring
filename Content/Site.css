@@ -67,7 +67,7 @@ textarea {
     text-decoration: none;
 }
 
-    .nav-link:hover {
-        background-color: #aaa;
-        color: #fff;
-    }
+.nav-link:hover {
+    background-color: #aaa;
+    color: #fff;
+}

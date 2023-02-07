@@ -1,0 +1,14 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.login {
+    background-color: #F9F9F9;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+}

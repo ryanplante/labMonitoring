@@ -11,10 +11,6 @@ namespace labMonitor
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["variableName"] == null)
-            {
-                Response.Redirect("Login");
-            }
         }
     }
 }
