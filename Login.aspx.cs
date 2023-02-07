@@ -12,7 +12,6 @@ namespace labMonitor
 {
     public partial class WebForm1 : System.Web.UI.Page
     {
-        private readonly IConfiguration _configuration;
         public User tUser { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,11 +21,10 @@ namespace labMonitor
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            UserDAL user = new UserDAL(_configuration);
+            UserDAL user = new UserDAL();
             int userID = Int32.Parse(txtUsername.Text);
             string password = txtPassword.Text;
-
-            if (user.ValidateCredentials(userID, password) != null)
+            if (user.ValidateCredentials(userID, password))
             {
                 Session["IsLoggedIn"] = true;
                 Response.Redirect("Default.aspx");

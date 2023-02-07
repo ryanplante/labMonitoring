@@ -66,17 +66,14 @@ namespace labMonitor.Models
         //    return @"Server=sql.neit.edu\studentsqlserver,4500;Database=capstone;User Id=;Password=";
         //}
 
-
-        string connectionString; // string that will recieve the connection string from the constructor
-
-        private readonly IConfiguration _configuration; // Instance of IConfiguration class... allows us to read in from config file like appsettings
-
         // The Razor page that creates this data factory and passes the configuration onject to it.
-        public UserDAL(IConfiguration configuration)
+        public UserDAL()
         {
-            //Via the Configuration onject, we could collect the connection string for this project.
-            _configuration = configuration;
-            connectionString = _configuration.GetConnectionString("DefaultConnection");
+        }
+
+        private string GetConnected()
+        {
+            return "Server= sql.neit.edu\\studentsqlserver,4500; Database=SE133_RPlante; User Id=SE133_RPlante;Password=008016590;";
         }
 
         public void AddUser()
@@ -101,40 +98,43 @@ namespace labMonitor.Models
 
         public void Create()
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(GetConnected()))
             {
-                string sql = "INSERT Into users (Title, Description, Address, Address2, City, State, Zip, Category, Email, Phone, Orig_Date, Expire_Date, Active, Flagged, Rate) VALUES (@Title, @Description, @Address, @Address2, @City, @State, @Zip, @Category, @Email, @Phone, @Orig_Date, @Expire_Date, @Active, @Flagged, @Rate);";
+                string sql = "INSERT Into users (userID, userFName, userLName, userPassword, userSalt, userDept, userPrivilege) VALUES (@userID, @userFName, @userLName, @userPassword, @userSalt, @userDept, @userPrivilege)";
 
                 try
                 {
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.CommandType = CommandType.Text;
-                        command.Parameters.AddWithValue("@Title", listing.Title);
-                        command.Parameters.AddWithValue("@Description", listing.Description);
-                        command.Parameters.AddWithValue("@Address", listing.Address);
-                        command.Parameters.AddWithValue("@Address2", listing.Address2);
-                        command.Parameters.AddWithValue("@City", listing.City);
-                        command.Parameters.AddWithValue("@State", listing.State);
-                        command.Parameters.AddWithValue("@Zip", listing.Zip);
-                        command.Parameters.AddWithValue("@Category", listing.Category);
-                        command.Parameters.AddWithValue("@Email", listing.Email);
-                        command.Parameters.AddWithValue("@Phone", listing.Phone);
-                        command.Parameters.AddWithValue("@Orig_Date", DateTime.Now); // filling in current date and time
-                        command.Parameters.AddWithValue("@Expire_Date", listing.Expire_Date);
-                        command.Parameters.AddWithValue("@Active", true); // default value as only admin can set it
-                        command.Parameters.AddWithValue("@Flagged", false); // default value as only admin can set it
-                        command.Parameters.AddWithValue("@Rate", listing.Rate);
+                        command.Parameters.AddWithValue("@userID", 1);
+                        // Generate a random salt
+                        byte[] salt = new byte[16];
+                        using (var rng = new RNGCryptoServiceProvider())
+                        {
+                            rng.GetBytes(salt);
+                        }
+                        // Combine the password and salt and hash them
+                        byte[] passwordWithSalt = Encoding.UTF8.GetBytes("password" + Convert.ToBase64String(salt));
+                        byte[] hashedPasswordWithSalt = SHA1.Create().ComputeHash(passwordWithSalt);
+
+                        command.Parameters.AddWithValue("@userSalt", Convert.ToBase64String(salt));
+                        command.Parameters.AddWithValue("@userPassword", Convert.ToBase64String(hashedPasswordWithSalt));
+                        
+                        command.Parameters.AddWithValue("@userFName", "Test");
+                        command.Parameters.AddWithValue("@userLName", "Test");
+                        command.Parameters.AddWithValue("@userDept", 0);
+                        command.Parameters.AddWithValue("@userPrivilege", 0);
 
                         connection.Open();
 
-                        listing.Feedback = command.ExecuteNonQuery().ToString() + " Record Added";
+                        command.ExecuteNonQuery();
                         connection.Close();
                     }
                 }
                 catch (Exception e)
                 {
-                    listing.Feedback = "ERROR: " + e.Message;
+                    //todo
                 }
             }
         }
@@ -142,37 +142,39 @@ namespace labMonitor.Models
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------------->>>>
 
-        public IEnumerable<User> ValidateCredentials(int userID, string password)
+        public bool ValidateCredentials(int userID, string password)
         {
-            List<User> lstUsers = new List<User>();
-
             try
             {
-                using (SqlConnection con = new SqlConnection(connectionString))
+                using (SqlConnection con = new SqlConnection(GetConnected()))
                 {
-                    string strSQL = "SELECT TOP 1 * FROM users  WHERE userID = @userID AND userPassword = @userPassword";
+                    string strSQL = "SELECT userPassword, userSalt FROM users WHERE userID = @userID";
                     SqlCommand cmd = new SqlCommand(strSQL, con);
                     cmd.CommandType = CommandType.Text;
 
                     // Fill in seatch params with login from data
                     cmd.Parameters.AddWithValue("@userID", userID);
-                    cmd.Parameters.AddWithValue("@userPassword", password);
 
                     con.Open();
                     SqlDataReader rdr = cmd.ExecuteReader(); // Populate the data reader (rdr) from DB
 
-                    // Loop through each record,
-                    // For each record fill a temporary trouble ticket object with current record's data.
-                    // Then add this temporary ticket object to the list. List will be available to the CSHTML format.
-                    while (rdr.Read())
+                    if (rdr.Read())
                     {
-                        User user = new User(); // Create temporary object
+                        string encryptedPassword = rdr["userPassword"].ToString();
+                        string salt = rdr["userSalt"].ToString();
+                        // Convert the encrypted password and salt to bytes
+                        byte[] encryptedPasswordBytes = Convert.FromBase64String(encryptedPassword);
+                        byte[] saltBytes = Convert.FromBase64String(salt);
 
-                        // Fill in the temporary object from DB results
-                        user.userID = Convert.ToInt32(rdr["userID"].ToString()); // Needed to convert to Int32
-                        user.userPassword = rdr["userID"].ToString();
+                        // Combine the password and salt and hash them
+                        byte[] passwordWithSalt = Encoding.UTF8.GetBytes(password + salt);
+                        byte[] hashedPasswordWithSalt = SHA1.Create().ComputeHash(passwordWithSalt);
 
-                        lstUsers.Add(user); // Add themp object to list
+                        // Compare the hashed password with the encrypted password
+                        if (Convert.ToBase64String(hashedPasswordWithSalt) == Convert.ToBase64String(encryptedPasswordBytes))
+                        {
+                            return true;
+                        }
                     }
                     con.Close();
                 }
@@ -181,7 +183,7 @@ namespace labMonitor.Models
             {
                 // Nothing at this moment
             }
-            return lstUsers;
+            return false;
         }
 
 
