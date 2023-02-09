@@ -38,7 +38,7 @@ namespace labMonitor.Models
         public string userFName { get; set; }           //  userFName, string (32)
 
         [Required, StringLength(32)]
-        public string useLFName { get; set; }           //  userLName, string (32)
+        public string userLName { get; set; }           //  userLName, string (32)
 
         [Required, StringLength(255)]
         public string userPassword { get; set; }        //  userPassword, string (255)

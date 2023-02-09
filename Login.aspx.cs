@@ -12,27 +12,29 @@ namespace labMonitor
 {
     public partial class WebForm1 : System.Web.UI.Page
     {
-        public User tUser { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
 
 
-        protected void btnSubmit_Click(object sender, EventArgs e)
+        protected void login_Click(object sender, EventArgs e)
         {
-            UserDAL user = new UserDAL();
-            int userID = Int32.Parse(txtUsername.Text);
-            string password = txtPassword.Text;
-            if (user.ValidateCredentials(userID, password))
+            UserDAL userDAL = new UserDAL();
+            int userID = 0;
+            if (Int32.TryParse(txtUsername.Text, out userID)) // all user names should be a combination of student id or employee id
             {
-                Session["IsLoggedIn"] = true;
-                Response.Redirect("Default.aspx");
+                string password = txtPassword.Text;
+                if (userDAL.ValidateCredentials(userID, password))
+                {
+                    User user = userDAL.GetOneUser(userID);
+                    Session["User"] = user;
+                    var user1 = Session["User"] as User;
+                    Session["test"] = (User)(Session["User"]);
+                    Response.Redirect("Default.aspx");
+                }
             }
-            else
-            {
-                Response.Write("Invalid username or password.");
-            }
+            lblFeedback.Text = "<p class='warning'>Invalid username or password.</p>";
         }
     }
 }

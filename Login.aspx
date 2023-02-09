@@ -24,8 +24,11 @@
         <div class ="centered">
             <asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox>
         </div>
+        <div class="centered">
+            <asp:Label ID="lblFeedback" runat="server" Text=""></asp:Label>
+        </div>
         <div class ="centered">
-            <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" />
+            <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="login_Click" />
         </div>
     </form>
 </body>

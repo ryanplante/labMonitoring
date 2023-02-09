@@ -96,6 +96,37 @@ namespace labMonitor.Models
 
         }
 
+        public User GetOneUser(int ?id)
+        {
+            User user = new User();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(GetConnected()))
+                {
+                    string strSQL = "SELECT * FROM users WHERE UserID = @UserID;";
+                    SqlCommand cmd = new SqlCommand(strSQL, con);
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue("@UserID", id);
+                    con.Open();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+
+                    while (rdr.Read())
+                    {
+                        user.userID = Convert.ToInt32(rdr["userID"]);
+                        user.userFName = rdr["userFName"].ToString();
+                        user.userLName = rdr["userLName"].ToString();
+                        user.userDept = Convert.ToInt32(rdr["userPrivilege"]);
+                        user.userPrivilege = Convert.ToInt32(rdr["userPrivilege"]);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+            }
+            return user;
+
+        }
+
         public void Create()
         {
             using (SqlConnection connection = new SqlConnection(GetConnected()))

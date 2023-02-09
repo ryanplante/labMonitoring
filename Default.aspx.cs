@@ -11,6 +11,15 @@ namespace labMonitor
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["User"] != null)
+            {
+                var user = Session["User"] as labMonitor.Models.User;
+                lblUserPrivilege.Text = "Welcome, " + user.userFName;
+            }
+            else
+            {
+                lblUserPrivilege.Text = "No privilege information available.";
+            }
         }
     }
 }
