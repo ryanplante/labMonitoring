@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -17,8 +18,12 @@ namespace labMonitor
             }
             else
             {
-                avatar.ImageUrl = "images/avatar.png";
                 var user = Session["User"] as labMonitor.Models.User;
+                lblUserName.Text = user.userFName;
+                if (File.Exists(Server.MapPath("~/images/" + user.userID.ToString() + ".jpg")))
+                {
+                    avatar.ImageUrl = "images/" + user.userID.ToString() + ".jpg";
+                }
                 if (user.userPrivilege < 2)
                 {
                     monitor.Visible = false;
@@ -32,6 +37,11 @@ namespace labMonitor
         {
             Session.Abandon();
             Response.Redirect("Login");
+        }
+
+        protected void GoHome(object sender, ImageClickEventArgs e)
+        {
+            Response.Redirect("Default");
         }
     }
 }

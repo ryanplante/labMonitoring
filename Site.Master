@@ -41,15 +41,17 @@
         </asp:ScriptManager>
         <div class="sidebar">
     <div class="sidebar-header">
-        <img src="images/logo.png" alt="Logo" height="60" width="74" />
+        <asp:ImageButton  ID="Logo" runat="server" ImageAlign="Bottom" ImageUrl="images/logo.png" OnClick="GoHome" />
     </div>
         <ul class="nav">
             <%--this will always show--%>
             <li class="nav-item">
                 <asp:ImageButton id="avatar" runat="server"
                    AlternateText="Avatar"
-                   ImageUrl="images/avatar.jpg"
-                   OnClick="LogOut" class="rounded"/>
+                   ImageUrl="images/avatar.png"
+                   OnClick="LogOut" class="rounded" BorderColor="White"/>
+                <br />
+                <asp:Label ID="lblUserName" runat="server">Name</asp:Label>
             </li>
             <li class="nav-item" runat="server" id="monitor">
                 <a class="nav-link" href="MonitorsEdit">Add/Edit Monitors</a>
