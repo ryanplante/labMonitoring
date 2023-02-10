@@ -1,6 +1,4 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="labMonitor._Default" %>
-<%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"  
-    Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %> 
+﻿<%@ Page Language="C#" Title="Reports" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Reports.aspx.cs" Inherits="labMonitor.Reports" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -21,10 +19,8 @@
         </ChartAreas>  
     </asp:Chart> 
     </div>
-    <div id="monitor" runat="server">
-        <h3>Unlogged Students</h3>
-    </div>
  
 </div>
 
 </asp:Content>
+

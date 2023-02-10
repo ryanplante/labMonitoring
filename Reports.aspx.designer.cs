@@ -11,52 +11,34 @@ namespace labMonitor
 {
 
 
-    public partial class SiteMaster
+    public partial class Reports
     {
 
         /// <summary>
-        /// avatar control.
+        /// welcome control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton avatar;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl welcome;
 
         /// <summary>
-        /// monitor control.
+        /// head control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl monitor;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl head;
 
         /// <summary>
-        /// reports control.
+        /// Chart1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl reports;
-
-        /// <summary>
-        /// admin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl admin;
-
-        /// <summary>
-        /// MainContent control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        protected global::System.Web.UI.DataVisualization.Charting.Chart Chart1;
     }
 }

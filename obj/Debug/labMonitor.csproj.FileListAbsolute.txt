@@ -236,3 +236,7 @@ C:\Users\aweso\Documents\Github\labMonitor\bin\System.Runtime.CompilerServices.U
 C:\Users\aweso\Documents\Github\labMonitor\bin\System.Text.Encodings.Web.xml
 C:\Users\aweso\Documents\Github\labMonitor\bin\System.Threading.Tasks.Extensions.xml
 C:\Users\aweso\Documents\Github\labMonitor\bin\System.ValueTuple.xml
+C:\Users\aweso\Documents\Github\labMonitor\bin\Cyotek.Windows.Forms.ColorPicker.dll
+C:\Users\aweso\Documents\Github\labMonitor\bin\System.Windows.Forms.DataVisualization.MSChartExtension.dll
+C:\Users\aweso\Documents\Github\labMonitor\bin\Cyotek.Windows.Forms.ColorPicker.xml
+C:\Users\aweso\Documents\Github\labMonitor\bin\System.Windows.Forms.DataVisualization.MSChartExtension.xml

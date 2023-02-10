@@ -5,6 +5,11 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
+
+
 namespace labMonitor
 {
     public partial class _Default : Page
@@ -14,11 +19,15 @@ namespace labMonitor
             if (Session["User"] != null)
             {
                 var user = Session["User"] as labMonitor.Models.User;
-                lblUserPrivilege.Text = "Welcome, " + user.userFName;
+                welcome.InnerText = "Welcome, " + user.userFName;
+                if (user.userPrivilege < 2)
+                {
+                    head.Visible = false;
+                }
             }
             else
             {
-                lblUserPrivilege.Text = "No privilege information available.";
+                Response.Redirect("Login");
             }
         }
     }

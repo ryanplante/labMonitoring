@@ -1,4 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="labMonitor.SiteMaster" %>
+<%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
+
 
 <!DOCTYPE html>
 
@@ -37,23 +39,35 @@
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <h3>Sidebar</h3>
-        </div>
+        <div class="sidebar">
+    <div class="sidebar-header">
+        <img src="images/logo.png" alt="Logo" height="60" width="74" />
+    </div>
         <ul class="nav">
+            <%--this will always show--%>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link 1</a>
+                <asp:ImageButton id="avatar" runat="server"
+                   AlternateText="Avatar"
+                   ImageUrl="images/avatar.jpg"
+                   OnClick="LogOut" class="rounded"/>
+            </li>
+            <li class="nav-item" runat="server" id="monitor">
+                <a class="nav-link" href="MonitorsEdit">Add/Edit Monitors</a>
+            </li>
+            <li class="nav-item" runat="server" id="reports">
+                <a class="nav-link" href="Reports">Reports</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link 2</a>
+                <a class="nav-link" href="LogView">Log History</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link 3</a>
+                <a class="nav-link" href="Calendar">Schedule</a>
+            </li>
+            <li class="nav-item" runat="server" id="admin">
+                <a class="nav-link" href="LabEdit">Admin</a>
             </li>
         </ul>
     </div>
-
        <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>

@@ -15,6 +15,23 @@ namespace labMonitor
             {
                 Response.Redirect("Login");
             }
+            else
+            {
+                avatar.ImageUrl = "images/avatar.png";
+                var user = Session["User"] as labMonitor.Models.User;
+                if (user.userPrivilege < 2)
+                {
+                    monitor.Visible = false;
+                    reports.Visible = false;
+                    admin.Visible = false;
+                }
+            }
+        }
+
+        protected void LogOut(object sender, ImageClickEventArgs e)
+        {
+            Session.Abandon();
+            Response.Redirect("Login");
         }
     }
 }

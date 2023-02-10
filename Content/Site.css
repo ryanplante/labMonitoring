@@ -39,15 +39,14 @@ textarea {
     padding: 20px;
     overflow-x: hidden;
     overflow-y: auto;
-    background-color: #ddd;
-    width: 200px;
+    background-color: #061745; /* For browsers that do not support gradients */
+    background-image: linear-gradient(#0684F9, #061745);
+    width: 112px;
 }
 
 .sidebar-header {
     text-align: center;
-    background-color: #555;
-    color: #fff;
-    padding: 10px;
+    color: white;
 }
 
 .nav {
@@ -63,11 +62,17 @@ textarea {
 .nav-link {
     display: block;
     padding: 10px;
-    color: #333;
+    color: white;
     text-decoration: none;
 }
 
 .nav-link:hover {
     background-color: #aaa;
     color: #fff;
+}
+
+.rounded {
+    border-radius: 50%;
+    height: 65px;
+    width: 65px;
 }
