@@ -115,7 +115,7 @@ namespace labMonitor.Models
                         user.userID = Convert.ToInt32(rdr["userID"]);
                         user.userFName = rdr["userFName"].ToString();
                         user.userLName = rdr["userLName"].ToString();
-                        user.userDept = Convert.ToInt32(rdr["userPrivilege"]);
+                        user.userDept = Convert.ToInt32(rdr["userDept"]);
                         user.userPrivilege = Convert.ToInt32(rdr["userPrivilege"]);
                     }
                 }
@@ -170,6 +170,36 @@ namespace labMonitor.Models
             }
         }
 
+        public IEnumerable<User>GetMonitorsByDept(int? deptID)
+        {
+            List<User> monitors = new List<User>(); // Listings from DB table
+            try
+            {
+                using (SqlConnection con = new SqlConnection(GetConnected()))
+                {
+                    String strSQL = ("Select * FROM users WHERE userDept = @deptID AND userPrivilege = 1");
+                    SqlCommand cmd = new SqlCommand(strSQL, con);
+                    cmd.Parameters.AddWithValue("@deptID", deptID);
+                    cmd.CommandType = CommandType.Text;
+                    con.Open();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        User labMonitor = new User();
+                        labMonitor.userID = Convert.ToInt32(rdr["userID"]);
+                        labMonitor.userFName = rdr["userFName"].ToString();
+                        labMonitor.userLName = rdr["userLName"].ToString();
+                        monitors.Add(labMonitor);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception Ex)
+            {
+                Console.WriteLine(Ex.Message);
+            }
+            return monitors;
+        }
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------------->>>>
 
@@ -218,7 +248,67 @@ namespace labMonitor.Models
         }
 
 
+        public IEnumerable<User> GetNamesByID(int? userID)
+        {
+            List<User> monitors = new List<User>(); // Listings from DB table
+            try
+            {
+                using (SqlConnection con = new SqlConnection(GetConnected()))
+                {
+                    String strSQL = ("Select * FROM users WHERE userID like @userID % AND userPrivilege = 0");
+                    SqlCommand cmd = new SqlCommand(strSQL, con);
+                    cmd.Parameters.AddWithValue("@userID", userID);
+                    cmd.CommandType = CommandType.Text;
+                    con.Open();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        User labMonitor = new User();
+                        labMonitor.userID = Convert.ToInt32(rdr["userID"]);
+                        labMonitor.userFName = rdr["userFName"].ToString();
+                        labMonitor.userLName = rdr["userLName"].ToString();
+                        monitors.Add(labMonitor);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception Ex)
+            {
+                Console.WriteLine(Ex.Message);
+            }
+            return monitors;
+        }
 
+        public IEnumerable<User> SearchByName(string fname, string lname)
+        {
+            List<User> monitors = new List<User>(); // Listings from DB table
+            try
+            {
+                using (SqlConnection con = new SqlConnection(GetConnected()))
+                {
+                    String strSQL = ("Select * FROM users WHERE userFName like % @userFName % AND % @userFName % = 0");
+                    SqlCommand cmd = new SqlCommand(strSQL, con);
+                    //cmd.Parameters.AddWithValue("@userID", userID);
+                    cmd.CommandType = CommandType.Text;
+                    con.Open();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        User labMonitor = new User();
+                        labMonitor.userID = Convert.ToInt32(rdr["userID"]);
+                        labMonitor.userFName = rdr["userFName"].ToString();
+                        labMonitor.userLName = rdr["userLName"].ToString();
+                        monitors.Add(labMonitor);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception Ex)
+            {
+                Console.WriteLine(Ex.Message);
+            }
+            return monitors;
+        }
 
         public void ChangePassword(string userName, string userPassword)
         {

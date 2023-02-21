@@ -43,5 +43,11 @@ namespace labMonitor
         {
             Response.Redirect("Default");
         }
+
+        public void ShowHideBar(object sender, ImageClickEventArgs e)
+        {
+            avabar.Visible = !avabar.Visible;
+
+        }
     }
 }

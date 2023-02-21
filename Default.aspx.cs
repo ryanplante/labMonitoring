@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using labMonitor.Models;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
-
+using System.Web.Services;
 
 namespace labMonitor
 {
@@ -29,6 +29,15 @@ namespace labMonitor
             {
                 Response.Redirect("Login");
             }
+        }
+
+        [WebMethod]
+        public static List<string> getStudentNames(string id)
+        {
+            UserDAL factory = new UserDAL();
+            List<User> users = (List<User>)factory.GetNamesByID(int.Parse(id));
+            List<String> names = users.Select(z => z.userFName + " " + z.userLName).ToList();
+            return names;
         }
     }
 }
