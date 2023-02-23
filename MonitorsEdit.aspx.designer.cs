@@ -33,13 +33,22 @@ namespace labMonitor
         protected global::System.Web.UI.WebControls.GridView DGLabMonitors;
 
         /// <summary>
-        /// txtAutoComplete control.
+        /// txtStudentID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAutoComplete;
+        protected global::System.Web.UI.WebControls.TextBox txtStudentID;
+
+        /// <summary>
+        /// RegularExpressionValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator1;
 
         /// <summary>
         /// txtStudentFirst control.
@@ -58,6 +67,15 @@ namespace labMonitor
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtStudentLast;
+
+        /// <summary>
+        /// lblWarning control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblWarning;
 
         /// <summary>
         /// GridResults control.

@@ -51,5 +51,7 @@ namespace labMonitor.Models
 
         [Required]
         public int userPrivilege { get; set; }          //  userPrivilege, int
+
+        public string userFeedback { get; set; }
     }
 }

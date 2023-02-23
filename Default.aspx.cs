@@ -30,14 +30,5 @@ namespace labMonitor
                 Response.Redirect("Login");
             }
         }
-
-        [WebMethod]
-        public static List<string> getStudentNames(string id)
-        {
-            UserDAL factory = new UserDAL();
-            List<User> users = (List<User>)factory.GetNamesByID(int.Parse(id));
-            List<String> names = users.Select(z => z.userFName + " " + z.userLName).ToList();
-            return names;
-        }
     }
 }

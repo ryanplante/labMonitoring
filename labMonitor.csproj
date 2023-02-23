@@ -376,6 +376,8 @@
     </Compile>
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\DepartmentDAL.cs" />
+    <Compile Include="Models\Schedule.cs" />
+    <Compile Include="Models\ScheduleDAL.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserDAL.cs" />
     <Compile Include="MonitorsEdit.aspx.cs">

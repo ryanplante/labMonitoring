@@ -187,6 +187,7 @@ namespace labMonitor.Models
                     {
                         User labMonitor = new User();
                         labMonitor.userID = Convert.ToInt32(rdr["userID"]);
+                        labMonitor.userDept = Convert.ToInt32(rdr["userDept"]);
                         labMonitor.userFName = rdr["userFName"].ToString();
                         labMonitor.userLName = rdr["userLName"].ToString();
                         monitors.Add(labMonitor);
@@ -310,6 +311,98 @@ namespace labMonitor.Models
             return monitors;
         }
 
+        public List<User> SearchUsersByFullName(string userFName, string userLName)
+        {
+            List<User> users = new List<User>();
+
+            using (SqlConnection con = new SqlConnection(GetConnected()))
+            {
+                String strSQL = "SELECT * FROM users WHERE userFName LIKE @userFName AND userLName LIKE @userLName AND userPrivilege < 2"; // get all 
+
+                using (SqlCommand command = new SqlCommand(strSQL, con))
+                {
+                    // perform wildcard search on both first name and last name with %
+                    command.Parameters.AddWithValue("@userFName", "%" + userFName + "%");
+                    command.Parameters.AddWithValue("@userLName", "%" + userLName + "%");
+
+                    con.Open();
+
+                    using (SqlDataReader rdr = command.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            User user = new User();
+                            user.userID = Convert.ToInt32(rdr["userID"]);
+                            user.userFName = rdr["userFName"].ToString();
+                            user.userLName = rdr["userLName"].ToString();
+
+                            users.Add(user);
+                        }
+                    }
+                }
+            }
+
+            return users;
+        }
+
+        /*
+         * This function will change their department id and change their permission level to 1
+         */
+        public void ChangeMonitorDept(int userID, int dept)
+        {
+            User tUser = new User();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(GetConnected()))
+                {
+                    string strSQL = "UPDATE users SET userDept = @userDept, userPrivilege = 1 WHERE userID = @userID";
+                    SqlCommand cmd = new SqlCommand(strSQL, con);
+                    cmd.Parameters.AddWithValue("@userID", userID);
+                    cmd.Parameters.AddWithValue("@userDept", dept);
+                    cmd.CommandText = strSQL;
+                    cmd.CommandType = CommandType.Text;
+                    // fill parameters with form values
+
+                    // perform the update
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                tUser.userFeedback = "ERROR: " + e.Message;
+            }
+        }
+
+        public void ChangeToStudent(int userID)
+        {
+            User tUser = new User();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(GetConnected()))
+                {
+                    string strSQL = "UPDATE users SET userPrivilege = 0 WHERE userID = @userID";
+                    SqlCommand cmd = new SqlCommand(strSQL, con);
+                    cmd.Parameters.AddWithValue("@userID", userID);
+                    cmd.CommandText = strSQL;
+                    cmd.CommandType = CommandType.Text;
+                    // fill parameters with form values
+
+                    // perform the update
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                tUser.userFeedback = "ERROR: " + e.Message;
+            }
+        }
+
+
+
         public void ChangePassword(string userName, string userPassword)
         {
 
@@ -325,10 +418,6 @@ namespace labMonitor.Models
 
         }
 
-        public void GetPrivilege(int UserId)
-        {
-
-        }
 
     }
     
