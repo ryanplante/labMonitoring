@@ -58,9 +58,10 @@
         </asp:TemplateColumn>
         </Columns>
        </asp:DataGrid>
+        <asp:Button BackColor="Yellow" OnClick="Publish" Text="Publish" runat="server" style="border-radius: 5%;"/>
        <div class="MonitorForm" runat="server" id="ScheduleForm" visible="false">
         <h2>Edit Schedule</h2>
-        <asp:HiddenField id="coords" runat="server"/>
+        <asp:HiddenField ID="coords" runat="server" />
         <h3 id="lblStudent" runat="server">FirstName LastName</h3>
         <h3 id="lblDay" runat="server">Schedule for:</h3>
         <label for="start">Start time:</label>
@@ -71,10 +72,10 @@
         <input type="time" id="end" name="end"
                required runat="server">
         <br />
-
         <asp:Label ID="lblWarning" CssClass="warning" runat="server" Visible="false"></asp:Label>
         <br />
-        <asp:Button BackColor="Yellow" OnClick="Submit" Text="Submit" runat="server" style="border-radius: 20%;"/>
+        <asp:Button BackColor="Yellow" OnClick="Submit" Text="Submit" runat="server" style="border-radius: 5%;"/>
+        <asp:Button BackColor="Yellow" OnClick="Remove" Text="Remove" runat="server" style="border-radius: 5%;"/>
     </div>
     
 </div>

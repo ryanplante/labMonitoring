@@ -73,9 +73,57 @@ namespace labMonitor.Models
         }
 
 
-        public void SetSchedule()
+        public void SetUserSchedule(User user, string timeSchedule)
         {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(GetConnected()))
+                {
+                    string strSQL = "UPDATE Schedule SET text_Schedule = @text_Schedule WHERE student_ID = @userID";
+                    SqlCommand cmd = new SqlCommand(strSQL, con);
+                    cmd.Parameters.AddWithValue("@userID", user.userID);
+                    cmd.Parameters.AddWithValue("@text_Schedule", timeSchedule);
+                    cmd.CommandText = strSQL;
+                    cmd.CommandType = CommandType.Text;
+                    // fill parameters with form values
 
+                    // perform the update
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public void ChangeMonitorDept(int userID, int dept)
+        {
+            User tUser = new User();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(GetConnected()))
+                {
+                    string strSQL = "UPDATE users SET userDept = @userDept, userPrivilege = 1 WHERE userID = @userID";
+                    SqlCommand cmd = new SqlCommand(strSQL, con);
+                    cmd.Parameters.AddWithValue("@userID", userID);
+                    cmd.Parameters.AddWithValue("@userDept", dept);
+                    cmd.CommandText = strSQL;
+                    cmd.CommandType = CommandType.Text;
+                    // fill parameters with form values
+
+                    // perform the update
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                tUser.userFeedback = "ERROR: " + e.Message;
+            }
         }
 
         public void GetDeptSchedule()
