@@ -3,22 +3,34 @@
 
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+<script type='text/javascript'>
+    // Get all anchor elements with the class of "nav-link"
+    var navLinks = document.querySelectorAll('.nav-link');
+    if (isEdited) {
+        // Attach a click event listener to each nav link
+        navLinks.forEach(function (link) {
+            link.addEventListener('click', function (event) {
 
-<script type="text/javascript">
-    function getCellIndex(linkButton) {
-        var cell = linkButton.parentNode;
-        var row = cell.parentNode;
-        var rowIndex = row.rowIndex - 1; //subtract header row
-        var colIndex = cell.cellIndex;
-        var cellIndex = rowIndex + "," + colIndex;
-        alert(cellIndex);
-        linkButton.setAttributeNS(null, "CommandArgument", cellIndex);
+                // Display a confirmation message to the user
+                var confirmed = confirm("Are you sure you want to leave this page?");
+                // If the user clicks "OK", continue with the link action
+                if (confirmed) {
+                    return true;
+                }
+
+                // Otherwise, prevent the link action from happening
+                event.preventDefault();
+                return false;
+            });
+        });
     }
+
 </script>
 <div>
     <%--Show when user is department head or admin --%>
+    <input type="hidden" id="isEdited" runat="server" />
     <h1>Calendar</h1>
-    <asp:DataGrid id="ScheduleGrid" runat="server" AutoGenerateColumns="false" AutoPostBack="false" OnItemCommand="DataGrid1_ItemCommand">
+    <asp:DataGrid id="ScheduleGrid" runat="server" AutoGenerateColumns="false" AutoPostBack="false" OnItemCommand="OnSelectedCell" >
         <Columns>
             <asp:BoundColumn HeaderText="Student Name" DataField="studentName" />
         <asp:TemplateColumn HeaderText="Sunday" >

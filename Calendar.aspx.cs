@@ -42,33 +42,25 @@ namespace labMonitor
                 }
                 ScheduleGrid.DataSource = GenerateGrid();
                 ScheduleGrid.DataBind();
+                // Hack to pass variables to Javascript so that the event listener can check if the user is leaving before they publish the schedule
+                ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = false;", false); 
             }
         }
 
-        protected void MakeGray(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                string cellValue = e.Row.Cells[1].Text; // index 1 corresponds to "Column2"
-                if (cellValue == "off")
-                {
-                    e.Row.Cells[1].BackColor = Color.Gray;
-                }
-            }
-        }
-
+        /*
+         * Format the data columns. This has to be done programatically since we cannot just connect it to a table from a db
+         */
         private DataTable GenerateGrid()
         {
             UserDAL userFactory = new UserDAL();
             ScheduleDAL scheduleFactory = new ScheduleDAL();
             var user = Session["User"] as labMonitor.Models.User;
             List<User> monitors = (List<User>)userFactory.GetMonitorsByDept(user.userDept); // get all the users for the department to populate them on the datagrid
-            /*
-             * Format the data columns. This has to be done programatically since we cannot just connect it to a table from a db
-             */
+
             DataTable dt = new DataTable();
             DataColumn dc = new DataColumn("studentName", typeof(string));
             dt.Columns.Add(dc); 
+            // Format the header columns
             foreach (String day in daysOfWeek)
             {
                 dc = new DataColumn(day, typeof(string));
@@ -89,6 +81,9 @@ namespace labMonitor
             return dt;
         }
 
+        /*
+         * This function gets the cell value given the row index and column index
+         */
         protected string GetCellValue(int rowIndex, int colIndex)
         {
             // Check if the row index is valid
@@ -117,13 +112,13 @@ namespace labMonitor
             // Check if the row index is valid
             if (rowIndex < 0 || rowIndex >= ScheduleGrid.Items.Count)
                 return;
-            //ScheduleGrid.Items[rowIndex].Cells[colIndex + 1].Controls.OfType<LinkButton>().FirstOrDefault().Text = value;
             ScheduleGrid.Items[rowIndex].Cells[colIndex + 1].Controls.OfType<LinkButton>().FirstOrDefault().Text = value;
         }
 
 
         private void PopulateForm(int row, int col)
         {
+            // Set up factories
             UserDAL userFactory = new UserDAL();
             ScheduleDAL scheduleFactory = new ScheduleDAL();
             var user = Session["User"] as labMonitor.Models.User;
@@ -146,7 +141,7 @@ namespace labMonitor
             coords.Value = String.Format("{0},{1}", row, col);
         }
 
-        protected void DataGrid1_ItemCommand(object source, DataGridCommandEventArgs e)
+        protected void OnSelectedCell(object source, DataGridCommandEventArgs e)
         {
             if (e.CommandName == "GetCellValue")
             {
@@ -155,7 +150,6 @@ namespace labMonitor
                 int rowIndex = int.Parse(args[0]);
                 int colIndex = int.Parse(args[1]);
                 PopulateForm(rowIndex, colIndex);
-
             }
         }
 
@@ -166,12 +160,14 @@ namespace labMonitor
             String timeIn = start.Value;
             String timeOut = end.Value;
             SetDataGridCellText(Int32.Parse(coordinates[0]), Int32.Parse(coordinates[1]), timeIn + "-" + timeOut);
+            ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = true;", true);
         }
 
         protected void Remove(object sender, EventArgs e)
         {
             String[] coordinates = coords.Value.Split(',');
             SetDataGridCellText(Int32.Parse(coordinates[0]), Int32.Parse(coordinates[1]), "off");
+            ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = true;", true);
         }
 
         protected void Publish(object sender, EventArgs e)
@@ -189,6 +185,7 @@ namespace labMonitor
                     tSchedule += GetCellValue(i, j) + ",";
                 }
                 scheduleFactory.SetUserSchedule(monitors[i], tSchedule.Substring(0, tSchedule.Length - 1)); // strip the last comma off from the string
+                ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = false;", false);
                 //Console.WriteLine(tSchedule);
             }
         }
