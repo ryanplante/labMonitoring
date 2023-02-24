@@ -39,7 +39,7 @@ namespace labMonitor
             UserDAL userFactory = new UserDAL();
             User user = Session["User"] as User;
             List<User> labMonitors = (List<User>)userFactory.GetMonitorsByDept(user.userDept);
-
+            // Gather certain properties from the object so it doesn't display all attributes
             DGLabMonitors.DataSource = labMonitors.Select(o => new User()
             { userID = o.userID, userFName = o.userFName + " " + o.userLName }).ToList();
             //DGLabMonitors.DataSource = userFactory.GetMonitorsByDept(user.userDept);
@@ -87,6 +87,28 @@ namespace labMonitor
                 lblWarning.Visible = true;
             }
             UpdateGrid();
+        }
+
+        protected void Search_Users(object sender, EventArgs e)
+        {
+            User user = Session["User"] as labMonitor.Models.User; // get current logged in user so that they can change the dept of the selected user to their department
+            UserDAL userFactory = new UserDAL();
+            DepartmentDAL factory = new DepartmentDAL();
+            List<User> labMonitors = (List<User>)userFactory.SearchUsersByFullName(txtStudentFirst.Text, txtStudentLast.Text);
+            // If there are results, then show the datagrid. Else, let's hide it
+            if (labMonitors.Count > 0)
+            {
+                GridResults.DataSource = labMonitors.Select(o => new User()
+                { userID = o.userID, userFName = o.userFName, userLName = o.userLName }).ToList();
+
+                GridResults.DataBind();
+                GridResults.Visible = true;
+            }
+            else
+            {
+                GridResults.Visible = false;
+            }
+
         }
     }
 }
