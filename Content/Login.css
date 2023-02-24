@@ -9,10 +9,53 @@ body {
 }
 
 .centered {
+    margin-top: 5px;
     display: flex;
     justify-content: center;
+}
+
+.start {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    margin-right: 280px;
 }
 
 .warning {
     color: red;
 }
+
+
+#txtUsername {
+    width:350px;
+    height:25px;
+    border-radius:50px;
+}
+
+#txtPassword {
+    width: 350px;
+    height: 25px;
+    border-radius: 50px;
+}
+
+#neitlogo {
+    width: 400px;
+    margin-bottom: -50px;
+}
+
+#btnSubmit {
+    background-color: #FFC700;
+    color:black;
+    margin-top:5px;
+    font-size:20px;
+    text-decoration:solid;
+    width: 200px;
+    height:30px;
+    border:0px;
+    border-radius:10px;
+}
+
+#ntlg {
+    margin-top:100px;
+}
+

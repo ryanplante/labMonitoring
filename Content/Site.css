@@ -89,7 +89,7 @@ textarea {
 }
 
 .avabar {
-    border-radius: 5%;
+    border-radius: 30px;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -100,7 +100,7 @@ textarea {
     overflow-y: auto;
     background-color: #D6D6D6; /*  #D6D6D6; */
     width: 400px;
-    border: 1px solid black;
+    border: 1px solid #AAA;
 }
 
 .avacontent {
@@ -166,6 +166,44 @@ textarea {
     transition: all 1s;
 }
 
-.warning {
-    color: red;
+/* DASHBOARD STUDENT VIEW*/
+
+.labcard {
+
+    width: 350px;
+    height: 210px;
+    background: linear-gradient(180deg, rgba(30, 157, 249, 0) 0%, #0684F9 100%);
+    border: 1px solid #000000;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border-radius: 42px;
+    color: black;
+
+}
+
+.htags {
+    display:flex;
+    justify-content:space-between;
+}
+
+.lbn {
+    margin-left: 25px;
+}
+
+.rn {
+    margin-right: 35px;
+}
+
+.cardcontent {
+    margin-top:2px;
+    margin-left: 25px;
+    display:flex;
+    justify-content:space-between;
+}
+
+.imgbk {
+    display:flex;
+    margin-right:15px;
+    margin-top:20px;
+    height:150px;
+    width:150px;
 }

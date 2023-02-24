@@ -5,19 +5,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+        <link href="~/Content/ChangePW.css" rel="stylesheet" type="text/css" />
+
 </head>
-<body>
-    <h1>Change Password</h1>
+<body class="login">
+    <div class="centered">
+        <img src="images/logo (1).png" id="neitlogo" />
+    </div>
+    <h1 class="centered" id="lblCPW">Change Password</h1>
     <form id="form1" runat="server">
-      <div>
-        <label for="txtPassword">New Password:</label>
+      <div class="start">
+          <label for="txtPassword">New Password</label>
+      </div>
+      <div class="centered">
         <asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox>
       </div>
-      <div>
-        <label for="txtConfirm">Confirm Password:</label>
+      <div class="start">
+          <label id="cmpw" for="txtConfirm">Confirm Password</label>
+      </div>
+      <div class="centered">
         <asp:TextBox ID="txtConfirm" runat="server" TextMode="Password"></asp:TextBox>
       </div>
-      <div>
+      <div class="centered">
         <asp:Button ID="btnSubmit" runat="server" Text="Change" OnClick="btnSubmit_Click" />
       </div>
     </form>
