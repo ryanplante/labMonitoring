@@ -2,6 +2,7 @@
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+
 }
 
 /* Wrapping element */
@@ -206,4 +207,9 @@ textarea {
     margin-top:20px;
     height:150px;
     width:150px;
+}
+
+.footer {
+    position:fixed;
+    bottom:0;
 }
