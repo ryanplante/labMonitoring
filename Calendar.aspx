@@ -101,6 +101,9 @@
         <br />
         <asp:Label ID="lblWarning" CssClass="warning" runat="server" Visible="false"></asp:Label>
         <br />
+        <label for="checkRepeat">Repeat schedule for work week</label>
+           <asp:CheckBox runat="server" ID="checkRepeat" />
+           <br />
         <asp:Button BackColor="Yellow" OnClick="Submit" Text="Submit" runat="server" style="border-radius: 5%;"/>
         <asp:Button BackColor="Yellow" OnClick="Remove" Text="Remove" runat="server" style="border-radius: 5%;"/>
     </div>

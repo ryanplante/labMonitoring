@@ -45,14 +45,15 @@ body {
 
 #btnSubmit {
     background-color: #FFC700;
-    color:black;
-    margin-top:5px;
-    font-size:20px;
-    text-decoration:solid;
+    color: black;
+    margin-top: 5px;
+    font-size: 20px;
+    text-decoration: solid;
     width: 200px;
-    height:30px;
-    border:0px;
-    border-radius:10px;
+    height: 30px;
+    border: 0px;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
 #ntlg {

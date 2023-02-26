@@ -177,7 +177,19 @@ namespace labMonitor
             }
             else
             {
-                SetDataGridCellText(Int32.Parse(coordinates[0]), Int32.Parse(coordinates[1]), timeIn + "-" + timeOut);
+                if (checkRepeat.Checked)
+                {
+                    // Set the schedule for Monday-Friday
+                    for (int i = 0; i < 5; i++) 
+                    {
+                        SetDataGridCellText(Int32.Parse(coordinates[0]), i + 1, timeIn + "-" + timeOut);
+                    }
+                }
+                else
+                {
+                    SetDataGridCellText(Int32.Parse(coordinates[0]), Int32.Parse(coordinates[1]), timeIn + "-" + timeOut);
+                }
+
                 ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = true;", true);
             }
 

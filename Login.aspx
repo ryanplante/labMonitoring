@@ -28,7 +28,7 @@
             <asp:Label ID="lblFeedback" runat="server" Text=""></asp:Label>
         </div>
         <div class ="centered">
-            <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="login_Click" />
+            <asp:Button ID="btnSubmit" runat="server" Text="Login" OnClick="login_Click" />
         </div>
     </form>
 </body>
