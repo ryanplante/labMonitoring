@@ -47,12 +47,12 @@
 
             <div class="avacontent">
                 <div class="userfname">  <%-- H2, Name of user --%>
-                    <h2 class="uname">[Name]</h2>
+                    <h2 class="uname" id="userName" runat="server">[Name]</h2>
                 </div>
 
                 <div class="">
                     
-                    <asp:ImageButton  class="btnimg2" runat="server" ImageAlign="Bottom" ImageUrl="~/images/avatars/008015459.jpg" OnClick="GoHome"/>  <%-- Edit Img--%> 
+                    <asp:ImageButton  id="avaImage" class="btnimg2" runat="server" ImageAlign="Bottom" ImageUrl="~/images/avatars/avatar.jpg" OnClick="GoHome"/>  <%-- Edit Img--%> 
                     <asp:ImageButton  class="btnimg3" runat="server" ImageAlign="Bottom" ImageUrl="~/images/pencil icon.png" OnClick="GoHome"/>  <%-- Edit Img--%>  
                 </div>
                 
@@ -84,19 +84,19 @@
                 <br />
                 <asp:Label ID="lblUserName" runat="server">Name</asp:Label>
             </li>
-            <li class="nav-item" runat="server" id="monitor">
+            <li class="nav-item" runat="server" id="monitor" visible="false">
                 <a class="nav-link" href="MonitorsEdit">Add/Edit Monitors</a>
             </li>
-            <li class="nav-item" runat="server" id="reports">
+            <li class="nav-item" runat="server" id="reports" visible="false">
                 <a class="nav-link" href="Reports">Reports</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" runat="server" id="logHistory" visible="false">
                 <a class="nav-link" href="LogView">Log History</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" runat="server" id="schedule" visible="false">
                 <a class="nav-link" href="Calendar">Schedule</a>
             </li>
-            <li class="nav-item" runat="server" id="admin">
+            <li class="nav-item" runat="server" id="admin" visible="false">
                 <a class="nav-link" href="LabEdit">Admin</a>
             </li>
         </ul>

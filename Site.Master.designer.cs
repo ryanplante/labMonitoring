@@ -24,6 +24,24 @@ namespace labMonitor
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl avabar;
 
         /// <summary>
+        /// userName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl userName;
+
+        /// <summary>
+        /// avaImage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton avaImage;
+
+        /// <summary>
         /// ImageButton3 control.
         /// </summary>
         /// <remarks>
@@ -76,6 +94,24 @@ namespace labMonitor
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl reports;
+
+        /// <summary>
+        /// logHistory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl logHistory;
+
+        /// <summary>
+        /// schedule control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl schedule;
 
         /// <summary>
         /// admin control.

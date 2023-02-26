@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using labMonitor.Models;
 using System.Web.UI.WebControls;
 
 namespace labMonitor
@@ -18,17 +19,29 @@ namespace labMonitor
             }
             else
             {
+                UserDAL userFactory = new UserDAL();
                 var user = Session["User"] as labMonitor.Models.User;
                 lblUserName.Text = user.userFName;
-                if (File.Exists(Server.MapPath("~/images/" + user.userID.ToString() + ".jpg")))
+                userName.InnerText = user.userFName;
+                string avaPath = userFactory.GetPicture(user.userID);
+                avatar.ImageUrl = avaPath;
+                avaImage.ImageUrl = avaPath;
+                switch (user.userPrivilege)
                 {
-                    avatar.ImageUrl = "images/" + user.userID.ToString() + ".jpg";
-                }
-                if (user.userPrivilege < 2)
-                {
-                    monitor.Visible = false;
-                    reports.Visible = false;
-                    admin.Visible = false;
+                    case 1:
+                        logHistory.Visible = true;
+                        schedule.Visible = true;
+                        break;
+                    case 2:
+                        monitor.Visible = true;
+                        reports.Visible = true;
+                        schedule.Visible = true;
+                        break;
+                    case 3:
+                        monitor.Visible = true;
+                        reports.Visible = true;
+                        schedule.Visible = true;
+                        break;
                 }
             }
         }

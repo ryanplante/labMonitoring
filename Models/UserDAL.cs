@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Session;
 // Added to encrypt/decrypt passwords
 using System.Security.Cryptography;
 using System.Text;
+using System.IO;
 
 namespace labMonitor.Models
 {
@@ -413,9 +414,19 @@ namespace labMonitor.Models
 
         }
 
-        public void GetPicture(int UserId)
+        public string GetPicture(int UserId)
         {
+            string defaultPath = (@"images\avatars\avatar.jpg");
 
+            String path = @"images\avatars\" + UserId.ToString() + ".jpg";
+            if (File.Exists(System.Web.HttpContext.Current.Server.MapPath(path)))
+            {
+                return path;
+            }
+            else
+            {
+                return defaultPath;
+            }
         }
 
 
