@@ -2,7 +2,11 @@
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+}
 
+@font-face {
+    font-family: inter;
+    src: url(../fonts/Inter-reg.ttf);
 }
 
 /* Wrapping element */
@@ -12,12 +16,16 @@ body {
     padding-right: 15px;
 }
 
+* {
+    font-family: inter;
+}
+
 /* Set widths on the form inputs since otherwise they're 100% wide */
-input,
+/*input,
 select,
 textarea {
     max-width: 280px;
-}
+}*/
 
 
 /* Responsive: Portrait tablets and up */
@@ -42,7 +50,7 @@ textarea {
     overflow-y: auto;
     background-color: #061745; /* For browsers that do not support gradients */
     background-image: linear-gradient(#0684F9, #061745);
-    width: 112px;
+    width: 115px;
 }
 
 .sidebar-header {
@@ -67,10 +75,10 @@ textarea {
     text-decoration: none;
 }
 
-.nav-link:hover {
-    background-color: #aaa;
-    color: #fff;
-}
+    .nav-link:hover {
+        background-color: #aaa;
+        color: #fff;
+    }
 
 .rounded {
     border-radius: 50%;
@@ -85,12 +93,13 @@ textarea {
     width: 500px;
     height: 100%; /*copied from figma*/
     background: #D6D6D6;
-    border-radius: 49px;
+    border-top-left-radius: 49px;
+    border-bottom-left-radius: 49px;
     padding-left: 90px; /*not sure what */
 }
 
 .avabar {
-    border-radius: 30px;
+    border-radius: 5%;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -101,7 +110,7 @@ textarea {
     overflow-y: auto;
     background-color: #D6D6D6; /*  #D6D6D6; */
     width: 400px;
-    border: 1px solid #AAA;
+    border: 1px solid black;
 }
 
 .avacontent {
@@ -167,6 +176,85 @@ textarea {
     transition: all 1s;
 }
 
+.warning {
+    color: red;
+    display: block;
+}
+
+.gone {
+    display: none;
+}
+
+
+.stTable {
+    width: 900px;
+    padding-left: 22px;
+}
+
+tr {
+    border-bottom: 1px solid black;
+    height: 40px;
+}
+
+td:first-child {
+    padding-left: 22px;
+}
+
+td:last-child {
+    text-align: center;
+}
+
+tr:last-child {
+    border: none;
+}
+
+
+
+.button {
+    border-radius: 12px;
+    background-color: #ffbb00;
+    border: 0;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#headerButton {
+    display: flex;
+    justify-content: space-between;
+    width: 75%;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+.xbutton {
+    width: 25px;
+}
+
+.container {
+    margin-left: 195px;
+}
+
+h2, #formHeader {
+    font-size: 40px;
+}
+
+
+.formfield {
+    width: 75%;
+    height: 30px;
+}
+
+#formButtons {
+    display: flex;
+    justify-content: space-between;
+    width: 75%;
+    margin-top: 20px;
+}
+
+.MonitorForm label {
+    font-size: 20px;
+}
+
 /* DASHBOARD STUDENT VIEW*/
 
 .labcard {
@@ -213,3 +301,5 @@ textarea {
     position:fixed;
     bottom:0;
 }
+
+

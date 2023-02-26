@@ -41,6 +41,7 @@ namespace labMonitor
                         monitor.Visible = true;
                         reports.Visible = true;
                         schedule.Visible = true;
+                        admin.Visible = true;
                         break;
                 }
             }
@@ -60,7 +61,6 @@ namespace labMonitor
         public void ShowHideBar(object sender, ImageClickEventArgs e)
         {
             avabar.Visible = !avabar.Visible;
-
         }
     }
 }

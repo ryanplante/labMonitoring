@@ -305,6 +305,7 @@
     <Content Include="LabEdit.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="appsettings.json" />
+    <Content Include="fonts\Inter-reg.ttf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="LogView.aspx" />
     <Content Include="MonitorsEdit.aspx" />
