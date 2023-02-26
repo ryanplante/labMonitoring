@@ -4,6 +4,9 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 <script type='text/javascript'>
+    window.onload = function () {
+        setTdBackgroundColor();
+    }
     // Get all anchor elements with the class of "nav-link"
     var navLinks = document.querySelectorAll('.nav-link');
     if (isEdited) {
@@ -25,6 +28,18 @@
         });
     }
 
+
+    function setTdBackgroundColor() {
+        const tds = document.querySelectorAll('td');
+        tds.forEach(td => {
+            if (td.querySelector('a') && td.querySelector('a').textContent === 'off') {
+                td.style.backgroundColor = '#D3D3D3';
+            }
+        });
+    }
+
+
+
 </script>
 <div>
     <%--Show when user is department head or admin --%>
@@ -38,7 +53,7 @@
                 <asp:LinkButton runat="server" Text='<%# Eval("Sunday") %>' CommandName="GetCellValue" CommandArgument='<%# Container.ItemIndex + ",0"%>' />
             </ItemTemplate>
         </asp:TemplateColumn>
-        <asp:TemplateColumn HeaderText="Monday" >
+        <asp:TemplateColumn HeaderText="Monday">
             <ItemTemplate>
                 <asp:LinkButton runat="server" Text='<%# Eval("Monday") %>' CommandName="GetCellValue" CommandArgument='<%# Container.ItemIndex + ",1"%>' />
             </ItemTemplate>

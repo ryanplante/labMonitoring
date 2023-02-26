@@ -8,11 +8,13 @@ using labMonitor.Models;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Globalization;
 
 namespace labMonitor
 {
     public partial class Calendar : System.Web.UI.Page
     {
+        public Color color = Color.White;
         List<string> daysOfWeek = new List<string>()
             {
                 "Sunday",
@@ -43,7 +45,7 @@ namespace labMonitor
                 ScheduleGrid.DataSource = GenerateGrid();
                 ScheduleGrid.DataBind();
                 // Hack to pass variables to Javascript so that the event listener can check if the user is leaving before they publish the schedule
-                ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = false;", false); 
+                ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = false;", false);
             }
         }
 
@@ -59,7 +61,7 @@ namespace labMonitor
 
             DataTable dt = new DataTable();
             DataColumn dc = new DataColumn("studentName", typeof(string));
-            dt.Columns.Add(dc); 
+            dt.Columns.Add(dc);
             // Format the header columns
             foreach (String day in daysOfWeek)
             {
@@ -122,6 +124,7 @@ namespace labMonitor
             UserDAL userFactory = new UserDAL();
             ScheduleDAL scheduleFactory = new ScheduleDAL();
             var user = Session["User"] as labMonitor.Models.User;
+            lblWarning.Visible = false;
             List<User> monitors = (List<User>)userFactory.GetMonitorsByDept(user.userDept); // get all the users for the department to populate them on the datagrid
             ScheduleForm.Visible = true;
             lblStudent.InnerText = monitors[row].userFName + " " + monitors[row].userLName;
@@ -156,11 +159,28 @@ namespace labMonitor
 
         protected void Submit(object sender, EventArgs e)
         {
+            lblWarning.Visible = false;
             String[] coordinates = coords.Value.Split(',');
             String timeIn = start.Value;
             String timeOut = end.Value;
-            SetDataGridCellText(Int32.Parse(coordinates[0]), Int32.Parse(coordinates[1]), timeIn + "-" + timeOut);
-            ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = true;", true);
+            var dt_timeIn = DateTime.ParseExact(timeIn, "H:mm", null, System.Globalization.DateTimeStyles.None);
+            var dt_timeOut = DateTime.ParseExact(timeOut, "H:mm", null, System.Globalization.DateTimeStyles.None);
+            if (dt_timeIn > dt_timeOut)
+            {
+                lblWarning.Text = "Start time cannot be after end time.";
+                lblWarning.Visible = true;
+            }
+            else if (dt_timeIn == dt_timeOut)
+            {
+                lblWarning.Text = "Start time and end time cannot be the same! Click on remove if you'd like to make the user off";
+                lblWarning.Visible = true;
+            }
+            else
+            {
+                SetDataGridCellText(Int32.Parse(coordinates[0]), Int32.Parse(coordinates[1]), timeIn + "-" + timeOut);
+                ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = true;", true);
+            }
+
         }
 
         protected void Remove(object sender, EventArgs e)
