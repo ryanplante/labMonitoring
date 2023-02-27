@@ -45,8 +45,38 @@
 
            </div>
 
+               <%-- Student View--%>
+           <div class="studentview" runat="server" id="studentview" visible="false">
+               <h1>Dashboard</h1>
+            <%labMonitor.Models.LabDAL labFactory = new labMonitor.Models.LabDAL(); %>
+            <%labMonitor.Models.ScheduleDAL scheduleFactory = new labMonitor.Models.ScheduleDAL(); %>
+            <% List<labMonitor.Models.Lab> labs = labFactory.GetAllLabs(); %>
+            <% foreach (labMonitor.Models.Lab lab in labs) { %>
+                <div class="labcard" id="<%= lab.labRoom %>">
+                    <div class="htags">
+                        <h3 class="lbn"><%= lab.labName %></h3>
+                        <h3 class="rn"><%= lab.labRoom %></h3>
+                    </div>
+
+                    <div class="cardcontent" runat="server">
+                        <asp:Literal ID="scheduleDiv" runat="server"></asp:Literal>
+
+                        <div class="imgbk">
+                            <img src="images/image 39.png" />
+                        </div>
+                    </div>
+                </div>
+
+                <% string schedule = scheduleFactory.GetDeptSchedule(lab.deptID); %>
+                <% Literal scheduleDiv = (Literal)Page.FindControl("scheduleDiv"); %>
+                <% if (scheduleDiv != null) { scheduleDiv.Text = schedule; } %>
+            <% } %>
+               </div>
+               </div>
 
 
 
 
+
+    </div>
 </asp:Content>
