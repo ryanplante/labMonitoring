@@ -195,7 +195,7 @@ namespace labMonitor
                     warning = true;
                     User tUser = userFactory.GetOneUser(Int32.Parse(selectedID.Value));
                     Department tDepartment = deptFactory.GetDeptByID(tUser.userDept);
-                    lblHeadWarning.Text = tUser.userFName + " " + tUser.userLName + "is already a department head for " + tDepartment.deptName + " Department, please change them first!";
+                    lblHeadWarning.Text = tUser.userFName + " " + tUser.userLName + " is already a department head for " + tDepartment.deptName + " Department, please change them first!";
                     lblHeadWarning.Visible = true;
                 }
 
