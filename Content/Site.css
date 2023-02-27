@@ -75,10 +75,10 @@ textarea {
     text-decoration: none;
 }
 
-    .nav-link:hover {
-        background-color: #aaa;
-        color: #fff;
-    }
+.nav-item:hover {
+    background-color: #353940;
+    color: #fff;
+}
 
 .rounded {
     border-radius: 50%;

@@ -86,7 +86,7 @@
                 </li>
                 <li class="nav-item" runat="server" id="monitor" visible="false">
                      <asp:ImageButton  ID="addeditbtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/monitors icon.png" href="MonitorsEdit" />
-                    <a class="nav-link" href="MonitorsEdit">Add/Edit Monitors</a>
+                     <asp:Label runat="server">Add/Edit Monitors</asp:Label>
                 </li>
                 <li class="nav-item" runat="server" id="reports" visible="false">
                     <asp:ImageButton  ID="reportsbtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/report icon.png" href="Reports" />
