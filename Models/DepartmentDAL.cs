@@ -41,5 +41,33 @@ namespace labMonitor.Models
             }
             return dept;
         }
+
+        public List<Department> GetAllDepartments()
+        {
+            List<Department> deptList = new List<Department>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(GetConnected()))
+                {
+                    string strSQL = "SELECT * FROM department";
+                    SqlCommand cmd = new SqlCommand(strSQL, con);
+                    cmd.CommandType = CommandType.Text;
+                    con.Open();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+
+                    while (rdr.Read())
+                    {
+                        Department dept = new Department();
+                        dept.deptID = Convert.ToInt32(rdr["deptID"]);
+                        dept.deptName = rdr["deptName"].ToString();
+                        deptList.Add(dept);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+            }
+            return deptList;
+        }
     }
 }

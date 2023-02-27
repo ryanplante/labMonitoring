@@ -97,7 +97,7 @@
                 <a class="nav-link" href="Calendar">Schedule</a>
             </li>
             <li class="nav-item" runat="server" id="admin" visible="false">
-                <a class="nav-link" href="LabEdit">Admin</a>
+                <a class="nav-link" href="Admin">Admin</a>
             </li>
         </ul>
     </div>

@@ -318,7 +318,41 @@ namespace labMonitor.Models
 
             using (SqlConnection con = new SqlConnection(GetConnected()))
             {
-                String strSQL = "SELECT * FROM users WHERE userFName LIKE @userFName AND userLName LIKE @userLName AND userPrivilege < 2"; // get all 
+                String strSQL = "SELECT * FROM users WHERE userFName LIKE @userFName AND userLName LIKE @userLName AND userPrivilege < 2"; // get all users that are not students
+
+                using (SqlCommand command = new SqlCommand(strSQL, con))
+                {
+                    // perform wildcard search on both first name and last name with %
+                    command.Parameters.AddWithValue("@userFName", "%" + userFName + "%");
+                    command.Parameters.AddWithValue("@userLName", "%" + userLName + "%");
+
+                    con.Open();
+
+                    using (SqlDataReader rdr = command.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            User user = new User();
+                            user.userID = Convert.ToInt32(rdr["userID"]);
+                            user.userFName = rdr["userFName"].ToString();
+                            user.userLName = rdr["userLName"].ToString();
+
+                            users.Add(user);
+                        }
+                    }
+                }
+            }
+
+            return users;
+        }
+
+        public List<User> SearchTeachersByFullName(string userFName, string userLName)
+        {
+            List<User> users = new List<User>();
+
+            using (SqlConnection con = new SqlConnection(GetConnected()))
+            {
+                String strSQL = "SELECT * FROM users WHERE userFName LIKE @userFName AND userLName LIKE @userLName AND userPrivilege > 2"; // get all users that are students
 
                 using (SqlCommand command = new SqlCommand(strSQL, con))
                 {
@@ -359,6 +393,36 @@ namespace labMonitor.Models
                     string strSQL = "UPDATE users SET userDept = @userDept, userPrivilege = 1 WHERE userID = @userID";
                     SqlCommand cmd = new SqlCommand(strSQL, con);
                     cmd.Parameters.AddWithValue("@userID", userID);
+                    cmd.Parameters.AddWithValue("@userDept", dept);
+                    cmd.CommandText = strSQL;
+                    cmd.CommandType = CommandType.Text;
+                    // fill parameters with form values
+
+                    // perform the update
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                tUser.userFeedback = "ERROR: " + e.Message;
+            }
+        }
+
+        /*
+         * This function will change their department id
+         */
+        public void ChangeDept(User user, int dept)
+        {
+            User tUser = new User();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(GetConnected()))
+                {
+                    string strSQL = "UPDATE users SET userDept = @userDept WHERE userID = @userID";
+                    SqlCommand cmd = new SqlCommand(strSQL, con);
+                    cmd.Parameters.AddWithValue("@userID", user.userID);
                     cmd.Parameters.AddWithValue("@userDept", dept);
                     cmd.CommandText = strSQL;
                     cmd.CommandType = CommandType.Text;

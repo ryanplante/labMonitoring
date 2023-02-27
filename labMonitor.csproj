@@ -272,6 +272,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Admin.aspx" />
     <Content Include="Calendar.aspx" />
     <Content Include="ChangePassword.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -302,7 +303,6 @@
     <Content Include="images\neit-logo.png" />
     <Content Include="images\pencil icon.png" />
     <Content Include="images\x.png" />
-    <Content Include="LabEdit.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="appsettings.json" />
     <Content Include="fonts\Inter-reg.ttf" />
@@ -345,6 +345,13 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin.aspx.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin.aspx.designer.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Calendar.aspx.cs">
@@ -371,13 +378,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="LabEdit.aspx.cs">
-      <DependentUpon>LabEdit.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="LabEdit.aspx.designer.cs">
-      <DependentUpon>LabEdit.aspx</DependentUpon>
-    </Compile>
     <Compile Include="LogView.aspx.cs">
       <DependentUpon>LogView.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -387,6 +387,8 @@
     </Compile>
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\DepartmentDAL.cs" />
+    <Compile Include="Models\Lab.cs" />
+    <Compile Include="Models\LabDAL.cs" />
     <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\ScheduleDAL.cs" />
     <Compile Include="Models\User.cs" />

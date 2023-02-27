@@ -3,7 +3,7 @@
 
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-<script type='text/javascript'>
+    <script type='text/javascript'>
     window.onload = function () {
         setTdBackgroundColor();
     }

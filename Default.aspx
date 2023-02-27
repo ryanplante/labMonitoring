@@ -28,7 +28,7 @@
     </div>
 
             <%-- Head View--%>
-           <div class="headview">
+           <div class="headview" >
                <h1></h1>
 
            </div>
@@ -46,7 +46,7 @@
            </div>
 
            <%-- Student View--%>
-           <div class="studentview" runat="server" id="studentview">
+           <div class="studentview" runat="server" id="studentview" visible="false">
                <h1>Dashboard</h1>
 
                <div class="dbgrid">
@@ -57,7 +57,7 @@
                             <h3 class="rn">[R#]</h3>
                        </div>
 
-                       <div class="cardcontent">
+                       <div class="cardcontent" runat="server">
                            <div class="schcard">
                                <p>Monday: 9am-5pm</p>
                                <p>Tuesday: 9am-5pm</p>

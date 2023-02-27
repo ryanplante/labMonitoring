@@ -99,56 +99,96 @@ namespace labMonitor.Models
             }
         }
 
-        public void ChangeMonitorDept(int userID, int dept)
+        static string GetDayOfWeekName(int dayOfWeek)
         {
-            User tUser = new User();
+            switch (dayOfWeek)
+            {
+                case 0:
+                    return "Sunday";
+                case 1:
+                    return "Monday";
+                case 2:
+                    return "Tuesday";
+                case 3:
+                    return "Wednesday";
+                case 4:
+                    return "Thursday";
+                case 5:
+                    return "Friday";
+                case 6:
+                    return "Saturday";
+                default:
+                    throw new ArgumentException("Invalid day of week");
+            }
+        }
+
+        static Dictionary<string, Tuple<TimeSpan, TimeSpan>> GetEarliestLatestTimes(List<string> schedules)
+        {
+            var earliestLatest = new Dictionary<string, Tuple<TimeSpan, TimeSpan>>();
+
+            // Loop through each day of the week
+            for (int dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++)
+            {
+                var times = new List<TimeSpan>();
+
+                // Loop through each user's schedule for this day of the week
+                foreach (var schedule in schedules)
+                {
+                    var scheduleParts = schedule.Split(',');
+                    var scheduleForDay = scheduleParts[dayOfWeek];
+
+                    // If the user is off, skip to the next schedule
+                    if (scheduleForDay == "off")
+                    {
+                        continue;
+                    }
+
+                    // Parse the start and end times for this user's schedule
+                    var startEnd = scheduleForDay.Split('-');
+                    var startTime = TimeSpan.Parse(startEnd[0]);
+                    var endTime = TimeSpan.Parse(startEnd[1]);
+
+                    times.Add(startTime);
+                    times.Add(endTime);
+                }
+
+                // Get the earliest and latest times for this day of the week
+                var earliest = times.Min();
+                var latest = times.Max();
+
+                earliestLatest.Add(GetDayOfWeekName(dayOfWeek), Tuple.Create(earliest, latest));
+            }
+
+            return earliestLatest;
+        }
+
+        public Dictionary<string, Tuple<TimeSpan, TimeSpan>>GetDeptSchedule(int dept)
+        {
+            var earliestLatest = new Dictionary<string, Tuple<TimeSpan, TimeSpan>>();
             try
             {
                 using (SqlConnection con = new SqlConnection(GetConnected()))
                 {
-                    string strSQL = "UPDATE users SET userDept = @userDept, userPrivilege = 1 WHERE userID = @userID";
+                    string strSQL = "SELECT * FROM Schedule WHERE dept_ID = @dept_ID";
                     SqlCommand cmd = new SqlCommand(strSQL, con);
-                    cmd.Parameters.AddWithValue("@userID", userID);
-                    cmd.Parameters.AddWithValue("@userDept", dept);
-                    cmd.CommandText = strSQL;
                     cmd.CommandType = CommandType.Text;
-                    // fill parameters with form values
-
-                    // perform the update
+                    cmd.Parameters.AddWithValue("@dept_ID", dept);
                     con.Open();
-                    cmd.ExecuteNonQuery();
-                    con.Close();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    List<string> dept_schedule = new List<string>();
+                    // Loop through everyone's schedule in the department
+                    while (rdr.Read())
+                    {
+                        dept_schedule.Add(rdr["text_Schedule"].ToString());
+                    }
+                    earliestLatest = GetEarliestLatestTimes(dept_schedule);
                 }
             }
             catch (Exception e)
             {
-                tUser.userFeedback = "ERROR: " + e.Message;
+                Console.WriteLine(e);
             }
-        }
-
-        public void GetDeptSchedule()
-        {
-
-        }
-
-        public void DelSchedule()
-        {
-
-        }
-
-        public void DelUserUnavailbility()
-        {
-
-        }
-
-        public void AddSchedule()
-        {
-
-        }
-
-        public void AddUnavailbility()
-        {
-
+            return earliestLatest; // this will return if the schedule doesn't exist for the user, it'll generate the schedule in the else clause and return a blank schedule back to Calendar.aspx
         }
     }
 }

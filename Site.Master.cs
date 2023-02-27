@@ -43,6 +43,8 @@ namespace labMonitor
                         schedule.Visible = true;
                         admin.Visible = true;
                         break;
+                    default:
+                        break;
                 }
             }
         }
