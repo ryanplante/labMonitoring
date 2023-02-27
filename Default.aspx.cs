@@ -30,27 +30,28 @@ namespace labMonitor
                 if (user.userPrivilege == 0) // do this in a switch case once everyone finishes their view
                 {
                     studentview.Visible = true;
+                    string deptSchedule = scheduleFactory.GetDeptSchedule(2);
+                    string[] operatingHours = deptSchedule.Split(',');
+                    string[] daysOfWeek = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+
+                    // Create the schcard div
+                    Literal schCardDiv = new Literal();
+                    schCardDiv.Text += "<div class='schcard'>";
+                    for (int i = 0; i < daysOfWeek.Length; i++)
+                    {
+                        schCardDiv.Text += "<p>" + daysOfWeek[i] + ": " + operatingHours[i] + "</p>";
+                    }
+                    schCardDiv.Text += "</div>";
+
+                    // Add the schcard div to the scheduleDiv literal control
+                    scheduleDiv.Text = schCardDiv.Text;
                 }
             }
             else
             {
                 Response.Redirect("Login");
             }
-            string deptSchedule = scheduleFactory.GetDeptSchedule(2);
-            string[] operatingHours = deptSchedule.Split(',');
-            string[] daysOfWeek = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
 
-            // Create the schcard div
-            Literal schCardDiv = new Literal();
-            schCardDiv.Text += "<div class='schcard'>";
-            for (int i = 0; i < daysOfWeek.Length; i++)
-            {
-                schCardDiv.Text += "<p>" + daysOfWeek[i] + ": " + operatingHours[i] + "</p>";
-            }
-            schCardDiv.Text += "</div>";
-
-            // Add the schcard div to the scheduleDiv literal control
-            scheduleDiv.Text = schCardDiv.Text;
 
         }
 
