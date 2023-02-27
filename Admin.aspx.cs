@@ -68,10 +68,15 @@ namespace labMonitor
         {
             action.Value = "Add";
             // H2 tags don't seem to play nicely with razer, so we'll have to manually set it here and in the edit button
-            formHeader.InnerText = action.Value + " Lab"; 
+            formHeader.InnerText = action.Value + " Lab";
+            // Clear forms
+            txtLabName.Text = "";
+            txtRoom.Text = "";
+            txtDept.Text = "";
+            comboDept.SelectedIndex = 0;
             // Databind the page so that the action can be updated
             Page.DataBind(); 
-            labForm.Visible = !labForm.Visible;
+            labForm.Visible = true;
         }
 
         protected void Populate_User(object sender, EventArgs e)
@@ -165,6 +170,16 @@ namespace labMonitor
         protected void actionButton_Click(object sender, EventArgs e)
         {
             bool warning = false;
+            // Clear all warnings
+            lblNameWarning.Visible = false;
+            lblRoomWarning.Visible = false;
+            lblHeadWarning.Visible = false;
+            lblDeptWarning.Visible = false;
+            lblNameWarning.Text = "";
+            lblRoomWarning.Text = "";
+            lblHeadWarning.Text = "";
+            lblDeptWarning.Text = "";
+
             if (txtLabName.Text.Length < 1 || txtLabName.Text.Length > 32)
             {
                 warning = true;

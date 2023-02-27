@@ -14,6 +14,8 @@ namespace labMonitor
 {
     public partial class _Default : Page
     {
+        DepartmentDAL departmentFactory = new DepartmentDAL();
+        ScheduleDAL scheduleFactory = new ScheduleDAL();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["User"] != null)
@@ -29,6 +31,10 @@ namespace labMonitor
             {
                 Response.Redirect("Login");
             }
+            List<Department> departments = departmentFactory.GetAllDepartments();
+            var earliestLatest = scheduleFactory.GetDeptSchedule(2);
+            Console.WriteLine(earliestLatest.ToString());
+            
         }
     }
 }

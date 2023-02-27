@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace labMonitor.Models
@@ -99,72 +100,39 @@ namespace labMonitor.Models
             }
         }
 
-        static string GetDayOfWeekName(int dayOfWeek)
+        public static string GetOperatingHours(List<string> schedules)
         {
-            switch (dayOfWeek)
+            string[] daysOfWeek = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+            string[] operatingHours = new string[7];
+
+            for (int dayIndex = 0; dayIndex < daysOfWeek.Length; dayIndex++)
             {
-                case 0:
-                    return "Sunday";
-                case 1:
-                    return "Monday";
-                case 2:
-                    return "Tuesday";
-                case 3:
-                    return "Wednesday";
-                case 4:
-                    return "Thursday";
-                case 5:
-                    return "Friday";
-                case 6:
-                    return "Saturday";
-                default:
-                    throw new ArgumentException("Invalid day of week");
-            }
-        }
-
-        static Dictionary<string, Tuple<TimeSpan, TimeSpan>> GetEarliestLatestTimes(List<string> schedules)
-        {
-            var earliestLatest = new Dictionary<string, Tuple<TimeSpan, TimeSpan>>();
-
-            // Loop through each day of the week
-            for (int dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++)
-            {
-                var times = new List<TimeSpan>();
-
-                // Loop through each user's schedule for this day of the week
-                foreach (var schedule in schedules)
+                List<string> hoursList = new List<string>();
+                foreach (string schedule in schedules)
                 {
-                    var scheduleParts = schedule.Split(',');
-                    var scheduleForDay = scheduleParts[dayOfWeek];
-
-                    // If the user is off, skip to the next schedule
-                    if (scheduleForDay == "off")
+                    string[] scheduleSplit = schedule.Split(',');
+                    string hours = scheduleSplit[dayIndex].Trim();
+                    if (hours != "off")
                     {
-                        continue;
+                        hoursList.Add(hours);
                     }
-
-                    // Parse the start and end times for this user's schedule
-                    var startEnd = scheduleForDay.Split('-');
-                    var startTime = TimeSpan.Parse(startEnd[0]);
-                    var endTime = TimeSpan.Parse(startEnd[1]);
-
-                    times.Add(startTime);
-                    times.Add(endTime);
                 }
-
-                // Get the earliest and latest times for this day of the week
-                var earliest = times.Min();
-                var latest = times.Max();
-
-                earliestLatest.Add(GetDayOfWeekName(dayOfWeek), Tuple.Create(earliest, latest));
+                if (hoursList.Count > 0)
+                {
+                    operatingHours[dayIndex] = string.Join("-", hoursList);
+                }
+                else
+                {
+                    operatingHours[dayIndex] = "off";
+                }
             }
 
-            return earliestLatest;
+            return string.Join(",", operatingHours);
         }
 
-        public Dictionary<string, Tuple<TimeSpan, TimeSpan>>GetDeptSchedule(int dept)
+        public string GetDeptSchedule(int dept)
         {
-            var earliestLatest = new Dictionary<string, Tuple<TimeSpan, TimeSpan>>();
+            string operatingSchedule = "off,off,off,off,off,off,off";
             try
             {
                 using (SqlConnection con = new SqlConnection(GetConnected()))
@@ -181,14 +149,14 @@ namespace labMonitor.Models
                     {
                         dept_schedule.Add(rdr["text_Schedule"].ToString());
                     }
-                    earliestLatest = GetEarliestLatestTimes(dept_schedule);
+                    operatingSchedule = GetOperatingHours(dept_schedule);
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            return earliestLatest; // this will return if the schedule doesn't exist for the user, it'll generate the schedule in the else clause and return a blank schedule back to Calendar.aspx
+            return operatingSchedule; // this will return if the schedule doesn't exist for the user, it'll generate the schedule in the else clause and return a blank schedule back to Calendar.aspx
         }
     }
 }
