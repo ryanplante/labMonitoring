@@ -60,6 +60,15 @@ namespace labMonitor
         protected global::System.Web.UI.WebControls.ImageButton Logo;
 
         /// <summary>
+        /// nvbar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl nvbar;
+
+        /// <summary>
         /// avatar control.
         /// </summary>
         /// <remarks>
@@ -87,6 +96,15 @@ namespace labMonitor
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl monitor;
 
         /// <summary>
+        /// addeditbtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton addeditbtn;
+
+        /// <summary>
         /// reports control.
         /// </summary>
         /// <remarks>
@@ -94,6 +112,15 @@ namespace labMonitor
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl reports;
+
+        /// <summary>
+        /// reportsbtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton reportsbtn;
 
         /// <summary>
         /// logHistory control.
@@ -105,6 +132,15 @@ namespace labMonitor
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl logHistory;
 
         /// <summary>
+        /// loghistorybtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton loghistorybtn;
+
+        /// <summary>
         /// schedule control.
         /// </summary>
         /// <remarks>
@@ -114,6 +150,15 @@ namespace labMonitor
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl schedule;
 
         /// <summary>
+        /// schedulebtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton schedulebtn;
+
+        /// <summary>
         /// admin control.
         /// </summary>
         /// <remarks>
@@ -121,6 +166,15 @@ namespace labMonitor
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl admin;
+
+        /// <summary>
+        /// adminbtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton adminbtn;
 
         /// <summary>
         /// MainContent control.

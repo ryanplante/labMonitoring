@@ -67,39 +67,45 @@
         </div> <%-- END --%>
 
 
-        <div class="sidebar">
+       <div class="sidebar">
 
     <div class="sidebar-header">
         <asp:ImageButton  ID="Logo"  runat="server" ImageAlign="Bottom" ImageUrl="images/logo.png" OnClick="GoHome" /> <%-- Opens Avatar Bar --%>
     </div>
 
-
-        <ul class="nav">
-            <%--this will always show--%>
-            <li class="nav-item">
-                <asp:ImageButton id="avatar" runat="server"
-                   AlternateText="Avatar"
-                   ImageUrl="images/avatar.png"
-                   class="rounded" BorderColor="White" OnClick="ShowHideBar"/>
-                <br />
-                <asp:Label ID="lblUserName" runat="server">Name</asp:Label>
-            </li>
-            <li class="nav-item" runat="server" id="monitor" visible="false">
-                <a class="nav-link" href="MonitorsEdit">Add/Edit Monitors</a>
-            </li>
-            <li class="nav-item" runat="server" id="reports" visible="false">
-                <a class="nav-link" href="Reports">Reports</a>
-            </li>
-            <li class="nav-item" runat="server" id="logHistory" visible="false">
-                <a class="nav-link" href="LogView">Log History</a>
-            </li>
-            <li class="nav-item" runat="server" id="schedule" visible="false">
-                <a class="nav-link" href="Calendar">Schedule</a>
-            </li>
-            <li class="nav-item" runat="server" id="admin" visible="false">
-                <a class="nav-link" href="Admin">Admin</a>
-            </li>
-        </ul>
+        <div class="nvbar"  id="nvbar" runat="server">
+            <ul class="nav">
+                <%--this will always show--%>
+                <li class="nav-item">
+                    <asp:ImageButton id="avatar" runat="server"
+                       AlternateText="Avatar"
+                       ImageUrl="images/avatar.png"
+                       class="rounded" BorderColor="White" OnClick="ShowHideBar"/>
+                    <br />
+                    <asp:Label ID="lblUserName" runat="server">Name</asp:Label>
+                </li>
+                <li class="nav-item" runat="server" id="monitor" visible="false">
+                     <asp:ImageButton  ID="addeditbtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/monitors icon.png" href="MonitorsEdit" />
+                    <a class="nav-link" href="MonitorsEdit">Add/Edit Monitors</a>
+                </li>
+                <li class="nav-item" runat="server" id="reports" visible="false">
+                    <asp:ImageButton  ID="reportsbtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/report icon.png" href="Reports" />
+                    <a class="nav-link" href="Reports">Reports</a>
+                </li>
+                <li class="nav-item" runat="server" id="logHistory" visible="false">
+                    <asp:ImageButton  ID="loghistorybtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/logs icon.png" href="LogHistory" />
+                    <a class="nav-link" href="LogView">Log History</a>
+                </li>
+                <li class="nav-item" runat="server" id="schedule" visible="false">
+                    <asp:ImageButton  ID="schedulebtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/schedule icon.png" href="Schedule" />
+                    <a class="nav-link" href="Calendar">Schedule</a>
+                </li>
+                <li class="nav-item" runat="server" id="admin" visible="false">
+                    <asp:ImageButton  ID="adminbtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/admin icon.png" href="Admin" />
+                    <a class="nav-link" href="Admin">Admin</a>
+                </li>
+            </ul>
+        </div>
     </div>
 
             
