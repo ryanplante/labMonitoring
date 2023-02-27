@@ -84,26 +84,31 @@
                     <br />
                     <asp:Label ID="lblUserName" runat="server">Name</asp:Label>
                 </li>
-                <li class="nav-item" runat="server" id="monitor" visible="false">
-                     <asp:ImageButton  ID="addeditbtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/monitors icon.png" href="MonitorsEdit" />
-                     <asp:Label runat="server">Add/Edit Monitors</asp:Label>
-                </li>
-                <li class="nav-item" runat="server" id="reports" visible="false">
-                    <asp:ImageButton  ID="reportsbtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/report icon.png" href="Reports" />
-                    <a class="nav-link" href="Reports">Reports</a>
-                </li>
-                <li class="nav-item" runat="server" id="logHistory" visible="false">
-                    <asp:ImageButton  ID="loghistorybtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/logs icon.png" href="LogHistory" />
-                    <a class="nav-link" href="LogView">Log History</a>
-                </li>
-                <li class="nav-item" runat="server" id="schedule" visible="false">
-                    <asp:ImageButton  ID="schedulebtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/schedule icon.png" href="Schedule" />
-                    <a class="nav-link" href="Calendar">Schedule</a>
-                </li>
-                <li class="nav-item" runat="server" id="admin" visible="false">
-                    <asp:ImageButton  ID="adminbtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/admin icon.png" href="Admin" />
-                    <a class="nav-link" href="Admin">Admin</a>
-                </li>
+                <a href="MonitorsEdit.aspx"><li class="nav-item" runat="server" id="monitor" visible="false">
+                     <asp:ImageButton  ID="addeditbtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/monitors icon.png" OnClick="Monitors" />
+                     <asp:Label  OnClick="Monitors" runat="server">Add/Edit Monitors</asp:Label>
+                </li></a>
+
+                <a href="Reports.aspx"><li class="nav-item" runat="server" id="reports" visible="false">
+                    <asp:ImageButton  ID="reportsbtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/report icon.png" OnClick="Reports" />
+                    <asp:Label runat="server">Reports</asp:Label>
+                </li></a>
+
+                <a href="LogView.aspx"><li class="nav-item" runat="server" id="logHistory" visible="false">
+                    <asp:ImageButton  ID="loghistorybtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/logs icon.png" OnClick="LogHistory" />
+                    <asp:Label runat="server">Log History</asp:Label>
+                </li></a>
+
+                <a href="Calendar.aspx"><li class="nav-item" runat="server" id="schedule" visible="false">
+                    <asp:ImageButton  ID="schedulebtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/schedule icon.png" OnClick="Schedule" />
+                    <asp:Label runat="server">Schedule</asp:Label>
+                </li></a>
+
+                <a href="Admin.aspx"><li class="nav-item" runat="server" id="admin" visible="false">
+                    <asp:ImageButton  ID="adminbtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/admin icon.png" OnClick="Admin" />
+                    <asp:Label runat="server">Admin</asp:Label>
+                </li></a>
+
             </ul>
         </div>
     </div>

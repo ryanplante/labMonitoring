@@ -60,6 +60,32 @@ namespace labMonitor
             Response.Redirect("Default");
         }
 
+        protected void Monitors(object sender, ImageClickEventArgs e)
+        {
+            Response.Redirect("MonitorsEdit");
+        }
+
+        protected void Reports(object sender, ImageClickEventArgs e)
+        {
+            Response.Redirect("Reports");
+        }
+
+        protected void LogHistory(object sender, ImageClickEventArgs e)
+        {
+            Response.Redirect("LogView");
+        }
+
+        protected void Schedule(object sender, ImageClickEventArgs e)
+        {
+            Response.Redirect("Calendar");
+        }
+
+        protected void Admin(object sender, ImageClickEventArgs e)
+        {
+            Response.Redirect("Admin");
+        }
+
+
         public void ShowHideBar(object sender, ImageClickEventArgs e)
         {
             avabar.Visible = !avabar.Visible;

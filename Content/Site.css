@@ -62,10 +62,12 @@ textarea {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    color: white;
 }
 
 .nav-item {
     margin: 10px 0;
+    color: white;
 }
 
 .nav-link {
@@ -76,7 +78,8 @@ textarea {
 }
 
 .nav-item:hover {
-    background-color: #353940;
+
+    background-image: linear-gradient(#0684F9, #061745);
     color: #fff;
 }
 
@@ -87,10 +90,12 @@ textarea {
 }
 
 .nvbar {
+   
     margin-top: 15px;
     display: flex;
     justify-content: center;
     text-align: center;
+    
 }
 
 .MonitorForm {
