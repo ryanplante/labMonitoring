@@ -6,8 +6,9 @@
 <head runat="server">
     <title></title>
         <link href="~/Content/ChangePW.css" rel="stylesheet" type="text/css" />
-
 </head>
+
+
 <body class="login">
     <div class="centered">
         <img src="images/logo (1).png" id="neitlogo" />
@@ -27,7 +28,9 @@
         <asp:TextBox ID="txtConfirm" runat="server" TextMode="Password"></asp:TextBox>
       </div>
       <div class="centered">
-        <asp:Button ID="btnSubmit" runat="server" Text="Change" OnClick="btnSubmit_Click" />
+          <asp:Label ID="lblWarning" CssClass="warning" runat="server" Visible="false"></asp:Label>
+          <br />
+        <asp:Button ID="btnSubmit" runat="server" Text="Change" OnClick="changePassword" />
       </div>
     </form>
 </body>

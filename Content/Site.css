@@ -78,7 +78,6 @@ textarea {
 }
 
 .nav-item:hover {
-
     background-image: linear-gradient(#0684F9, #061745);
     color: #fff;
 }
@@ -90,12 +89,10 @@ textarea {
 }
 
 .nvbar {
-   
     margin-top: 15px;
     display: flex;
     justify-content: center;
     text-align: center;
-    
 }
 
 .MonitorForm {
@@ -270,7 +267,6 @@ h2, #formHeader {
 /* DASHBOARD STUDENT VIEW*/
 
 .labcard {
-
     width: 420px;
     height: 290px;
     background: linear-gradient(180deg, rgba(30, 157, 249, 0) 0%, #0684F9 100%);
@@ -278,12 +274,11 @@ h2, #formHeader {
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     border-radius: 42px;
     color: black;
-
 }
 
 .htags {
-    display:flex;
-    justify-content:space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .lbn {
@@ -295,10 +290,10 @@ h2, #formHeader {
 }
 
 .cardcontent {
-    margin-top:2px;
+    margin-top: 2px;
     margin-left: 25px;
-    display:flex;
-    justify-content:space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .imgbk {
@@ -321,6 +316,7 @@ h2, #formHeader {
     display: flex;
     align-items: center;
 }
-.labs-header h2 {
-    margin-right: 10px;
-}
+
+    .labs-header h2 {
+        margin-right: 10px;
+    }

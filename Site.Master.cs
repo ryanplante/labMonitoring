@@ -60,7 +60,12 @@ namespace labMonitor
             Response.Redirect("Default");
         }
 
-        protected void Monitors(object sender, ImageClickEventArgs e)
+        public void ShowHideBar(object sender, ImageClickEventArgs e)
+        {
+            avabar.Visible = !avabar.Visible;
+        }
+
+        protected void MonitorsEdit(object sender, ImageClickEventArgs e)
         {
             Response.Redirect("MonitorsEdit");
         }
@@ -83,12 +88,6 @@ namespace labMonitor
         protected void Admin(object sender, ImageClickEventArgs e)
         {
             Response.Redirect("Admin");
-        }
-
-
-        public void ShowHideBar(object sender, ImageClickEventArgs e)
-        {
-            avabar.Visible = !avabar.Visible;
         }
     }
 }

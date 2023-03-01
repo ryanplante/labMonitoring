@@ -45,7 +45,9 @@ namespace labMonitor
                 ScheduleGrid.DataSource = GenerateGrid();
                 ScheduleGrid.DataBind();
                 // Hack to pass variables to Javascript so that the event listener can check if the user is leaving before they publish the schedule
-                ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = false;", false);
+                //ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = false;", false);
+                isEdited.Value = "false";
+                //isEdited
             }
         }
 
@@ -190,7 +192,8 @@ namespace labMonitor
                     SetDataGridCellText(Int32.Parse(coordinates[0]), Int32.Parse(coordinates[1]), timeIn + "-" + timeOut);
                 }
 
-                ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = true;", true);
+                //ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = true;", true);
+                isEdited.Value = "true";
             }
 
         }
@@ -199,7 +202,8 @@ namespace labMonitor
         {
             String[] coordinates = coords.Value.Split(',');
             SetDataGridCellText(Int32.Parse(coordinates[0]), Int32.Parse(coordinates[1]), "off");
-            ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = true;", true);
+            //ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = true;", true);
+            isEdited.Value = "true";
         }
 
         protected void Publish(object sender, EventArgs e)
@@ -217,7 +221,8 @@ namespace labMonitor
                     tSchedule += GetCellValue(i, j) + ",";
                 }
                 scheduleFactory.SetUserSchedule(monitors[i], tSchedule.Substring(0, tSchedule.Length - 1)); // strip the last comma off from the string
-                ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = false;", false);
+                //ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = false;", false);
+                isEdited.Value = "false";
                 //Console.WriteLine(tSchedule);
             }
         }

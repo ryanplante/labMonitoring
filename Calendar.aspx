@@ -3,48 +3,10 @@
 
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <script type='text/javascript'>
-    window.onload = function () {
-        setTdBackgroundColor();
-    }
-    // Get all anchor elements with the class of "nav-link"
-    var navLinks = document.querySelectorAll('.nav-link');
-    if (isEdited) {
-        // Attach a click event listener to each nav link
-        navLinks.forEach(function (link) {
-            link.addEventListener('click', function (event) {
-
-                // Display a confirmation message to the user
-                var confirmed = confirm("Are you sure you want to leave this page?");
-                // If the user clicks "OK", continue with the link action
-                if (confirmed) {
-                    return true;
-                }
-
-                // Otherwise, prevent the link action from happening
-                event.preventDefault();
-                return false;
-            });
-        });
-    }
-
-
-    function setTdBackgroundColor() {
-        const tds = document.querySelectorAll('td');
-        tds.forEach(td => {
-            if (td.querySelector('a') && td.querySelector('a').textContent === 'off') {
-                td.style.backgroundColor = '#D3D3D3';
-            }
-        });
-    }
-
-
-
-</script>
 <div>
     <%--Show when user is department head or admin --%>
-    <input type="hidden" id="isEdited" runat="server" />
     <h1>Calendar</h1>
+    <asp:HiddenField ID="isEdited" runat="server"/>
     <asp:DataGrid id="ScheduleGrid" runat="server" AutoGenerateColumns="false" AutoPostBack="false" OnItemCommand="OnSelectedCell" >
         <Columns>
             <asp:BoundColumn HeaderText="Student Name" DataField="studentName" />
@@ -109,5 +71,39 @@
     </div>
     
 </div>
+    <script type='text/javascript'>
+        window.onload = function () {
+            setTdBackgroundColor();
+        }
+        // Get all anchor elements with the class of "nav-link"
+        // Get all anchor elements with the class of "nav-link"
+        var navLinks = document.querySelectorAll('li');
+        let isEdited = document.getElementById('<%= isEdited.ClientID %>');
+        if (isEdited && isEdited.value === 'true') {
+            // Attach a click event listener to each nav link
+            navLinks.forEach(function (link) {
+                link.addEventListener('click', function (event) {
+                    // Display a confirmation message to the user
+                    var confirmed = confirm("Are you sure you want to leave this page?\nUnsaved changes will be lost.");
+                    // If the user clicks "OK", continue with the link action
+                    if (confirmed) {
+                        return true;
+                    }
+                    // Otherwise, prevent the link action from happening
+                    event.preventDefault();
+                    return false;
+                });
+            });
+        }
 
+
+        function setTdBackgroundColor() {
+            const tds = document.querySelectorAll('td');
+            tds.forEach(td => {
+                if (td.querySelector('a') && td.querySelector('a').textContent === 'off') {
+                    td.style.backgroundColor = '#D3D3D3';
+                }
+            });
+        }
+    </script>
 </asp:Content>

@@ -85,7 +85,7 @@
                     <asp:Label ID="lblUserName" runat="server">Name</asp:Label>
                 </li>
                 <a href="MonitorsEdit.aspx"><li class="nav-item" runat="server" id="monitor" visible="false">
-                     <asp:ImageButton  ID="addeditbtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/monitors icon.png" OnClick="Monitors" />
+                     <asp:ImageButton  ID="addeditbtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/monitors icon.png" OnClick="MonitorsEdit" />
                      <asp:Label  OnClick="Monitors" runat="server">Add/Edit Monitors</asp:Label>
                 </li></a>
 

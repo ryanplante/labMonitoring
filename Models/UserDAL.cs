@@ -171,6 +171,44 @@ namespace labMonitor.Models
             }
         }
 
+        public bool ChangePassword(User user, string newPassword)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(GetConnected()))
+                {
+                    string strSQL = "UPDATE users SET userSalt = @userSalt, userPassword = @userPassword WHERE userID = @userID";
+                    // Generate a random salt
+                    byte[] salt = new byte[16];
+                    using (var rng = new RNGCryptoServiceProvider())
+                    {
+                        rng.GetBytes(salt);
+                    }
+                    // Combine the password and salt and hash them
+                    byte[] passwordWithSalt = Encoding.UTF8.GetBytes(newPassword + Convert.ToBase64String(salt));
+                    byte[] hashedPasswordWithSalt = SHA1.Create().ComputeHash(passwordWithSalt);
+                    SqlCommand cmd = new SqlCommand(strSQL, con);
+                    cmd.Parameters.AddWithValue("@userSalt", Convert.ToBase64String(salt));
+                    cmd.Parameters.AddWithValue("@userPassword", Convert.ToBase64String(hashedPasswordWithSalt));
+                    cmd.Parameters.AddWithValue("@userID", user.userID);
+                    cmd.CommandText = strSQL;
+                    cmd.CommandType = CommandType.Text;
+
+                    // perform the update
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                user.userFeedback = "ERROR: " + e.Message;
+                return false;
+            }
+            return false;
+        }
+
         public IEnumerable<User>GetMonitorsByDept(int? deptID)
         {
             List<User> monitors = new List<User>(); // Listings from DB table
