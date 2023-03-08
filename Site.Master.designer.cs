@@ -39,7 +39,7 @@ namespace labMonitor
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton avaImage;
+        protected global::System.Web.UI.WebControls.Image avaImage;
 
         /// <summary>
         /// ImageButton3 control.

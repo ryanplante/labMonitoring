@@ -51,9 +51,7 @@
                 </div>
 
                 <div class="">
-                    
-                    <asp:ImageButton  id="avaImage" class="btnimg2" runat="server" ImageAlign="Bottom" ImageUrl="~/images/avatars/avatar.jpg" OnClick="GoHome"/>  <%-- Edit Img--%> 
-                    <asp:ImageButton  class="btnimg3" runat="server" ImageAlign="Bottom" ImageUrl="~/images/pencil icon.png" OnClick="GoHome"/>  <%-- Edit Img--%>  
+                    <asp:Image ID="avaImage" class="btnimg2" runat="server" ImageAlign="Bottom" ImageUrl="~/images/avatars/avatar.jpg" />
                 </div>
                 
                 <div>
