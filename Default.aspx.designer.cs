@@ -60,12 +60,12 @@ namespace labMonitor
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl studentview;
 
         /// <summary>
-        /// scheduleDiv control.
+        /// scheduleLiteral control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal scheduleDiv;
+        protected global::System.Web.UI.WebControls.Literal scheduleLiteral;
     }
 }

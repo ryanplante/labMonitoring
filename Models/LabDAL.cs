@@ -11,7 +11,7 @@ namespace labMonitor.Models
     {
         private string GetConnected()
         {
-            return "Server= sql.neit.edu\\studentsqlserver,4500; Database=SE133_RPlante; User Id=SE133_RPlante;Password=008016590;";
+            return "Server= sql.neit.edu\\studentsqlserver,4500; Database=SE265_LabMonitorProj; User Id=SE265_LabMonitorProj;Password=FaridRyanSpencer;";
         }
 
         public Lab GetLabByID(int? id)

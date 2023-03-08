@@ -74,7 +74,7 @@ namespace labMonitor.Models
 
         private string GetConnected()
         {
-            return "Server= sql.neit.edu\\studentsqlserver,4500; Database=SE133_RPlante; User Id=SE133_RPlante;Password=008016590;";
+            return "Server= sql.neit.edu\\studentsqlserver,4500; Database=SE265_LabMonitorProj; User Id=SE265_LabMonitorProj;Password=FaridRyanSpencer;";
         }
 
         public void AddUser()
@@ -390,7 +390,7 @@ namespace labMonitor.Models
 
             using (SqlConnection con = new SqlConnection(GetConnected()))
             {
-                String strSQL = "SELECT * FROM users WHERE userFName LIKE @userFName AND userLName LIKE @userLName AND userPrivilege > 2"; // get all users that are students
+                String strSQL = "SELECT * FROM users WHERE userFName LIKE @userFName AND userLName LIKE @userLName AND userPrivilege > 1"; // get all users that are students
 
                 using (SqlCommand command = new SqlCommand(strSQL, con))
                 {

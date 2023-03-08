@@ -17,6 +17,7 @@ namespace labMonitor
     {
         DepartmentDAL departmentFactory = new DepartmentDAL();
         ScheduleDAL scheduleFactory = new ScheduleDAL();
+        LabDAL labFactory = new LabDAL();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["User"] != null)
@@ -30,21 +31,25 @@ namespace labMonitor
                 if (user.userPrivilege == 0) // do this in a switch case once everyone finishes their view
                 {
                     studentview.Visible = true;
-                    string deptSchedule = scheduleFactory.GetDeptSchedule(2);
-                    string[] operatingHours = deptSchedule.Split(',');
-                    string[] daysOfWeek = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+                    List<Lab> labs = labFactory.GetAllLabs();
 
-                    // Create the schcard div
-                    Literal schCardDiv = new Literal();
-                    schCardDiv.Text += "<div class='schcard'>";
-                    for (int i = 0; i < daysOfWeek.Length; i++)
+                    foreach (Lab lab in labs)
                     {
-                        schCardDiv.Text += "<p>" + daysOfWeek[i] + ": " + operatingHours[i] + "</p>";
+                        scheduleLiteral.Text += "<div class='labcard'>";
+                        scheduleLiteral.Text += "<div class='htags'>\n <h3 class='lbn'>" + lab.labName + "</h3><h3 class='rn'>" + lab.labRoom + "</h3></div>";
+                        scheduleLiteral.Text += "<div class='cardcontent'>";
+                        scheduleLiteral.Text += "<div class='schcard'>";
+                        string[] operatingHours = scheduleFactory.GetDeptSchedule(lab.deptID).Split(',');
+                        string[] daysOfWeek = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+                        for (int i = 0; i < daysOfWeek.Length; i++)
+                        {
+                            scheduleLiteral.Text += "<p>" + daysOfWeek[i] + ": " + operatingHours[i] + "</p>";
+                        }
+                        scheduleLiteral.Text += "</div>";
+                        scheduleLiteral.Text += "<div class='imgbk'> <img src='images/image 39.png' /></div>";
+                        scheduleLiteral.Text += "</div></div>";
                     }
-                    schCardDiv.Text += "</div>";
 
-                    // Add the schcard div to the scheduleDiv literal control
-                    scheduleDiv.Text = schCardDiv.Text;
                 }
             }
             else
