@@ -30,24 +30,27 @@ namespace labMonitor
                 }
                 if (user.userPrivilege == 0) // do this in a switch case once everyone finishes their view
                 {
-                    studentview.Visible = true;
-                    List<Lab> labs = labFactory.GetAllLabs();
-
-                    foreach (Lab lab in labs)
+                    if (!IsPostBack)
                     {
-                        scheduleLiteral.Text += "<div class='labcard'>";
-                        scheduleLiteral.Text += "<div class='htags'>\n <h3 class='lbn'>" + lab.labName + "</h3><h3 class='rn'>" + lab.labRoom + "</h3></div>";
-                        scheduleLiteral.Text += "<div class='cardcontent'>";
-                        scheduleLiteral.Text += "<div class='schcard'>";
-                        string[] operatingHours = scheduleFactory.GetDeptSchedule(lab.deptID).Split(',');
-                        string[] daysOfWeek = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
-                        for (int i = 0; i < daysOfWeek.Length; i++)
+                        studentview.Visible = true;
+                        List<Lab> labs = labFactory.GetAllLabs();
+
+                        foreach (Lab lab in labs)
                         {
-                            scheduleLiteral.Text += "<p>" + daysOfWeek[i] + ": " + operatingHours[i] + "</p>";
+                            scheduleLiteral.Text += "<div class='labcard'>";
+                            scheduleLiteral.Text += "<div class='htags'>\n <h3 class='lbn'>" + lab.labName + "</h3><h3 class='rn'>" + lab.labRoom + "</h3></div>";
+                            scheduleLiteral.Text += "<div class='cardcontent'>";
+                            scheduleLiteral.Text += "<div class='schcard'>";
+                            string[] operatingHours = scheduleFactory.GetDeptSchedule(lab.deptID).Split(',');
+                            string[] daysOfWeek = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+                            for (int i = 0; i < daysOfWeek.Length; i++)
+                            {
+                                scheduleLiteral.Text += "<p>" + daysOfWeek[i] + ": " + operatingHours[i] + "</p>";
+                            }
+                            scheduleLiteral.Text += "</div>";
+                            scheduleLiteral.Text += "<div class='imgbk'> <img src='images/image 39.png' /></div>";
+                            scheduleLiteral.Text += "</div></div>";
                         }
-                        scheduleLiteral.Text += "</div>";
-                        scheduleLiteral.Text += "<div class='imgbk'> <img src='images/image 39.png' /></div>";
-                        scheduleLiteral.Text += "</div></div>";
                     }
 
                 }
