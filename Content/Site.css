@@ -265,6 +265,18 @@ h2, #formHeader {
 }
 
 /* DASHBOARD STUDENT VIEW*/
+.dbgrid {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    padding-right: 100px;
+}
+
+@media (max-width: 900px) {
+    .dbgrid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
 
 .labcard {
     width: 420px;
