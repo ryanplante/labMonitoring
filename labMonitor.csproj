@@ -385,6 +385,7 @@
     <Compile Include="LogView.aspx.designer.cs">
       <DependentUpon>LogView.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Helpers.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\DepartmentDAL.cs" />
     <Compile Include="Models\Lab.cs" />

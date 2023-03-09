@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Web.Services;
 using System.Web.UI.HtmlControls;
+using System.Globalization;
 
 namespace labMonitor
 {
@@ -45,7 +46,7 @@ namespace labMonitor
                             string[] daysOfWeek = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
                             for (int i = 0; i < daysOfWeek.Length; i++)
                             {
-                                scheduleLiteral.Text += "<p>" + daysOfWeek[i] + ": " + operatingHours[i] + "</p>";
+                                scheduleLiteral.Text += "<p>" + daysOfWeek[i] + ": " + Helpers.FormatOperatingHours(operatingHours[i]) + "</p>";
                             }
                             scheduleLiteral.Text += "</div>";
                             scheduleLiteral.Text += "<div class='imgbk'> <img src='images/image 39.png' /></div>";
@@ -62,6 +63,7 @@ namespace labMonitor
 
 
         }
+
 
         /*
         public static void CreateScheduleDiv(List<string> schedules, HtmlGenericControl parentDiv)
