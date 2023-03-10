@@ -332,3 +332,50 @@ h2, #formHeader {
     .labs-header h2 {
         margin-right: 10px;
     }
+
+
+/* REPORT.CSS */
+
+.search {
+    display: flex;
+    margin-right: 100px;
+    justify-content: left;
+    height: 100px;
+}
+
+#selectbox {
+    display: flex;
+    margin-right: 50px;
+    height: 30px;
+}
+
+#datebox {
+    display: flex;
+    margin-right: 50px;
+    height: 30px;
+}
+
+#filetbox {
+    display: flex;
+    margin-right: 50px;
+    height: 30px;
+}
+
+.stday {
+    display: flex;
+    margin-right: 25px;
+}
+
+.endday {
+    display: flex;
+    margin-left: 25px;
+}
+
+#lgChart {
+    background-color: black;
+    border-width: 0;
+    height: 500px;
+    width: 500px;
+    border: solid black 1px;
+    font-palette: none;
+}

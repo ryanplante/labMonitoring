@@ -912,3 +912,9 @@ C:\Users\aweso\Documents\Github\labMonitoring\obj\Debug\labMonitor.csproj.CoreCo
 C:\Users\aweso\Documents\Github\labMonitoring\obj\Debug\labMonitor.csproj.CopyComplete
 C:\Users\aweso\Documents\Github\labMonitoring\obj\Debug\labMonitor.dll
 C:\Users\aweso\Documents\Github\labMonitoring\obj\Debug\labMonitor.pdb
+C:\Users\aweso\source\repos\labMonitoring\bin\EPPlus.dll
+C:\Users\aweso\source\repos\labMonitoring\bin\EPPlus.Interfaces.dll
+C:\Users\aweso\source\repos\labMonitoring\bin\EPPlus.System.Drawing.dll
+C:\Users\aweso\source\repos\labMonitoring\bin\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\aweso\source\repos\labMonitoring\bin\EPPlus.xml
+C:\Users\aweso\source\repos\labMonitoring\bin\Microsoft.IO.RecyclableMemoryStream.xml
