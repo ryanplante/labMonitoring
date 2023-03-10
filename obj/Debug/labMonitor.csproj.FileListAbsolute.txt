@@ -1092,3 +1092,9 @@ C:\Users\spenc\Documents\school\Q6\capstone\4\labMonitoring\obj\Debug\labMonitor
 C:\Users\spenc\Documents\school\Q6\capstone\4\labMonitoring\obj\Debug\labMonitor.csproj.CopyComplete
 C:\Users\spenc\Documents\school\Q6\capstone\4\labMonitoring\obj\Debug\labMonitor.dll
 C:\Users\spenc\Documents\school\Q6\capstone\4\labMonitoring\obj\Debug\labMonitor.pdb
+C:\Users\Ryan\source\repos\labMonitoring\bin\EPPlus.dll
+C:\Users\Ryan\source\repos\labMonitoring\bin\EPPlus.Interfaces.dll
+C:\Users\Ryan\source\repos\labMonitoring\bin\EPPlus.System.Drawing.dll
+C:\Users\Ryan\source\repos\labMonitoring\bin\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\Ryan\source\repos\labMonitoring\bin\EPPlus.xml
+C:\Users\Ryan\source\repos\labMonitoring\bin\Microsoft.IO.RecyclableMemoryStream.xml

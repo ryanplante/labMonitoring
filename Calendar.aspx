@@ -115,6 +115,10 @@
                 if (td.querySelector('a') && td.querySelector('a').textContent === 'off') {
                     td.style.backgroundColor = '#D3D3D3';
                 }
+                else if (td.querySelector('p') && td.querySelector('p').textContent === 'off') {
+                    td.style.backgroundColor = '#D3D3D3';
+
+                }
             });
         }
     </script>
