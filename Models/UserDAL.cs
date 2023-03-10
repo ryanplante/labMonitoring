@@ -171,6 +171,36 @@ namespace labMonitor.Models
             }
         }
 
+        public void addNonexistentUser(User tba) //add user when the inputted student ID does not exist in the DB
+        {
+            using (SqlConnection conn = new SqlConnection(GetConnected()))
+            {
+                string sql = "INSERT Into users (userID, userFName, userLName, userPassword, userSalt, userDept, userPrivilege) VALUES (@userID, @userFName, @userLName, @userPassword, @userSalt, @userDept, @userPrivilege)";
+
+                try
+                {
+                    using (SqlCommand comm = new SqlCommand(sql, conn))
+                    {
+                        comm.CommandType = CommandType.Text;
+                        comm.Parameters.AddWithValue("@userID", tba.userID);
+                        comm.Parameters.AddWithValue("@userFName", tba.userFName);
+                        comm.Parameters.AddWithValue("@userLName", tba.userLName);
+                        comm.Parameters.AddWithValue("@userPassword", tba.userPassword);
+                        comm.Parameters.AddWithValue("@userSalt", tba.userSalt);
+                        comm.Parameters.AddWithValue("@userDept", tba.userDept);
+                        comm.Parameters.AddWithValue("@userPrivilege", tba.userPrivilege);
+                        conn.Open();
+                        comm.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e);
+                }
+            }
+        }
+
         public bool ChangePassword(User user, string newPassword)
         {
             try
@@ -531,6 +561,19 @@ namespace labMonitor.Models
             }
         }
 
+        public bool doesUserExist(int id)
+        {
+            var temp = GetOneUser(id);
+            bool result = true;
+
+            if (temp.userFName == null) //since fName is required to not be null, if it's null then that means there's no record
+            {
+                result = false;
+            }
+
+            return result;
+
+        }
 
     }
     

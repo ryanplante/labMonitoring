@@ -19,6 +19,9 @@ namespace labMonitor
         DepartmentDAL departmentFactory = new DepartmentDAL();
         ScheduleDAL scheduleFactory = new ScheduleDAL();
         LabDAL labFactory = new LabDAL();
+        UserDAL userFactory = new UserDAL();
+        LogDAL logFactory = new LogDAL();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["User"] != null)
@@ -55,6 +58,15 @@ namespace labMonitor
                     }
 
                 }
+
+                if (user.userPrivilege == 1)
+                {
+                    submitButton.Text = "Submit";
+                    monitorview.Visible = true;
+                    permissionCheck.InnerText = user.userPrivilege.ToString();
+
+                    UpdateGrid();
+                }
             }
             else
             {
@@ -62,6 +74,160 @@ namespace labMonitor
             }
 
 
+        }
+
+        public static DateTime StartOfDay(DateTime theDate)
+        {
+            return theDate.Date;
+        }
+
+        public static DateTime EndOfDay(DateTime theDate)
+        {
+            return theDate.Date.AddDays(1).AddTicks(-1);
+        }
+
+        private void UpdateGrid()
+        {
+            var user = Session["User"] as User;
+            var dept = user.userDept;
+            var sod = StartOfDay(DateTime.Now);
+            var eod = EndOfDay(DateTime.Now);
+            List<Log> logs = (List<Log>)logFactory.GetLogsBetween(sod, eod, dept);
+            // Gather certain properties from the object so it doesn't display all attributes
+            DGlogs.DataSource = logs.Select(o => new Log()
+            { logID = o.logID, studentName = o.studentName, studentID = o.studentID, timeIn = o.timeIn, timeOut = o.timeOut }).ToList();
+            //DGLabMonitors.DataSource = userFactory.GetMonitorsByDept(user.userDept);
+            DGlogs.DataBind();
+            System.Diagnostics.Debug.WriteLine("update grid has executed");
+        }
+
+        protected void LogsCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "ClockOut")
+            {
+                string[] parameters = e.CommandArgument.ToString().Split(',');
+                int id = Int32.Parse(parameters[0]);
+                logFactory.ClockOut(id);
+                UpdateGrid();
+            }
+            else if (e.CommandName == "EditLog")
+            {
+                string[] parameters = e.CommandArgument.ToString().Split(',');
+                Log tLog = logFactory.GetALog(Int32.Parse(parameters[0]));
+                logID.Value = parameters[0];
+                User tUser = userFactory.GetOneUser(tLog.studentID);
+                txtStudentID.Text = tLog.studentID.ToString();
+                txtStudentName.Text = tUser.userFName + " " + tUser.userLName;
+                dtTimeIn.Value = tLog.timeIn.TimeOfDay.ToString();
+                dtTimeOut.Value = tLog.timeOut.TimeOfDay.ToString();
+                System.Diagnostics.Debug.WriteLine(tLog.timeIn.ToString());
+                System.Diagnostics.Debug.WriteLine(tLog.timeOut.ToString());
+                txtItems.Text = tLog.itemsBorrowed;
+                selectedID.Value = tUser.userID.ToString();
+                action.Value = "Update";
+                formHeader.InnerText = action.Value + " Log";
+                Page.DataBind();
+                logForm.Visible = true;
+
+            }
+        }
+
+        protected void submitButton_Click(object sender, EventArgs e)
+        {
+            bool warning = false;
+            lblIDWarning.Visible = false;
+            lblIDWarning.Text = "";
+            lblInWarning.Visible = false;
+            lblInWarning.Text = "";
+            lblItemsWarning.Visible = false;
+            lblItemsWarning.Text = "";
+            lblNameWarning.Visible = false;
+            lblNameWarning.Text = "";
+            lblOutWarning.Visible = false;
+            lblOutWarning.Text = "";
+
+            if (txtStudentID.Text.Length != 9)
+            {
+                warning = true;
+                lblIDWarning.Visible = true;
+                lblIDWarning.Text = "ID numbers are 9 characters long.";
+            }
+            if (txtStudentName.Text.Length < 1)
+            {
+                warning = true;
+                lblNameWarning.Visible = true;
+                lblNameWarning.Text = "Name is required.";
+            }
+            if (!warning)
+            {
+                User tUser = Session["User"] as User;
+                Log tLog = new Log();
+                tLog.studentID = Int32.Parse(txtStudentID.Text);
+                tLog.studentName = txtStudentName.Text;
+                tLog.deptID = tUser.userDept;
+                tLog.timeIn = DateTime.Parse(dtTimeIn.Value);
+                tLog.itemsBorrowed = txtItems.Text;
+                if (action.Value == "Add")
+                {
+                    var temp = DateTime.Parse(dtTimeIn.Value);
+                    var tempSpan = new TimeSpan(temp.Hour, temp.Minute, 0);
+                    tLog.timeIn = DateTime.Now.Date + tempSpan;
+
+                    if (dtTimeOut.Value != "")
+                    {
+                        temp = DateTime.Parse(dtTimeOut.Value);
+                        tempSpan = new TimeSpan(temp.Hour, temp.Minute, 0);
+                        tLog.timeOut = DateTime.Now.Date + tempSpan;
+                    }
+
+                    if (!userFactory.doesUserExist(tLog.studentID))
+                    {
+                        User newUser = new User();
+                        var monitor = Session["User"] as User;
+                        var nameList = txtStudentName.Text.Split(' ');
+                        newUser.userDept = monitor.userDept;
+                        newUser.userFName = nameList[0];
+                        newUser.userLName = nameList[1];
+                        newUser.userPassword = "Hx/xnGxwOSB4lq1DVtqAo6sUTzU=";
+                        newUser.userSalt = "/W5B3ypqGFeSRXeB5vNhDA==";
+                        newUser.userPrivilege = 0;
+                        newUser.userID = tLog.studentID;
+                        userFactory.addNonexistentUser(newUser);
+                    }
+
+                    logFactory.AddLog(tLog);
+
+                }
+                else if (action.Value == "Update")
+                {
+                    tLog.logID = Int32.Parse(logID.Value);
+                    if (dtTimeOut.Value != "")
+                    {
+                        var temp = DateTime.Parse(dtTimeOut.Value);
+                        var tempSpan = new TimeSpan(temp.Hour, temp.Minute, 0);
+                        tLog.timeOut = DateTime.Now.Date + tempSpan;
+                    }
+                    logFactory.ModifyLog(tLog);
+                }
+                UpdateGrid();
+                logForm.Visible = false;
+            }
+
+        }
+
+        protected void btnAdd_Click(object sender, EventArgs e)
+        {
+            action.Value = "Add";
+            formHeader.InnerText = action.Value + " Lab";
+            txtStudentID.Text = "";
+            txtStudentName.Text = "";
+            dtTimeIn.Value = "";
+            dateTimeIn.SelectedDate = DateTime.Now;
+            dtTimeOut.Value = "";
+            dateTimeOut.SelectedDate = DateTime.Now;
+            txtItems.Text = "";
+            Page.DataBind();
+            logForm.Visible = true;
         }
 
 

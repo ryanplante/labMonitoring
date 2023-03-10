@@ -44,6 +44,8 @@ namespace labMonitor
                 }
                 ScheduleGrid.DataSource = GenerateGrid();
                 ScheduleGrid.DataBind();
+                var test = Session["User"] as labMonitor.Models.User;
+                permission.InnerText = test.userPrivilege.ToString();
                 // Hack to pass variables to Javascript so that the event listener can check if the user is leaving before they publish the schedule
                 //ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = false;", false);
                 isEdited.Value = "false";

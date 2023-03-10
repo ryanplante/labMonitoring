@@ -1,10 +1,89 @@
-﻿<%@ Page Language="C#" Title="Logs" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="LogView.aspx.cs" Inherits="labMonitor.LogView" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="LogView.aspx.cs" Inherits="labMonitor.LogHistory" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-<div>
-    <%--Show when user is department head or admin --%>
- 
-</div>
+    <h3>Log History</h3>
+
+    <input type="date" ID="calSearch" runat="server" value="<%#DateTime.Today %>"/>
+    <asp:Button ID="searchButton" Text="Search" runat="server" OnClick="searchButton_Click" />
+
+               <asp:GridView ID="DGlogs" runat="server" AutoGenerateColumns="false" OnRowCommand="LogsCommand" class="historyTable">
+                    <Columns>
+                        <asp:BoundField DataField="logID" HeaderText ="log ID" Visible="false" />
+                        <asp:BoundField DataField="studentName" HeaderText="Student Name" />
+                        <asp:BoundField DataField="studentID" HeaderText="ID" />
+                        <asp:BoundField DataField="timeIn" HeaderText="Time In" />
+                        <asp:BoundField DataField="timeOut" HeaderText="Time Out" />
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:LinkButton ID="btnPencil" runat="server" CommandName="EditLog" CommandArgument='<%#Eval("logID")%>'>
+                                    <asp:Image ID="imgPencil" runat="server" ImageUrl="/images/pencil icon.png" class="xbutton" style="border-width:0px;" />
+                                </asp:LinkButton>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+               </asp:GridView>
+               <h4 id="logs404" runat="server">No logs found for this date.</h4>
+
+    <div runat="server" id="logForm" visible="false" class="MonitorForm">
+                   <asp:HiddenField ID="selectedID" runat="server" />
+                   <asp:HiddenField ID="logID" runat="server" />
+                   <h2 id="formHeader" runat="server">Log</h2>
+
+                   <label for="txtStudentID">Student ID*</label>
+                   <br />
+                   <asp:TextBox ID="txtStudentID" runat="server" class="formfield"></asp:TextBox>
+                   <asp:Label ID="lblIDWarning" runat="server" class="warning" Visible="false"></asp:Label>
+                    
+                   <br />
+                   <label for="txtStudentName">Student Name*</label>
+                   <asp:TextBox ID="txtStudentName" runat="server" class="formfield"></asp:TextBox>
+                   <asp:Label ID="lblNameWarning" runat="server" class="warning" Visible="false"></asp:Label>
+                   
+                   <br />
+                   <label for="dtTimeIn">Time In*</label>
+                   <input type="time" class="formcontrol" id="dtTimeIn" runat="server" />
+                   <asp:Calendar Visible="false" ID="dateTimeIn" runat="server" />
+                   <asp:Label ID="lblInWarning" runat="server" class="warning" Visible="false"></asp:Label>
+                   
+                   <br />
+                   <label for="dtTimeOut">Time Out</label>
+                   <input type="time" class="formcontrol out" id="dtTimeOut" runat="server" />
+                   <asp:Calendar Visible="false" ID="dateTimeOut" runat="server" />
+                   <asp:Label ID="lblOutWarning" runat="server" class="warning" Visible="false"></asp:Label>
+                   
+                   <br />
+                   <label for="txtItems">Items the student borrowed</label>
+                   <asp:TextBox ID="txtItems" runat="server" class="formfield"></asp:TextBox>
+                   <asp:Label ID="lblItemsWarning" runat="server" class="warning" Visible="false"></asp:Label>
+                   
+                   <asp:Button runat="server" ID="submitButton" OnClick="submitButton_Click"/>
+                </div>
+
+    <script>
+        var txtID = document.querySelector('#MainContent_txtStudentID')
+        if (txtID != null)
+        {
+            var txtIDValue = txtID.getAttribute("value")
+            if (txtIDValue != "") {
+                console.log(txtIDValue)
+                txtID.setAttribute('value', txtIDValue.padStart(9, "0"))
+            }
+        }
+        var timeIn = document.querySelectorAll('.historyTable td:nth-child(3)')
+        var timeOut = document.querySelectorAll(".historyTable td:nth-child(4)")
+        var ids = document.querySelectorAll('.historyTable td:nth-child(2)')
+        for (let i = 0; i < timeOut.length; i++) {
+            if (timeOut[i].innerText == "1/1/0001 12:00:00 AM") {
+                timeOut[i].innerText = "--"
+            }
+            else {
+                fullOutDate = timeOut[i].innerText.split(' ')
+                timeOut[i].innerText = `${fullOutDate[1]} ${fullOutDate[2]}`
+            }
+            fullInDate = timeIn[i].innerText.split(' ')
+            timeIn[i].innerText = `${fullInDate[1]} ${fullInDate[2]}`
+            ids[i].innerText = ids[i].innerText.padStart(9, '0')
+        }
+    </script>
 
 </asp:Content>

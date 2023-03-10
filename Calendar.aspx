@@ -5,6 +5,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 <div>
     <%--Show when user is department head or admin --%>
+    <p runat="server" style="display:none;" id="permission"></p>
     <h1>Calendar</h1>
     <asp:HiddenField ID="isEdited" runat="server"/>
     <asp:DataGrid id="ScheduleGrid" runat="server" AutoGenerateColumns="false" AutoPostBack="false" OnItemCommand="OnSelectedCell" >
@@ -75,6 +76,17 @@
         window.onload = function () {
             setTdBackgroundColor();
         }
+
+        var privLevel = Number(document.querySelector('#MainContent_permission').innerText)
+
+        if (privLevel < 2) {
+            tblLinks = document.querySelectorAll(`td a`)
+            console.log(tblLinks)
+            for (let i = 0; i < tblLinks.length; i++) {
+                tblLinks[i].outerHTML = tblLinks[i].outerHTML.replace("a", "p")
+            }
+        }
+
         // Get all anchor elements with the class of "nav-link"
         // Get all anchor elements with the class of "nav-link"
         var navLinks = document.querySelectorAll('li');
