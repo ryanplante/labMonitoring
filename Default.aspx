@@ -136,13 +136,9 @@
         //if monitor. did this in case my JS would mess up other pages
         if (document.querySelector("#MainContent_permissionCheck").innerText == 1) {
             var txtID = document.querySelector('#MainContent_txtStudentID')
-            console.log(txtID)
             if (txtID != null) {
-                console.log("take 2")
-                console.log(txtID)
                 var txtIDValue = txtID.getAttribute("value")
-                if (txtIDValue != "") {
-                    console.log(txtIDValue)
+                if (txtIDValue != "" && txtIDValue != null) {
                     txtID.setAttribute('value', txtIDValue.padStart(9, "0"))
                 }
             }

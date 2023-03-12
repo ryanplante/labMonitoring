@@ -81,7 +81,6 @@
 
         if (privLevel < 2) {
             tblLinks = document.querySelectorAll(`td a`)
-            console.log(tblLinks)
             for (let i = 0; i < tblLinks.length; i++) {
                 tblLinks[i].outerHTML = tblLinks[i].outerHTML.replace("a", "p")
             }

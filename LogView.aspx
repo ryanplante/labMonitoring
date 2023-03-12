@@ -65,7 +65,6 @@
         {
             var txtIDValue = txtID.getAttribute("value")
             if (txtIDValue != "") {
-                console.log(txtIDValue)
                 txtID.setAttribute('value', txtIDValue.padStart(9, "0"))
             }
         }
