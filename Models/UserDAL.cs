@@ -77,26 +77,6 @@ namespace labMonitor.Models
             return "Server= sql.neit.edu\\studentsqlserver,4500; Database=SE265_LabMonitorProj; User Id=SE265_LabMonitorProj;Password=FaridRyanSpencer;";
         }
 
-        public void AddUser()
-        {
-
-        }
-
-        private void EncryptPassword(string password)
-        {
-            // Generate a random salt
-            byte[] salt = new byte[16];
-            using (var rng = new RNGCryptoServiceProvider())
-            {
-                rng.GetBytes(salt);
-            }
-
-            // Combine the password and salt and hash them
-            byte[] passwordWithSalt = Encoding.UTF8.GetBytes(password + Convert.ToBase64String(salt));
-            byte[] hashedPasswordWithSalt = SHA1.Create().ComputeHash(passwordWithSalt);
-
-        }
-
         public User GetOneUser(int ?id)
         {
             User user = new User();
@@ -126,49 +106,6 @@ namespace labMonitor.Models
             }
             return user;
 
-        }
-
-        public void Create()
-        {
-            using (SqlConnection connection = new SqlConnection(GetConnected()))
-            {
-                string sql = "INSERT Into users (userID, userFName, userLName, userPassword, userSalt, userDept, userPrivilege) VALUES (@userID, @userFName, @userLName, @userPassword, @userSalt, @userDept, @userPrivilege)";
-
-                try
-                {
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
-                        command.CommandType = CommandType.Text;
-                        command.Parameters.AddWithValue("@userID", 1);
-                        // Generate a random salt
-                        byte[] salt = new byte[16];
-                        using (var rng = new RNGCryptoServiceProvider())
-                        {
-                            rng.GetBytes(salt);
-                        }
-                        // Combine the password and salt and hash them
-                        byte[] passwordWithSalt = Encoding.UTF8.GetBytes("password" + Convert.ToBase64String(salt));
-                        byte[] hashedPasswordWithSalt = SHA1.Create().ComputeHash(passwordWithSalt);
-
-                        command.Parameters.AddWithValue("@userSalt", Convert.ToBase64String(salt));
-                        command.Parameters.AddWithValue("@userPassword", Convert.ToBase64String(hashedPasswordWithSalt));
-                        
-                        command.Parameters.AddWithValue("@userFName", "Test");
-                        command.Parameters.AddWithValue("@userLName", "Test");
-                        command.Parameters.AddWithValue("@userDept", 0);
-                        command.Parameters.AddWithValue("@userPrivilege", 0);
-
-                        connection.Open();
-
-                        command.ExecuteNonQuery();
-                        connection.Close();
-                    }
-                }
-                catch (Exception e)
-                {
-                    //todo
-                }
-            }
         }
 
         public void addNonexistentUser(User tba) //add user when the inputted student ID does not exist in the DB
@@ -315,69 +252,6 @@ namespace labMonitor.Models
                 // Nothing at this moment
             }
             return false;
-        }
-
-
-        public IEnumerable<User> GetNamesByID(int? userID)
-        {
-            List<User> monitors = new List<User>(); // Listings from DB table
-            try
-            {
-                using (SqlConnection con = new SqlConnection(GetConnected()))
-                {
-                    String strSQL = ("Select * FROM users WHERE userID like @userID % AND userPrivilege = 0");
-                    SqlCommand cmd = new SqlCommand(strSQL, con);
-                    cmd.Parameters.AddWithValue("@userID", userID);
-                    cmd.CommandType = CommandType.Text;
-                    con.Open();
-                    SqlDataReader rdr = cmd.ExecuteReader();
-                    while (rdr.Read())
-                    {
-                        User labMonitor = new User();
-                        labMonitor.userID = Convert.ToInt32(rdr["userID"]);
-                        labMonitor.userFName = rdr["userFName"].ToString();
-                        labMonitor.userLName = rdr["userLName"].ToString();
-                        monitors.Add(labMonitor);
-                    }
-                    con.Close();
-                }
-            }
-            catch (Exception Ex)
-            {
-                Console.WriteLine(Ex.Message);
-            }
-            return monitors;
-        }
-
-        public IEnumerable<User> SearchByName(string fname, string lname)
-        {
-            List<User> monitors = new List<User>(); // Listings from DB table
-            try
-            {
-                using (SqlConnection con = new SqlConnection(GetConnected()))
-                {
-                    String strSQL = ("Select * FROM users WHERE userFName like % @userFName % AND % @userFName % = 0");
-                    SqlCommand cmd = new SqlCommand(strSQL, con);
-                    //cmd.Parameters.AddWithValue("@userID", userID);
-                    cmd.CommandType = CommandType.Text;
-                    con.Open();
-                    SqlDataReader rdr = cmd.ExecuteReader();
-                    while (rdr.Read())
-                    {
-                        User labMonitor = new User();
-                        labMonitor.userID = Convert.ToInt32(rdr["userID"]);
-                        labMonitor.userFName = rdr["userFName"].ToString();
-                        labMonitor.userLName = rdr["userLName"].ToString();
-                        monitors.Add(labMonitor);
-                    }
-                    con.Close();
-                }
-            }
-            catch (Exception Ex)
-            {
-                Console.WriteLine(Ex.Message);
-            }
-            return monitors;
         }
 
         public List<User> SearchUsersByFullName(string userFName, string userLName)
@@ -532,18 +406,6 @@ namespace labMonitor.Models
             {
                 tUser.userFeedback = "ERROR: " + e.Message;
             }
-        }
-
-
-
-        public void ChangePassword(string userName, string userPassword)
-        {
-
-        }
-
-        public void SetPicture(string UserId, string newPassword)
-        {
-
         }
 
         public string GetPicture(int UserId)
