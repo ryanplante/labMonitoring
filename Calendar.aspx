@@ -3,12 +3,15 @@
 
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+
+    <link rel="stylesheet" href="/Content/Calendar.css" />
+
 <div>
     <%--Show when user is department head or admin --%>
     <p runat="server" style="display:none;" id="permission"></p>
     <h1>Calendar</h1>
     <asp:HiddenField ID="isEdited" runat="server"/>
-    <asp:DataGrid id="ScheduleGrid" runat="server" AutoGenerateColumns="false" AutoPostBack="false" OnItemCommand="OnSelectedCell" >
+    <asp:DataGrid id="ScheduleGrid" runat="server" AutoGenerateColumns="false" AutoPostBack="false" OnItemCommand="OnSelectedCell" class="schedGrid" >
         <Columns>
             <asp:BoundColumn HeaderText="Student Name" DataField="studentName" />
         <asp:TemplateColumn HeaderText="Sunday" >
@@ -48,27 +51,38 @@
         </asp:TemplateColumn>
         </Columns>
        </asp:DataGrid>
-        <asp:Button BackColor="Yellow" OnClick="Publish" Text="Publish" runat="server" style="border-radius: 5%;"/>
+        <div class="divBelowTable">
+            <asp:Button OnClick="Publish" Text="Publish" runat="server" class="button btnBelowTable" ID="calPublish"/>
+        </div>
        <div class="MonitorForm" runat="server" id="ScheduleForm" visible="false">
         <h2>Edit Schedule</h2>
         <asp:HiddenField ID="coords" runat="server" />
         <h3 id="lblStudent" runat="server">FirstName LastName</h3>
         <h3 id="lblDay" runat="server">Schedule for:</h3>
-        <label for="start">Start time:</label>
-        <input type="time" id="start" name="start"
-               required runat="server">
-        <br />
-        <label for="end">End time:</label>
-        <input type="time" id="end" name="end"
-               required runat="server">
-        <br />
+        
+           <table style="border:none;">
+               <tr style="border:none;">
+                   <td><label for="start">Start time: &nbsp;</label></td>
+                   <td><input type="time" id="start" name="start"
+               required runat="server" style="font-weight:normal;"></td>
+               </tr>
+               <tr>
+                   <td><label for="end">End time:</label></td>
+                   <td><input type="time" id="end" name="end"
+               required runat="server"></td>
+               </tr>
+           </table>
+        
         <asp:Label ID="lblWarning" CssClass="warning" runat="server" Visible="false"></asp:Label>
         <br />
         <label for="checkRepeat">Repeat schedule for work week</label>
            <asp:CheckBox runat="server" ID="checkRepeat" />
            <br />
-        <asp:Button BackColor="Yellow" OnClick="Submit" Text="Submit" runat="server" style="border-radius: 5%;"/>
-        <asp:Button BackColor="Yellow" OnClick="Remove" Text="Remove" runat="server" style="border-radius: 5%;"/>
+
+           <div class="formButtons formBottom">
+                <asp:Button OnClick="Submit" Text="Submit" runat="server" class="button popoutButton"/>
+                <asp:Button OnClick="Remove" Text="Remove" runat="server" class="button popoutButton" />
+           </div>
     </div>
     
 </div>
@@ -80,9 +94,11 @@
         var privLevel = Number(document.querySelector('#MainContent_permission').innerText)
 
         if (privLevel < 2) {
-            tblLinks = document.querySelectorAll(`td a`)
+            var tblLinks = document.querySelectorAll(`td a`)
             for (let i = 0; i < tblLinks.length; i++) {
+                tblLinks[i].setAttribute('href', '')
                 tblLinks[i].outerHTML = tblLinks[i].outerHTML.replace("a", "p")
+
             }
         }
 
