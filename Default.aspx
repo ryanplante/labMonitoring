@@ -10,18 +10,17 @@
     <h2 runat="server" id="welcome"></h2>
     <%--Show when user is department head or admin --%>
     <div id="head" runat="server">
-       <asp:Chart ID="Chart1" runat="server" BackColor="128, 64, 0" BackGradientStyle="LeftRight"  
-        BorderlineWidth="0" Height="340px" Palette="None" PaletteCustomColors="64, 0, 0"  
-        Width="360px" BorderlineColor="192, 64, 0">  
-        <Series>  
-            <asp:Series Name="Series1" YValuesPerPoint="6">
-            </asp:Series>  
-        </Series>  
-        <ChartAreas>  
-            <asp:ChartArea Name="ChartArea1">  
-            </asp:ChartArea>  
-        </ChartAreas>  
-    </asp:Chart> 
+    <asp:Chart ID="Chart1" runat="server">
+        <ChartAreas>
+            <asp:ChartArea Name="ChartArea1">
+                <AxisX Title="Year" Interval="1"></AxisX>
+                <AxisY Title="Number of Students"></AxisY>
+            </asp:ChartArea>
+        </ChartAreas>
+        <Series>
+            <asp:Series Name="Student Count" ChartType="Column"></asp:Series>
+        </Series>
+    </asp:Chart>    
     </div>
     <div id="monitor" runat="server">
 
@@ -124,13 +123,9 @@
                    <asp:Literal runat="server" ID="scheduleLiteral"></asp:Literal>
                </div>
            </div>
-
-
-
-
-
     </div>
 
+    
 
     <script>
         //if monitor. did this in case my JS would mess up other pages

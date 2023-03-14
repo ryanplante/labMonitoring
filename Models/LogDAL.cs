@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web.UI.DataVisualization.Charting;
+using System.Drawing;
 
 namespace labMonitor.Models
 {
@@ -231,4 +233,6 @@ namespace labMonitor.Models
             return result;
         }
     }
+
+
 }

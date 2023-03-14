@@ -7,9 +7,9 @@ using System.Web.UI.WebControls;
 using labMonitor.Models;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
-using System.Web.Services;
-using System.Web.UI.HtmlControls;
+using System.Web.UI.DataVisualization.Charting;
+using System.Drawing;
+using OfficeOpenXml;
 using System.Globalization;
 
 namespace labMonitor
@@ -22,8 +22,64 @@ namespace labMonitor
         UserDAL userFactory = new UserDAL();
         LogDAL logFactory = new LogDAL();
 
+        private string GetConnected()
+        {
+            return "Server= sql.neit.edu\\studentsqlserver,4500; Database=SE265_LabMonitorProj; User Id=SE265_LabMonitorProj;Password=FaridRyanSpencer;";
+        }
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Получаем данные из базы данных
+            DateTime startDate = DateTime.Now.AddDays(-7); // начало периода
+            DateTime endDate = DateTime.Now; // конец периода
+            int departmentID = 0; // идентификатор отдела
+            LogDAL logFactory = new LogDAL();
+            List<Log> logs = logFactory.GetLogsBetween(startDate, endDate, departmentID);
+
+            // Создаем новую серию данных
+            Series series = new Series("Student Count");
+            series.ChartType = SeriesChartType.Column;
+
+            // Добавляем данные в серию
+            for (int i = 0; i < 7; i++)
+            {
+                DateTime date = startDate.AddDays(i);
+                int count = logs.Count(log => log.timeIn.Date == date.Date);
+                series.Points.AddXY(date.ToString("dddd"), count);
+            }
+
+            // Добавляем серию в график
+            Chart1.Series.Clear();
+            Chart1.Series.Add(series);
+
+            // Set gradient colors
+            series.Color = Color.FromArgb(128, 0, 136, 204);
+            series.BackGradientStyle = GradientStyle.TopBottom;
+            series.BackSecondaryColor = Color.FromArgb(128, 0, 206, 255);
+
+            // Настраиваем график
+            Chart1.ChartAreas[0].AxisX.Interval = 1;
+            Chart1.ChartAreas[0].AxisX.Title = "Day of Week";
+            Chart1.ChartAreas[0].AxisY.Title = "Number of Students";
+            Chart1.Width = 800;
+            Chart1.Height = 600;
+            Chart1.BackColor = Color.WhiteSmoke;
+            Chart1.BorderlineDashStyle = ChartDashStyle.Solid;
+            Chart1.BorderlineColor = Color.FromArgb(198, 198, 198);
+            Chart1.BorderlineWidth = 3;
+            Chart1.Titles.Add("Student Check In/Out Report");
+
+            Chart1.Visible = true;
+
+
+
+
+
+
+
+
+
             if (Session["User"] != null)
             {
                 var user = Session["User"] as labMonitor.Models.User;
@@ -74,6 +130,12 @@ namespace labMonitor
             }
 
 
+        }
+
+        private static DateTime GetDateForDayOfWeek(string dayOfWeek, DateTime baseDate)
+        {
+            int daysUntilDayOfWeek = ((int)Enum.Parse(typeof(DayOfWeek), dayOfWeek) - (int)baseDate.DayOfWeek + 7) % 7;
+            return baseDate.AddDays(daysUntilDayOfWeek).Date;
         }
 
         public static DateTime StartOfDay(DateTime theDate)
