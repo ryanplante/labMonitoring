@@ -50,6 +50,11 @@ namespace labMonitor
                 //ClientScript.RegisterClientScriptBlock(GetType(), "isEdited", "var isEdited = false;", false);
                 isEdited.Value = "false";
                 //isEdited
+
+                if(test.userPrivilege < 2)
+                {
+                    calPublish.Visible = false;
+                }
             }
         }
 

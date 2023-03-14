@@ -3,8 +3,9 @@
     Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %> 
 
 
-
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+
+    <link rel="stylesheet" href="/Content/DefaultM.css" />
 
 <div>
     <h2 runat="server" id="welcome"></h2>
@@ -42,14 +43,15 @@
             <div id="monitorview" class="monitorview" runat="server" visible="false">
                 
                 <p id="permissionCheck" runat="server" style="display:none;"></p>
-                
-               <h3>Logs for today</h3>
                
-               <asp:Button OnClick="btnAdd_Click" Text="Add new log" runat="server" />
+               <div id="headerButton">
+                    <h3 style="margin:0;">Logs for today</h3>
+                    <asp:Button OnClick="btnAdd_Click" Text="Add new log" runat="server" class="button newStudentButton" />
+               </div>
 
 
-               <div id="gridview">
-                <asp:GridView ID="DGlogs" runat="server" AutoGenerateColumns="false" OnRowCommand="LogsCommand">
+               <div id="gridviewDiv">
+                <asp:GridView ID="DGlogs" runat="server" AutoGenerateColumns="false" OnRowCommand="LogsCommand" class="gridview" border="0">
                     <Columns>
                         <asp:BoundField DataField="logID" HeaderText ="log ID" Visible="false" />
                         <asp:BoundField DataField="studentName" HeaderText="Student Name" />
@@ -75,7 +77,6 @@
                     </Columns>
                </asp:GridView>
                </div>
-               <% System.Diagnostics.Debug.WriteLine("code after asp gridview has executed"); %>
 
 
                <div runat="server" id="logForm" visible="false" class="MonitorForm">
@@ -84,34 +85,40 @@
                    <asp:HiddenField ID="logID" runat="server" />
                    <h2 id="formHeader" runat="server">Log</h2>
 
-                   <label for="txtStudentID">Student ID*</label>
+                   <label for="txtStudentID" class="formlabel">Student ID*</label>
                    <br />
                    <asp:TextBox ID="txtStudentID" runat="server" class="formfield"></asp:TextBox>
                    <asp:Label ID="lblIDWarning" runat="server" class="warning" Visible="false"></asp:Label>
                     
                    <br />
-                   <label for="txtStudentName">Student Name*</label>
+                   <label for="txtStudentName" class="formlabel">Student Name*</label>
                    <asp:TextBox ID="txtStudentName" runat="server" class="formfield"></asp:TextBox>
                    <asp:Label ID="lblNameWarning" runat="server" class="warning" Visible="false"></asp:Label>
                    
                    <br />
-                   <label for="dtTimeIn">Time In*</label>
+                   <label for="dtTimeIn" class="formlabel">Time In*</label>
                    <input type="time" class="formcontrol" id="dtTimeIn" runat="server" />
                    <asp:Calendar Visible="false" ID="dateTimeIn" runat="server" />
                    <asp:Label ID="lblInWarning" runat="server" class="warning" Visible="false"></asp:Label>
                    
                    <br />
-                   <label for="dtTimeOut">Time Out</label>
+                   <label for="dtTimeOut" class="formlabel" >Time Out</label>
                    <input type="time" class="formcontrol out" id="dtTimeOut" runat="server" />
                    <asp:Calendar Visible="false" ID="dateTimeOut" runat="server" />
                    <asp:Label ID="lblOutWarning" runat="server" class="warning" Visible="false"></asp:Label>
                    
                    <br />
-                   <label for="txtItems">Items the student borrowed</label>
+                   <label for="txtItems" class="formlabel">Items the student borrowed</label>
                    <asp:TextBox ID="txtItems" runat="server" class="formfield"></asp:TextBox>
                    <asp:Label ID="lblItemsWarning" runat="server" class="warning" Visible="false"></asp:Label>
+
+                   <div class="formBottom formfield formlabel">
+
+                        <p class="requiredText"><i>* required fields</i></p>
                    
-                   <asp:Button runat="server" ID="submitButton" OnClick="submitButton_Click"/>
+                        <asp:Button runat="server" ID="submitButton" class="button popoutButton" OnClick="submitButton_Click"/>
+                   
+                   </div>
                 </div>
 
            </div> <%--end of monitorview--%>

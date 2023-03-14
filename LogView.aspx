@@ -1,10 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="LogView.aspx.cs" Inherits="labMonitor.LogHistory" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h3>Log History</h3>
+    <link rel="stylesheet" href="/Content/LogView.css" />
 
-    <input type="date" ID="calSearch" runat="server" value="<%#DateTime.Today %>"/>
-    <asp:Button ID="searchButton" Text="Search" runat="server" OnClick="searchButton_Click" />
+    <h3 style="font-size:40px;">Log History</h3>
+
+    <div class="calAndButton">
+        <input type="date" ID="calSearch" runat="server" value="<%#DateTime.Today %>"/>
+        <asp:Button ID="searchButton" Text="Search" runat="server" OnClick="searchButton_Click" class="button buttonSearch" />
+    </div>
 
                <asp:GridView ID="DGlogs" runat="server" AutoGenerateColumns="false" OnRowCommand="LogsCommand" class="historyTable">
                     <Columns>
@@ -29,34 +33,41 @@
                    <asp:HiddenField ID="logID" runat="server" />
                    <h2 id="formHeader" runat="server">Log</h2>
 
-                   <label for="txtStudentID">Student ID*</label>
+                   <label for="txtStudentID" class="formlabel">Student ID*</label>
                    <br />
                    <asp:TextBox ID="txtStudentID" runat="server" class="formfield"></asp:TextBox>
                    <asp:Label ID="lblIDWarning" runat="server" class="warning" Visible="false"></asp:Label>
                     
                    <br />
-                   <label for="txtStudentName">Student Name*</label>
+                   <label for="txtStudentName" class="formlabel">Student Name*</label>
                    <asp:TextBox ID="txtStudentName" runat="server" class="formfield"></asp:TextBox>
                    <asp:Label ID="lblNameWarning" runat="server" class="warning" Visible="false"></asp:Label>
                    
                    <br />
-                   <label for="dtTimeIn">Time In*</label>
+                   <label for="dtTimeIn" class="formlabel">Time In*</label>
                    <input type="time" class="formcontrol" id="dtTimeIn" runat="server" />
                    <asp:Calendar Visible="false" ID="dateTimeIn" runat="server" />
                    <asp:Label ID="lblInWarning" runat="server" class="warning" Visible="false"></asp:Label>
                    
                    <br />
-                   <label for="dtTimeOut">Time Out</label>
+                   <label for="dtTimeOut" class="formlabel">Time Out</label>
                    <input type="time" class="formcontrol out" id="dtTimeOut" runat="server" />
                    <asp:Calendar Visible="false" ID="dateTimeOut" runat="server" />
                    <asp:Label ID="lblOutWarning" runat="server" class="warning" Visible="false"></asp:Label>
                    
                    <br />
-                   <label for="txtItems">Items the student borrowed</label>
+                   <label for="txtItems" class="formlabel">Items the student borrowed</label>
                    <asp:TextBox ID="txtItems" runat="server" class="formfield"></asp:TextBox>
                    <asp:Label ID="lblItemsWarning" runat="server" class="warning" Visible="false"></asp:Label>
                    
-                   <asp:Button runat="server" ID="submitButton" OnClick="submitButton_Click"/>
+
+                    <div class="formBottom formfield formlabel">
+
+                        <p class="requiredText"><i>* required fields</i></p>
+
+                        <asp:Button runat="server" ID="submitButton" OnClick="submitButton_Click" class="button popoutButton" />
+                    </div>
+
                 </div>
 
 

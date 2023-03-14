@@ -152,7 +152,6 @@ textarea {
 
 .uname {
     text-align: center;
-    margin-left: 30px;
 }
 
 #cplink {
@@ -160,14 +159,12 @@ textarea {
     text-decoration: none;
     font-size: 15px;
     position: center;
-    margin-left: 30px;
 }
 
 #lglink {
     text-decoration: none;
     font-size: 30px;
     color: black;
-    margin-left: 30px;
     margin-right: 3px;
     text-align: center;
 }
@@ -205,7 +202,7 @@ tr {
     height: 40px;
 }
 
-td:first-child {
+td:first-child, th:first-child {
     padding-left: 22px;
 }
 
@@ -217,6 +214,10 @@ tr:last-child {
     border: none;
 }
 
+.formBottom{
+    display:flex;
+    justify-content:space-between;
+}
 
 
 .button {
@@ -254,6 +255,13 @@ h2, #formHeader {
 }
 
 #formButtons {
+    display: flex;
+    justify-content: space-between;
+    width: 75%;
+    margin-top: 20px;
+}
+
+.formButtons {
     display: flex;
     justify-content: space-between;
     width: 75%;

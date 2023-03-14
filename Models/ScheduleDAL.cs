@@ -102,10 +102,9 @@ namespace labMonitor.Models
 
         public static string GetOperatingHours(List<string> schedules)
         {
-            string[] daysOfWeek = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
             string[] operatingHours = new string[7];
 
-            for (int dayIndex = 0; dayIndex < daysOfWeek.Length; dayIndex++)
+            for (int dayIndex = 0; dayIndex < 7; dayIndex++)
             {
                 List<string> hoursList = new List<string>();
                 foreach (string schedule in schedules)
@@ -119,7 +118,21 @@ namespace labMonitor.Models
                 }
                 if (hoursList.Count > 0)
                 {
-                    operatingHours[dayIndex] = string.Join("-", hoursList);
+                    // Convert each string in the hourList to DateTime objects representing the start and end time
+                    List<DateTime[]> shifts = hoursList.Select(s =>
+                    {
+                        string[] parts = s.Split('-');
+                        DateTime start = DateTime.ParseExact(parts[0], "HH:mm", CultureInfo.InvariantCulture);
+                        DateTime end = DateTime.ParseExact(parts[1], "HH:mm", CultureInfo.InvariantCulture);
+                        return new DateTime[] { start, end };
+                    }).ToList();
+
+                    // Find the earliest start time and latest end time across all shifts
+                    DateTime earliestStart = shifts.Min(shift => shift[0]);
+                    DateTime latestEnd = shifts.Max(shift => shift[1]);
+
+                    // Combine the earliest start and latest end time as a string in the format "HH:mm-HH:mm"
+                    operatingHours[dayIndex] = earliestStart.ToString("HH:mm") + "-" + latestEnd.ToString("HH:mm"); ;
                 }
                 else
                 {
