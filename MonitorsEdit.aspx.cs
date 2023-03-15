@@ -51,6 +51,7 @@ namespace labMonitor
             if (e.CommandName == "RemoveUser")
             {
                 UserDAL userFactory = new UserDAL();
+                ScheduleDAL scheduleFactory = new ScheduleDAL();
                 string[] parameters = e.CommandArgument.ToString().Split(',');
                 int userID = Int32.Parse(parameters[0]);
                 userFactory.ChangeToStudent(userID);

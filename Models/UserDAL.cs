@@ -401,6 +401,20 @@ namespace labMonitor.Models
                     cmd.ExecuteNonQuery();
                     con.Close();
                 }
+                using (SqlConnection con = new SqlConnection(GetConnected()))
+                {
+                    string strSQL = "DELETE Schedule WHERE student_ID = @userID";
+                    SqlCommand cmd = new SqlCommand(strSQL, con);
+                    cmd.Parameters.AddWithValue("@userID", userID);
+                    cmd.CommandText = strSQL;
+                    cmd.CommandType = CommandType.Text;
+                    // fill parameters with form values
+
+                    // perform the update
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
             }
             catch (Exception e)
             {
