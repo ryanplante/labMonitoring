@@ -77,7 +77,12 @@ namespace labMonitor
             lblWarning.Visible = false;
             User user = Session["User"] as labMonitor.Models.User; // get current logged in user so that they can change the dept of the selected user to their department
             // check if the user exists
-            if (userFactory.GetOneUser(int.Parse(txtStudentID.Text)) != null)
+            if (txtStudentID.Text == "")
+            {
+                lblWarning.Text = "Please select a user!";
+                lblWarning.Visible = true;
+            }
+            else if (userFactory.GetOneUser(int.Parse(txtStudentID.Text)) != null)
             {
                 userFactory.ChangeMonitorDept(int.Parse(txtStudentID.Text), user.userDept);
             }

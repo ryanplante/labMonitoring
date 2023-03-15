@@ -1624,3 +1624,11 @@ C:\Users\spenc\Documents\school\Q6\capstone\6\labMonitoring\bin\Antlr3.Runtime.p
 C:\Users\spenc\Documents\school\Q6\capstone\6\labMonitoring\bin\Microsoft.AspNet.FriendlyUrls.xml
 C:\Users\spenc\Documents\school\Q6\capstone\6\labMonitoring\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\spenc\Documents\school\Q6\capstone\6\labMonitoring\obj\Debug\labMonitor.csproj.CopyComplete
+C:\Users\aweso\Documents\Github\labMonitoring\bin\EPPlus.dll
+C:\Users\aweso\Documents\Github\labMonitoring\bin\EPPlus.Interfaces.dll
+C:\Users\aweso\Documents\Github\labMonitoring\bin\EPPlus.System.Drawing.dll
+C:\Users\aweso\Documents\Github\labMonitoring\bin\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\aweso\Documents\Github\labMonitoring\bin\NBitcoin.dll
+C:\Users\aweso\Documents\Github\labMonitoring\bin\EPPlus.xml
+C:\Users\aweso\Documents\Github\labMonitoring\bin\Microsoft.IO.RecyclableMemoryStream.xml
+C:\Users\aweso\Documents\Github\labMonitoring\bin\NBitcoin.xml
