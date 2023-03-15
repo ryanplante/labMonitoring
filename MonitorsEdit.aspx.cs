@@ -94,6 +94,14 @@ namespace labMonitor
             UpdateGrid();
         }
 
+        protected void Show_Form(object sender, EventArgs e)
+        {
+            MonitorForm.Visible = true;
+            txtStudentID.Text = "";
+            txtStudentFirst.Text = "";
+            txtStudentLast.Text = "";
+        }
+
         protected void Search_Users(object sender, EventArgs e)
         {
             User user = Session["User"] as labMonitor.Models.User; // get current logged in user so that they can change the dept of the selected user to their department

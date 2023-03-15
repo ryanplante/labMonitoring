@@ -33,6 +33,15 @@ namespace labMonitor
         protected global::System.Web.UI.WebControls.GridView DGLabMonitors;
 
         /// <summary>
+        /// MonitorForm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl MonitorForm;
+
+        /// <summary>
         /// txtStudentID control.
         /// </summary>
         /// <remarks>

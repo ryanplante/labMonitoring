@@ -10,7 +10,7 @@
     <h2 runat="server" id="welcome">Lab Monitors</h2>
     <div id="headerButton">
         <h3 style="margin:0;">Current Monitors</h3>
-        <asp:Button Text="Add new Monitor" runat="server" class="button" style="width: 200px; height: 30px;"/>
+        <asp:Button Text="Add new Monitor" runat="server" class="button" style="width: 200px; height: 30px;" OnClick="Show_Form"/>
     </div>
     
     <div class="monitor" runat="server">
@@ -28,7 +28,7 @@
         </Columns>
     </asp:GridView>
     </div>
-    <div class="MonitorForm" runat="server">
+    <div id="MonitorForm" class="MonitorForm" runat="server" Visible="false">
         <h3 id="formHeader">Add Lab Monitor</h3>
         <label for="txtStudentID">Student ID</label>
         <br />
