@@ -17,7 +17,7 @@
         <asp:GridView ID="DGLabMonitors" runat="server" AutoGenerateColumns="false" OnRowCommand="Remove_User" class="stTable" border="0">
         <Columns>
             <asp:BoundField DataField="userID" HeaderText="Student ID" />
-            <asp:BoundField DataField="userFName" HeaderText="First Name" />
+            <asp:BoundField DataField="userFName" HeaderText="Name" />
             <asp:TemplateField>
                 <ItemTemplate>
                     <asp:LinkButton ID="btnRemove" runat="server" CommandName="RemoveUser" CommandArgument='<%#Eval("userID")%>'>
@@ -47,7 +47,7 @@
             <asp:Button class="button popoutButton" OnClick="Search_Users" Text="Search" runat="server" style="border-radius: 20%;"/>
             <asp:Button class="button popoutButton" OnClick="Add_Monitor" Text="Add" runat="server" style="border-radius: 20%;"/>
         </div>
-        <asp:GridView ID="GridResults" runat="server" AutoGenerateColumns="false" Visible="false" AutoGenerateSelectButton="true" OnSelectedIndexChanged="Populate_User">
+        <asp:GridView ID="GridResults" runat="server" AutoGenerateColumns="false" Visible="false" AutoGenerateSelectButton="true" class="miniTable" OnSelectedIndexChanged="Populate_User">
                 <Columns>
             <asp:BoundField DataField="userID" HeaderText="Student ID" />
             <asp:BoundField DataField="userFName" HeaderText="First Name" />

@@ -272,6 +272,11 @@ h2, #formHeader {
     font-size: 20px;
 }
 
+.miniTable td:first-child {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
 /* DASHBOARD STUDENT VIEW*/
 .dbgrid {
     display: grid;
