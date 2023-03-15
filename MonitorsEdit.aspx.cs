@@ -85,13 +85,14 @@ namespace labMonitor
             else if (userFactory.GetOneUser(int.Parse(txtStudentID.Text)) != null)
             {
                 userFactory.ChangeMonitorDept(int.Parse(txtStudentID.Text), user.userDept);
+                MonitorForm.Visible = false;
+                UpdateGrid();
             }
             else
             {
                 lblWarning.Text = "User does not exist!";
                 lblWarning.Visible = true;
             }
-            UpdateGrid();
         }
 
         protected void Show_Form(object sender, EventArgs e)
@@ -100,6 +101,7 @@ namespace labMonitor
             txtStudentID.Text = "";
             txtStudentFirst.Text = "";
             txtStudentLast.Text = "";
+            GridResults.Visible = false;
         }
 
         protected void Search_Users(object sender, EventArgs e)
