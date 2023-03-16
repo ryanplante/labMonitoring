@@ -110,8 +110,6 @@ namespace labMonitor.Models
                 using (SqlConnection conn = new SqlConnection(GetConnected()))
                 {
                     string sql = "SELECT logID, studentID, deptID, timeIn, timeOut, itemsBorrowed FROM Log WHERE deptID = @paraDept";
-                    //string sql = "SELECT logID, studentID, deptID, timeIn, timeOut, itemsBorrowed FROM Log WHERE (timeIn BETWEEN '3/7/2023 12:00:00 AM' AND '3/7/2023 11:59:59 PM') AND deptID = 0";
-                    //string sql = "SELECT * FROM Log";
                     SqlCommand comm = new SqlCommand(sql, conn);
                     comm.CommandType = CommandType.Text;
                     comm.Parameters.AddWithValue("@paraDept", dept);
@@ -125,14 +123,13 @@ namespace labMonitor.Models
                         temp.logID = Convert.ToInt32(rdr["logID"]);
                         temp.studentID = Convert.ToInt32(rdr["studentID"].ToString());
                         var test = temp.studentID;
-                        //temp.studentName = rdr["studentName"].ToString();
                         User grabbed = getUser.GetOneUser(temp.studentID);
                         string tempNameContainer = grabbed.userFName + " " + grabbed.userLName;
                         temp.studentName = tempNameContainer;
                         temp.deptID = Convert.ToInt32(rdr["deptID"].ToString());
                         temp.timeIn = Convert.ToDateTime(rdr["timeIn"].ToString());
                         if (rdr["timeOut"].ToString() != "")
-                        { //do this in update
+                        {
                             temp.timeOut = Convert.ToDateTime(rdr["timeOut"].ToString());
                         }
                         temp.itemsBorrowed = rdr["itemsBorrowed"].ToString();
@@ -158,8 +155,6 @@ namespace labMonitor.Models
                 using (SqlConnection conn = new SqlConnection(GetConnected()))
                 {
                     string sql = "SELECT logID, studentID, deptID, timeIn, timeOut, itemsBorrowed FROM Log WHERE (timeIn BETWEEN @paraStart AND @paraEnd) AND deptID = @paraDept";
-                    //string sql = "SELECT logID, studentID, deptID, timeIn, timeOut, itemsBorrowed FROM Log WHERE (timeIn BETWEEN '3/7/2023 12:00:00 AM' AND '3/7/2023 11:59:59 PM') AND deptID = 0";
-                    //string sql = "SELECT * FROM Log";
                     SqlCommand comm = new SqlCommand(sql, conn);
                     comm.CommandType = CommandType.Text;
                     comm.Parameters.AddWithValue("@paraDept", dept);
@@ -175,14 +170,13 @@ namespace labMonitor.Models
                         temp.logID = Convert.ToInt32(rdr["logID"]);
                         temp.studentID = Convert.ToInt32(rdr["studentID"].ToString());
                         var test = temp.studentID;
-                        //temp.studentName = rdr["studentName"].ToString();
                         User grabbed = getUser.GetOneUser(temp.studentID);
                         string tempNameContainer = grabbed.userFName + " " + grabbed.userLName;
                         temp.studentName = tempNameContainer;
                         temp.deptID = Convert.ToInt32(rdr["deptID"].ToString());
                         temp.timeIn = Convert.ToDateTime(rdr["timeIn"].ToString());
                         if (rdr["timeOut"].ToString() != "")
-                        { //do this in update
+                        {
                             temp.timeOut = Convert.ToDateTime(rdr["timeOut"].ToString());
                         }
                         temp.itemsBorrowed = rdr["itemsBorrowed"].ToString();

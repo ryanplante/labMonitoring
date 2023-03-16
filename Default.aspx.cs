@@ -158,9 +158,7 @@ namespace labMonitor
             // Gather certain properties from the object so it doesn't display all attributes
             DGlogs.DataSource = logs.Select(o => new Log()
             { logID = o.logID, studentName = o.studentName, studentID = o.studentID, timeIn = o.timeIn, timeOut = o.timeOut }).ToList();
-            //DGLabMonitors.DataSource = userFactory.GetMonitorsByDept(user.userDept);
             DGlogs.DataBind();
-            System.Diagnostics.Debug.WriteLine("update grid has executed");
         }
 
         protected void LogsCommand(object sender, GridViewCommandEventArgs e)
@@ -182,8 +180,6 @@ namespace labMonitor
                 txtStudentName.Text = tUser.userFName + " " + tUser.userLName;
                 dtTimeIn.Value = tLog.timeIn.TimeOfDay.ToString();
                 dtTimeOut.Value = tLog.timeOut.TimeOfDay.ToString();
-                System.Diagnostics.Debug.WriteLine(tLog.timeIn.ToString());
-                System.Diagnostics.Debug.WriteLine(tLog.timeOut.ToString());
                 txtItems.Text = tLog.itemsBorrowed;
                 selectedID.Value = tUser.userID.ToString();
                 action.Value = "Update";
@@ -219,6 +215,12 @@ namespace labMonitor
                 warning = true;
                 lblNameWarning.Visible = true;
                 lblNameWarning.Text = "Name is required.";
+            }
+            if(dtTimeIn.Value == "")
+            {
+                warning = true;
+                lblInWarning.Visible = true;
+                lblInWarning.Text = "Time in is required.";
             }
             if (!warning)
             {
