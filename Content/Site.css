@@ -4,6 +4,10 @@ body {
     padding-bottom: 20px;
 }
 
+table{
+    z-index:0;
+}
+
 @font-face {
     font-family: inter;
     src: url(../fonts/Inter-reg.ttf);

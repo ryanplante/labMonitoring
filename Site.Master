@@ -117,7 +117,6 @@
             </asp:ContentPlaceHolder>
             
            <div class="hideme" id="hideme">
-         <asp:Image ID="tiger" runat="server" ImageUrl="~/images/tiger.png" class="tiger" />
     </div>
                
 
