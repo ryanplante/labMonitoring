@@ -107,6 +107,11 @@
                     <asp:Label runat="server">Admin</asp:Label>
                 </li></a>
 
+                <a href="PasswordMgr.aspx"><li class="nav-item" runat="server" id="passwordmgr" visible="false">
+                    <asp:ImageButton  ID="passwdbtn"  runat="server" ImageAlign="Bottom" ImageUrl="~/images/NavIcons/password.png" OnClick="PasswordMgr" />
+                    <asp:Label runat="server">Password Manager</asp:Label>
+                </li></a>
+
             </ul>
         </div>
     </div>

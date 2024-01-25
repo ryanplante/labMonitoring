@@ -42,6 +42,7 @@ namespace labMonitor
                         reports.Visible = true;
                         schedule.Visible = true;
                         admin.Visible = true;
+                        passwordmgr.Visible = true;
                         break;
                     default:
                         break;
@@ -88,6 +89,11 @@ namespace labMonitor
         protected void Admin(object sender, ImageClickEventArgs e)
         {
             Response.Redirect("Admin");
+        }
+
+        protected void PasswordMgr(object sender, ImageClickEventArgs e)
+        {
+            Response.Redirect("PasswordMgr");
         }
     }
 }

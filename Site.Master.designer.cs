@@ -177,6 +177,24 @@ namespace labMonitor
         protected global::System.Web.UI.WebControls.ImageButton adminbtn;
 
         /// <summary>
+        /// passwordmgr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl passwordmgr;
+
+        /// <summary>
+        /// passwdbtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton passwdbtn;
+
+        /// <summary>
         /// MainContent control.
         /// </summary>
         /// <remarks>

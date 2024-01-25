@@ -1,0 +1,300 @@
+commit 670444a6365e4b4ab796c7a0ae6454ef60bccb83
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Wed Mar 15 11:59:38 2023 -0400
+
+    delete user schedule if user is being downgraded to a student
+
+commit acd250b2af50057a48d824432934e74000ecc2c4
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Wed Mar 15 11:53:08 2023 -0400
+
+    change teacher query to top 10
+
+commit ccb771322133335ec9879e3082365b2ea7e4c606
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Wed Mar 15 11:44:55 2023 -0400
+
+    hide the add form by default, clear the text when the user adds and change search queries to top 10
+
+commit 4b030af015f9288d7006895b6abefec314dc7452
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Wed Mar 15 11:24:41 2023 -0400
+
+    prevent the user from clicking add button if they didn't chose a monitor
+
+commit 6810843bb5f362d203fd4dded11999045b1cd723
+Author: spenc-neit <sdroucoulet@email.neit.edu>
+Date:   Tue Mar 14 00:28:46 2023 -0400
+
+    admin styling
+
+commit 27ac38784760ef041164299857414c3dca4fbd3f
+Merge: b90b217 f018ef8
+Author: Farid Hasanov <fhasanov@email.neit.edu>
+Date:   Mon Mar 13 22:29:21 2023 -0700
+
+    Changes
+
+commit b90b217f5b6926bf7577732f938235077a3e64fb
+Author: Farid Hasanov <fhasanov@email.neit.edu>
+Date:   Mon Mar 13 22:27:38 2023 -0700
+
+    Changes
+
+commit f018ef81631b4363f49eb99538b676ce133545bd
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Mon Mar 13 13:19:40 2023 -0400
+
+    code clean up and fix bug on student monitor view for showing only 1 schedule rather than full schedule
+
+commit f2e8f3502f2ba4823e63cffd694f5ebd186c2e1a
+Author: spenc-neit <sdroucoulet@email.neit.edu>
+Date:   Sun Mar 12 21:02:46 2023 -0400
+
+    mostly styling (default, logview, calendar), some other minor functionality changes
+
+commit 0383e2bdb6dd3d2eb46e8e4868e867167610f843
+Author: spenc-neit <sdroucoulet@email.neit.edu>
+Date:   Sun Mar 12 17:47:50 2023 -0400
+
+    fix date display JS bug on default
+
+commit 27e01617f33118fa2f3c3b4c9999bfa825e3abe9
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Fri Mar 10 18:29:52 2023 -0500
+
+    fix calendar to change cell color to grey when text is off in monitor view
+
+commit c469b0839a5cac46c2702423cf5cd27d8041cf60
+Author: spenc-neit <sdroucoulet@email.neit.edu>
+Date:   Fri Mar 10 17:40:08 2023 -0500
+
+    add all of the log-accessing pages & files needed for them to work -SR
+
+commit eb8d852d929b355469b68548b398691e3db9c87d
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Fri Mar 10 15:57:52 2023 -0500
+
+    merge farid's changes with some code cleanup
+
+commit 8027ba642bf3d43375a6b57ac095110b5bfc5518
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Fri Mar 10 15:51:16 2023 -0500
+
+    add spencer's log class and logDAL
+
+commit 4f278dc05daa0a6cdd7858eeb7d8eb1ea9fdbcd6
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Thu Mar 9 13:17:47 2023 -0500
+
+    add helpers class and clean up the time to use 12h format for default.aspx
+
+commit e02f1efe804b86fb915832370a7e1cf26357b8d6
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Thu Mar 9 10:44:23 2023 -0500
+
+    add some css changes to student default.aspx
+
+commit 20210e07e4b347e23db7cc7713e8b1ce33cf188e
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Wed Mar 8 14:18:41 2023 -0500
+
+    remove imagebutton for edit image.
+
+commit 2f8ca46511f3179bb233dd80d0f9462cc590f2ae
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Wed Mar 8 14:14:24 2023 -0500
+
+    add postback check so that the schedule cards dont duplicate on student default.aspx
+
+commit e217b3920a94bd6c5d8d37607f81877d5e8d3aee
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Wed Mar 8 13:25:56 2023 -0500
+
+    fix admin page from not pulling up department heads and fix student default.aspx from not displaying all departments
+
+commit 80e637c9592ab5e0c9a9d0d375d3e84967ea110a
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Tue Feb 28 19:27:48 2023 -0500
+
+    added functionality to changePassword and tweaked Calendar a bit to work with new sidebar
+
+commit d8c9c025a220d0190114a5a69e8a99cc395e8fd2
+Author: Steaxgod <fhasanov@email.neit.edu>
+Date:   Mon Feb 27 13:58:12 2023 -0500
+
+    Changes
+
+commit f7ba41380763fd6bc66328cb7df5d5397ef18292
+Author: Steaxgod <fhasanov@email.neit.edu>
+Date:   Mon Feb 27 13:22:50 2023 -0500
+
+    CHANGES
+
+commit 9f797b67f46e9cc27d93a2fa13d6d0e91d073563
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Mon Feb 27 12:43:59 2023 -0500
+
+    changes
+
+commit 7165a9071a365ef94f5875eb365e7a1ea0147d1f
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Mon Feb 27 12:09:42 2023 -0500
+
+    upload farid changes
+
+commit 27a0a6075223efb1511609dd64e7ace23431d6bb
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Mon Feb 27 00:09:36 2023 -0500
+
+    don't load schedule if user privilage is higher than 0 and fix daysOfWeek
+
+commit 059f990691b44728d39e5c103ba85ffbdc3926ac
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Sun Feb 26 23:41:35 2023 -0500
+
+    populate schedule cards on grid
+
+commit 1b9bf6fb41e712a49826e98312343c7e6c447683
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Sun Feb 26 22:50:56 2023 -0500
+
+    change algorithm to find the deptschedule
+
+commit 2acbafa16205a2b1190b9e4a7bdd5ce819e4b79c
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Sun Feb 26 21:27:51 2023 -0500
+
+    fix lblHeadWarning text
+
+commit fbb3e1d56871162dec6f80b1eff142b531208cbe
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Sun Feb 26 21:09:05 2023 -0500
+
+    add admin page
+
+commit 1bee51aacc8f04f2a96ed2266c36dea9e50d2e10
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Sun Feb 26 14:48:11 2023 -0500
+
+    merge spencers changes
+
+commit e5fa2a1877250f9f3afc71ad7e04d16aab75667e
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Sun Feb 26 14:28:33 2023 -0500
+
+    more changes to schedule and login
+
+commit 94a96d208f592d780f9ca46496655d320c51152b
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Sun Feb 26 13:57:10 2023 -0500
+
+    add some changes to schedule
+
+commit 762aac64cd0bc5578581bdc023f0b4978eb59d27
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Sun Feb 26 13:53:04 2023 -0500
+
+    add logic to get user profile picture
+
+commit e08b3482b68c33272d033835a1bd85f1534e85b6
+Author: Steaxgod <fhasanov@email.neit.edu>
+Date:   Fri Feb 24 13:50:48 2023 -0500
+
+    fixes
+
+commit 8eba19b35955e3dfd7ca22d48e5d2ae0b73b1201
+Author: Steaxgod <fhasanov@email.neit.edu>
+Date:   Fri Feb 24 12:18:08 2023 -0500
+
+    ++
+
+commit d22c7e1e82ed1410c47a68d3c073ed515161a44a
+Author: Steaxgod <fhasanov@email.neit.edu>
+Date:   Fri Feb 24 12:08:11 2023 -0500
+
+    changes
+
+commit 9a0df0c6bb2c0724287ac351df4c57856a1a92a4
+Author: Steaxgod <fhasanov@email.neit.edu>
+Date:   Fri Feb 24 11:58:38 2023 -0500
+
+    omg
+
+commit 3a0fdd19d3bc834a6ad93a4cba1e7822825e7364
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Fri Feb 24 00:09:22 2023 -0500
+
+    add confirmation dialog box to alert the user about unsaved changes to the calendar
+
+commit c2a9402c3886c5013ab40633c9d1251573168d69
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Thu Feb 23 22:02:10 2023 -0500
+
+    accidently removed Search_Users ; this commit adds it back
+
+commit c0f9fef57636ec19d42533cf421170265cca8275
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Thu Feb 23 14:54:45 2023 -0500
+
+    add editing functionality to the schedule
+
+commit a104898c93fe71ea0283e7398838806236e64f6c
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Thu Feb 23 12:51:08 2023 -0500
+
+    pulling from schedule works... working on publishing schedule now
+
+commit 0c935724272abd2524a8c9995af009a9a5af10ad
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Tue Feb 21 12:16:55 2023 -0500
+
+    add farid avabars
+
+commit f25a12fc422f62cf1d3af2afc5450bdf5403222e
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Fri Feb 10 14:04:40 2023 -0500
+
+    finish navbar
+
+commit 914ccc79d25dc41e173faa119b42bef18a9bfbfa
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Fri Feb 10 13:35:17 2023 -0500
+
+    layout all the aspx pages
+
+commit 96978ca409c0758d39ea96866a3e5af4a5b2b884
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Thu Feb 9 14:01:17 2023 -0500
+
+    store the user object in session variable
+
+commit 535a6a4b21c5a0210cf378389096cdc47761d265
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Tue Feb 7 14:20:05 2023 -0500
+
+    connect login with the database
+
+commit 3d0c2647166183da93e072461063fa11bcccbfef
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Tue Feb 7 13:09:37 2023 -0500
+
+    upload current changes from 2/7/22
+
+commit eb5634809ac31969a36f24cc09298c577d89d930
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Fri Feb 3 13:43:35 2023 -0500
+
+    change the project from mvc to webforms
+
+commit 205e263e4a92bd07b97a49189feaa4c9dd9d0fd3
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Tue Jan 31 19:18:40 2023 -0500
+
+    add sidebar menu
+
+commit 8672d8286f8b421826cd13267d0ef00c3b7f332f
+Author: Ryan Plante <rmplante@email.neit.edu>
+Date:   Tue Jan 31 17:48:57 2023 -0500
+
+    inital upload. created from mvc project template

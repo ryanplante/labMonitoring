@@ -338,6 +338,7 @@
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="LogView.aspx" />
     <Content Include="MonitorsEdit.aspx" />
+    <Content Include="PasswordMgr.aspx" />
     <Content Include="Reports.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -433,6 +434,13 @@
     </Compile>
     <Compile Include="MonitorsEdit.aspx.designer.cs">
       <DependentUpon>MonitorsEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PasswordMgr.aspx.cs">
+      <DependentUpon>PasswordMgr.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PasswordMgr.aspx.designer.cs">
+      <DependentUpon>PasswordMgr.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports.aspx.cs">

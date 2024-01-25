@@ -422,6 +422,38 @@ namespace labMonitor.Models
             }
         }
 
+        public void ChangePermission(int userID, int permission)
+        {
+            User tUser = new User();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(GetConnected()))
+                {
+                    // SQL query to update the user's permission level
+                    string strSQL = "UPDATE users SET userPrivilege = @permission WHERE userID = @userID";
+
+                    using (SqlCommand cmd = new SqlCommand(strSQL, con))
+                    {
+                        // Add parameters to the command
+                        cmd.Parameters.AddWithValue("@userID", userID);
+                        cmd.Parameters.AddWithValue("@permission", permission);
+
+                        // Set command type
+                        cmd.CommandType = CommandType.Text;
+
+                        // Open the connection, execute the command, and close the connection
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                tUser.userFeedback = "ERROR: " + e.Message;
+            }
+        }
+
         public string GetPicture(int UserId)
         {
             string defaultPath = (@"images\avatars\avatar.jpg");
