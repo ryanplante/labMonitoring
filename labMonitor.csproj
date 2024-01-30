@@ -308,6 +308,7 @@
     <Content Include="Content\DefaultM.css" />
     <Content Include="Content\Login.css" />
     <Content Include="Content\LogView.css" />
+    <Content Include="Content\PasswordMgr.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
