@@ -16,13 +16,13 @@
             <label for="txtUsername">Username:</label>
         </div>
         <div class ="centered">
-            <asp:TextBox ID="txtUsername" runat="server" value="2"></asp:TextBox>
+            <asp:TextBox ID="txtUsername" runat="server"></asp:TextBox>
         </div>
         <div class="centered">
             <label for="txtPassword">Password:</label>
         </div>
         <div class ="centered">
-            <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" value="password"></asp:TextBox>
+            <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" ></asp:TextBox>
         </div>
         <div class="centered">
             <asp:Label ID="lblFeedback" runat="server" Text=""></asp:Label>
