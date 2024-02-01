@@ -21,15 +21,13 @@
 
     <asp:GridView ID="GridViewUsers" runat="server" AutoGenerateColumns="false" class="stTable" OnRowCommand="User_Command">
         <Columns>
-            <asp:BoundField DataField="userID" HeaderText="User ID" />
+            <asp:BoundField DataField="userID" HeaderText="User ID" DataFormatString="{0:00000000}" />
             <asp:BoundField DataField="userFName" HeaderText="First Name" />
             <asp:BoundField DataField="userLName" HeaderText="Last Name" />
-            <asp:BoundField DataField="userPassword" HeaderText="Password" />
             <asp:BoundField DataField="userDept" HeaderText="Department" />
 
             <asp:TemplateField HeaderText="Actions">
                 <ItemTemplate>
-                    <asp:Button ID="btnEditPermissions" runat="server" CommandName="EditPermissions" CommandArgument='<%# Eval("UserId") %>' Text="Edit Permissions" />
                     <asp:Button ID="btnResetPassword" runat="server" CommandName="ResetPassword" CommandArgument='<%# Eval("UserId") %>' Text="Reset Password" OnClientClick="return confirm('Are you sure you want to reset the password for this user?');" />
                 </ItemTemplate>
             </asp:TemplateField>
