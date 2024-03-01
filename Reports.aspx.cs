@@ -34,102 +34,112 @@ namespace labMonitor
         protected void Page_Load(object sender, EventArgs e)
         {
             user = Session["User"] as labMonitor.Models.User;
-            // Connection string for your database
-            string connectionString = GetConnected();
-            if (!IsPostBack)
+
+            if (user == null || user.userPrivilege < 2)
             {
-                // SQL query to select data from table
-                string query = "SELECT DISTINCT YEAR(timein) AS Year FROM Log ORDER BY Year ASC";
-                string countQuery = "SELECT YEAR(timein) AS Year, COUNT(DISTINCT studentID) AS 'Student Count' FROM Log WHERE timein IS NOT NULL GROUP BY YEAR(timein)";
-
-                // Create SQL connection and command objects
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                Response.Redirect("Default"); // kick them to the appropiate landing screen
+            } 
+            else //if the user is logged in and is dept. head or admin
+            {
+                // Connection string for your database
+                string connectionString = GetConnected();
+                if (!IsPostBack)
                 {
-                    SqlCommand command = new SqlCommand(query, connection);
+                    // SQL query to select data from table
+                    string query = "SELECT DISTINCT YEAR(timein) AS Year FROM Log ORDER BY Year ASC";
+                    string countQuery = "SELECT YEAR(timein) AS Year, COUNT(DISTINCT studentID) AS 'Student Count' FROM Log WHERE timein IS NOT NULL GROUP BY YEAR(timein)";
 
-                    // Create SqlDataAdapter and DataTable
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
-                    DataTable dataTable = new DataTable();
-
-                    // Fill DataTable with data from SQL
-                    adapter.Fill(dataTable);
-
-                    // Get the min and max year values
-                    int minYear = Convert.ToInt32(dataTable.Rows[0]["Year"]);
-                    int maxYear = Convert.ToInt32(dataTable.Rows[dataTable.Rows.Count - 1]["Year"]);
-
-                    // Create a new DataTable to hold the final results
-                    DataTable finalTable = new DataTable();
-                    finalTable.Columns.Add("Year", typeof(int));
-                    finalTable.Columns.Add("Student Count", typeof(int));
-
-                    // Create SQL command to get student count for each year
-                    command = new SqlCommand(countQuery, connection);
-                    adapter.SelectCommand = command;
-                    dataTable.Clear();
-                    adapter.Fill(dataTable);
-
-                    // Fill in the missing years with 0 counts
-                    for (int year = minYear; year <= maxYear; year++)
+                    // Create SQL connection and command objects
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
-                        DataRow[] rows = dataTable.Select("Year = " + year);
-                        int count = 0;
-                        if (rows.Length > 0)
+                        SqlCommand command = new SqlCommand(query, connection);
+
+                        // Create SqlDataAdapter and DataTable
+                        SqlDataAdapter adapter = new SqlDataAdapter(command);
+                        DataTable dataTable = new DataTable();
+
+                        // Fill DataTable with data from SQL
+                        adapter.Fill(dataTable);
+
+                        // Get the min and max year values
+                        int minYear = Convert.ToInt32(dataTable.Rows[0]["Year"]);
+                        int maxYear = Convert.ToInt32(dataTable.Rows[dataTable.Rows.Count - 1]["Year"]);
+
+                        // Create a new DataTable to hold the final results
+                        DataTable finalTable = new DataTable();
+                        finalTable.Columns.Add("Year", typeof(int));
+                        finalTable.Columns.Add("Student Count", typeof(int));
+
+                        // Create SQL command to get student count for each year
+                        command = new SqlCommand(countQuery, connection);
+                        adapter.SelectCommand = command;
+                        dataTable.Clear();
+                        adapter.Fill(dataTable);
+
+                        // Fill in the missing years with 0 counts
+                        for (int year = minYear; year <= maxYear; year++)
                         {
-                            count = Convert.ToInt32(rows[0]["Student Count"]);
+                            DataRow[] rows = dataTable.Select("Year = " + year);
+                            int count = 0;
+                            if (rows.Length > 0)
+                            {
+                                count = Convert.ToInt32(rows[0]["Student Count"]);
+                            }
+                            finalTable.Rows.Add(year, count);
                         }
-                        finalTable.Rows.Add(year, count);
+
+                        // Bind chart to DataTable
+                        Chart1.DataSource = finalTable;
+                        Chart1.DataBind();
+
+                        Series series = new Series();
+
+                        // Set gradient colors
+                        series.Color = Color.FromArgb(128, 0, 136, 204);
+                        series.BackGradientStyle = GradientStyle.TopBottom;
+                        series.BackSecondaryColor = Color.FromArgb(128, 0, 206, 255);
+
+                        // Set ChartArea background color and border style
+                        Chart1.ChartAreas[0].BackColor = Color.White;
+                        Chart1.ChartAreas[0].BorderDashStyle = ChartDashStyle.Solid;
+                        Chart1.ChartAreas[0].BorderColor = Color.Black;
+
+                        // Set Series color, border width, and label format
+                        Chart1.Series[0].Color = Color.FromArgb(128, 0, 136, 204);
+                        Chart1.Series[0].BorderWidth = 5;
+                        Chart1.Series[0].LabelFormat = "#";
+
+                        // Set XValueMember and YValueMember for the series
+                        Chart1.Series[0].XValueMember = "Year";
+                        Chart1.Series[0].YValueMembers = "Student Count";
+
+                        // Format AxisX to show all years and display total number of people
+                        Chart1.ChartAreas[0].AxisX.Minimum = minYear;
+                        Chart1.ChartAreas[0].AxisX.Maximum = maxYear;
+                        Chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Years;
+                        Chart1.ChartAreas[0].AxisX.LabelStyle.Format = "yyyy";
+                        Chart1.ChartAreas[0].AxisX.Interval = 1;
+                        Chart1.ChartAreas[0].AxisX.Title = "Year";
+                        Chart1.ChartAreas[0].AxisX.TitleFont = new Font("Arial", 18, FontStyle.Bold);
+                        Chart1.ChartAreas[0].AxisX.TitleForeColor = Color.Black;
+
+                        // Format AxisY to display number of people
+                        Chart1.ChartAreas[0].AxisY.Title = "Number of People";
+                        Chart1.ChartAreas[0].AxisY.TitleFont = new Font("Arial", 18, FontStyle.Bold);
+                        Chart1.ChartAreas[0].AxisY.TitleForeColor = Color.Black;
+
+                        Chart1.Width = 800;
+                        Chart1.Height = 600;
+                        Chart1.BackColor = Color.WhiteSmoke;
+                        Chart1.BorderlineDashStyle = ChartDashStyle.Solid;
+                        Chart1.BorderlineColor = Color.FromArgb(198, 198, 198);
+                        Chart1.BorderlineWidth = 3;
+                        Chart1.Titles.Add("Student Check In/Out Report");
+
                     }
-
-                    // Bind chart to DataTable
-                    Chart1.DataSource = finalTable;
-                    Chart1.DataBind();
-
-                    Series series = new Series();
-
-                    // Set gradient colors
-                    series.Color = Color.FromArgb(128, 0, 136, 204);
-                    series.BackGradientStyle = GradientStyle.TopBottom;
-                    series.BackSecondaryColor = Color.FromArgb(128, 0, 206, 255);
-
-                    // Set ChartArea background color and border style
-                    Chart1.ChartAreas[0].BackColor = Color.White;
-                    Chart1.ChartAreas[0].BorderDashStyle = ChartDashStyle.Solid;
-                    Chart1.ChartAreas[0].BorderColor = Color.Black;
-
-                    // Set Series color, border width, and label format
-                    Chart1.Series[0].Color = Color.FromArgb(128, 0, 136, 204);
-                    Chart1.Series[0].BorderWidth = 5;
-                    Chart1.Series[0].LabelFormat = "#";
-
-                    // Set XValueMember and YValueMember for the series
-                    Chart1.Series[0].XValueMember = "Year";
-                    Chart1.Series[0].YValueMembers = "Student Count";
-
-                    // Format AxisX to show all years and display total number of people
-                    Chart1.ChartAreas[0].AxisX.Minimum = minYear;
-                    Chart1.ChartAreas[0].AxisX.Maximum = maxYear;
-                    Chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Years;
-                    Chart1.ChartAreas[0].AxisX.LabelStyle.Format = "yyyy";
-                    Chart1.ChartAreas[0].AxisX.Interval = 1;
-                    Chart1.ChartAreas[0].AxisX.Title = "Year";
-                    Chart1.ChartAreas[0].AxisX.TitleFont = new Font("Arial", 18, FontStyle.Bold);
-                    Chart1.ChartAreas[0].AxisX.TitleForeColor = Color.Black;
-
-                    // Format AxisY to display number of people
-                    Chart1.ChartAreas[0].AxisY.Title = "Number of People";
-                    Chart1.ChartAreas[0].AxisY.TitleFont = new Font("Arial", 18, FontStyle.Bold);
-                    Chart1.ChartAreas[0].AxisY.TitleForeColor = Color.Black;
-
-                    Chart1.Width = 800;
-                    Chart1.Height = 600;
-                    Chart1.BackColor = Color.WhiteSmoke;
-                    Chart1.BorderlineDashStyle = ChartDashStyle.Solid;
-                    Chart1.BorderlineColor = Color.FromArgb(198, 198, 198);
-                    Chart1.BorderlineWidth = 3;
-                    Chart1.Titles.Add("Student Check In/Out Report");
-
                 }
+
+            
 
             }
 
