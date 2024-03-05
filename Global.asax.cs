@@ -17,5 +17,16 @@ namespace labMonitor
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            Exception exception = Server.GetLastError();
+            DateTime now = DateTime.Now;
+            // Log the exception. Probably be better to log it to a database but for now the admin can just check the console
+            Console.WriteLine($"{now} : {exception}");
+            //Clear the error from the server
+            Server.ClearError();
+            Response.Redirect("Error.aspx");
+        }
     }
 }
