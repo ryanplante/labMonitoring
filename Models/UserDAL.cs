@@ -99,11 +99,19 @@ namespace labMonitor.Models
                         user.userDept = Convert.ToInt32(rdr["userDept"]);
                         user.userPrivilege = Convert.ToInt32(rdr["userPrivilege"]);
                     }
+
+                    con.Close();
                 }
+            }
+            catch (SqlException e)
+            {
+                throw new ApplicationException($"A database error occurred while retrieving the user with the ID of {id}.", e);
             }
             catch (Exception e)
             {
+                throw new ApplicationException($"An error occurred while retrieving the user with the ID of {id}.", e);
             }
+            
             return user;
 
         }
@@ -131,9 +139,13 @@ namespace labMonitor.Models
                         conn.Close();
                     }
                 }
+                catch (SqlException e)
+                {
+                    throw new ApplicationException($"A database error occurred while adding nonexistent user with the ID of {tba.userID}.", e);
+                }
                 catch (Exception e)
                 {
-                    System.Diagnostics.Debug.WriteLine(e);
+                    throw new ApplicationException($"An error occurred while while adding nonexistent user with the ID of {tba.userID}.", e);
                 }
             }
         }
@@ -168,11 +180,17 @@ namespace labMonitor.Models
                     return true;
                 }
             }
-            catch (Exception e)
+            catch (SqlException e)
             {
-                user.userFeedback = "ERROR: " + e.Message;
+                user.userFeedback = "DB ERROR while changing passwords";
                 return false;
             }
+            catch (Exception e)
+            {
+                user.userFeedback = "ERROR while changing passwords";
+                return false;
+            }
+
             return false;
         }
 
@@ -201,9 +219,13 @@ namespace labMonitor.Models
                     con.Close();
                 }
             }
-            catch (Exception Ex)
+            catch (SqlException e)
             {
-                Console.WriteLine(Ex.Message);
+                throw new ApplicationException($"A database error occurred while retrieving monitors by department {deptID}.", e);
+            }
+            catch (Exception e)
+            {
+                throw new ApplicationException($"An error occurred while retrieving monitors by department {deptID}.", e);
             }
             return monitors;
         }
@@ -247,9 +269,13 @@ namespace labMonitor.Models
                     con.Close();
                 }
             }
-            catch (Exception err)
+            catch (SqlException e)
             {
-                // Nothing at this moment
+                throw new ApplicationException($"A database error occurred while validating the credentials of user {userID}.", e);
+            }
+            catch (Exception e)
+            {
+                throw new ApplicationException($"An error occurred while validating the credentials of user {userID}.", e);
             }
             return false;
         }
@@ -258,32 +284,45 @@ namespace labMonitor.Models
         {
             List<User> users = new List<User>();
 
-            using (SqlConnection con = new SqlConnection(GetConnected()))
+            try
             {
-                String strSQL = "SELECT TOP 10 * FROM users WHERE userFName LIKE @userFName AND userLName LIKE @userLName AND userPrivilege < 2"; // get all users that are not students
-
-                using (SqlCommand command = new SqlCommand(strSQL, con))
+                using (SqlConnection con = new SqlConnection(GetConnected()))
                 {
-                    // perform wildcard search on both first name and last name with %
-                    command.Parameters.AddWithValue("@userFName", "%" + userFName + "%");
-                    command.Parameters.AddWithValue("@userLName", "%" + userLName + "%");
+                    String strSQL = "SELECT TOP 10 * FROM users WHERE userFName LIKE @userFName AND userLName LIKE @userLName AND userPrivilege < 2"; // get all users that are not students
 
-                    con.Open();
-
-                    using (SqlDataReader rdr = command.ExecuteReader())
+                    using (SqlCommand command = new SqlCommand(strSQL, con))
                     {
-                        while (rdr.Read())
-                        {
-                            User user = new User();
-                            user.userID = Convert.ToInt32(rdr["userID"]);
-                            user.userFName = rdr["userFName"].ToString();
-                            user.userLName = rdr["userLName"].ToString();
+                        // perform wildcard search on both first name and last name with %
+                        command.Parameters.AddWithValue("@userFName", "%" + userFName + "%");
+                        command.Parameters.AddWithValue("@userLName", "%" + userLName + "%");
 
-                            users.Add(user);
+                        con.Open();
+
+                        using (SqlDataReader rdr = command.ExecuteReader())
+                        {
+                            while (rdr.Read())
+                            {
+                                User user = new User();
+                                user.userID = Convert.ToInt32(rdr["userID"]);
+                                user.userFName = rdr["userFName"].ToString();
+                                user.userLName = rdr["userLName"].ToString();
+
+                                users.Add(user);
+                            }
                         }
                     }
                 }
             }
+            catch (SqlException e)
+            {
+                throw new ApplicationException($"A database error occurred while searching by first and last name for user {userFName} {userLName}.", e);
+            }
+            catch (Exception e)
+            {
+                throw new ApplicationException($"An error occurred while searching by first and last name for user {userFName} {userLName}.", e);
+            }
+
+            
 
             return users;
         }
@@ -291,33 +330,44 @@ namespace labMonitor.Models
         public List<User> SearchTeachersByFullName(string userFName, string userLName)
         {
             List<User> users = new List<User>();
-
-            using (SqlConnection con = new SqlConnection(GetConnected()))
+            try
             {
-                String strSQL = "SELECT TOP 10 * FROM users WHERE userFName LIKE @userFName AND userLName LIKE @userLName AND userPrivilege > 1"; // get all users that are students
-
-                using (SqlCommand command = new SqlCommand(strSQL, con))
+                using (SqlConnection con = new SqlConnection(GetConnected()))
                 {
-                    // perform wildcard search on both first name and last name with %
-                    command.Parameters.AddWithValue("@userFName", "%" + userFName + "%");
-                    command.Parameters.AddWithValue("@userLName", "%" + userLName + "%");
+                    String strSQL = "SELECT TOP 10 * FROM users WHERE userFName LIKE @userFName AND userLName LIKE @userLName AND userPrivilege > 1"; // get all users that are students
 
-                    con.Open();
-
-                    using (SqlDataReader rdr = command.ExecuteReader())
+                    using (SqlCommand command = new SqlCommand(strSQL, con))
                     {
-                        while (rdr.Read())
-                        {
-                            User user = new User();
-                            user.userID = Convert.ToInt32(rdr["userID"]);
-                            user.userFName = rdr["userFName"].ToString();
-                            user.userLName = rdr["userLName"].ToString();
+                        // perform wildcard search on both first name and last name with %
+                        command.Parameters.AddWithValue("@userFName", "%" + userFName + "%");
+                        command.Parameters.AddWithValue("@userLName", "%" + userLName + "%");
 
-                            users.Add(user);
+                        con.Open();
+
+                        using (SqlDataReader rdr = command.ExecuteReader())
+                        {
+                            while (rdr.Read())
+                            {
+                                User user = new User();
+                                user.userID = Convert.ToInt32(rdr["userID"]);
+                                user.userFName = rdr["userFName"].ToString();
+                                user.userLName = rdr["userLName"].ToString();
+
+                                users.Add(user);
+                            }
                         }
                     }
                 }
             }
+            catch (SqlException e)
+            {
+                throw new ApplicationException($"A database error occurred while searching by first and last name for non-student user {userFName} {userLName}.", e);
+            }
+            catch (Exception e)
+            {
+                throw new ApplicationException($"An error occurred while searching by first and last name for teacher {userFName} {userLName}.", e);
+            }
+
 
             return users;
         }
@@ -346,9 +396,13 @@ namespace labMonitor.Models
                     con.Close();
                 }
             }
+            catch (SqlException e)
+            {
+                tUser.userFeedback = "DB ERROR while changing monitor department";
+            }
             catch (Exception e)
             {
-                tUser.userFeedback = "ERROR: " + e.Message;
+                tUser.userFeedback = "ERROR while changing monitor department";
             }
         }
 
@@ -376,9 +430,13 @@ namespace labMonitor.Models
                     con.Close();
                 }
             }
+            catch (SqlException e)
+            {
+                tUser.userFeedback = "DB ERROR while changing departments";
+            }
             catch (Exception e)
             {
-                tUser.userFeedback = "ERROR: " + e.Message;
+                tUser.userFeedback = "ERROR while changing departments";
             }
         }
 
@@ -416,9 +474,13 @@ namespace labMonitor.Models
                     con.Close();
                 }
             }
+            catch (SqlException e)
+            {
+                tUser.userFeedback = "DB ERROR while changing to a student";
+            }
             catch (Exception e)
             {
-                tUser.userFeedback = "ERROR: " + e.Message;
+                tUser.userFeedback = "ERROR while changing to a student";
             }
         }
 
@@ -446,11 +508,17 @@ namespace labMonitor.Models
                         cmd.ExecuteNonQuery();
                         con.Close();
                     }
+
+                    
                 }
+            }
+            catch (SqlException e)
+            {
+                tUser.userFeedback = "DB ERROR while changing password";
             }
             catch (Exception e)
             {
-                tUser.userFeedback = "ERROR: " + e.Message;
+                tUser.userFeedback = "ERROR while changing password";
             }
         }
 
