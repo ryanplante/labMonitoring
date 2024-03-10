@@ -10,17 +10,18 @@ namespace labMonitor.Models
     public class DepartmentDAL
     {
 
-        private string GetConnected()
-        {
-            return "Server=sql.neit.edu\\studentsqlserver,4500; Database=SE265_LabMonitorProj; User Id=SE265_LabMonitorProj;Password=FaridRyanSpencer;";
-        }
 
         public Department GetDeptByID(int? id)
         {
+            if (id == null)
+            {
+                Helpers.LogError(new ArgumentNullException(nameof(id), "Department ID cannot be null."));
+            }
+
             Department dept = new Department();
             try
             {
-                using (SqlConnection con = new SqlConnection(GetConnected()))
+                using (SqlConnection con = new SqlConnection(Helpers.GetConnected()))
                 {
                     string strSQL = "SELECT * FROM department WHERE deptID = @deptID";
                     SqlCommand cmd = new SqlCommand(strSQL, con);
@@ -29,15 +30,26 @@ namespace labMonitor.Models
                     con.Open();
                     SqlDataReader rdr = cmd.ExecuteReader();
 
-                    while (rdr.Read())
+                    if (rdr.Read()) // Assuming deptID is a primary key, there should be at most one record.
                     {
                         dept.deptID = Convert.ToInt32(rdr["deptID"]);
                         dept.deptName = rdr["deptName"].ToString();
                     }
+                    else // No department was found
+                    {
+                        Helpers.LogError(new KeyNotFoundException($"No department found with ID {id}."));
+                    }
                 }
+            }
+            catch (SqlException e)
+            {
+                // Log SQL-specific exceptions, possibly with more details or specific actions.
+                Helpers.LogError(new ApplicationException($"A database error occurred while retrieving the department with ID {id}.", e));
             }
             catch (Exception e)
             {
+                // Log generic exceptions.
+                Helpers.LogError(new ApplicationException($"An error occurred while retrieving the department with ID {id}.", e));
             }
             return dept;
         }
@@ -45,9 +57,10 @@ namespace labMonitor.Models
         public List<Department> GetAllDepartments()
         {
             List<Department> deptList = new List<Department>();
+
             try
             {
-                using (SqlConnection con = new SqlConnection(GetConnected()))
+                using (SqlConnection con = new SqlConnection(Helpers.GetConnected()))
                 {
                     string strSQL = "SELECT * FROM department";
                     SqlCommand cmd = new SqlCommand(strSQL, con);
@@ -57,17 +70,28 @@ namespace labMonitor.Models
 
                     while (rdr.Read())
                     {
-                        Department dept = new Department();
-                        dept.deptID = Convert.ToInt32(rdr["deptID"]);
-                        dept.deptName = rdr["deptName"].ToString();
+                        Department dept = new Department
+                        {
+                            deptID = Convert.ToInt32(rdr["deptID"]),
+                            deptName = rdr["deptName"].ToString()
+                        };
                         deptList.Add(dept);
                     }
                 }
             }
+            catch (SqlException e)
+            {
+                // Log SQL-specific exceptions
+                Helpers.LogError(new ApplicationException("A database error occurred while retrieving all departments.", e));
+            }
             catch (Exception e)
             {
+                // Log generic exceptions.
+                Helpers.LogError(new ApplicationException("An error occurred while retrieving all departments.", e));
             }
+
             return deptList;
         }
+
     }
 }

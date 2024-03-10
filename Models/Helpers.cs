@@ -21,6 +21,13 @@ namespace labMonitor
             string formattedEndTime = endTime.ToString("h:mm tt", CultureInfo.InvariantCulture);
             return $"{formattedStartTime}-{formattedEndTime}";
         }
+
+        public static void LogError(Exception e)
+        {
+            // It would be better to log the error to a database but this is sufficent enough as the admin can just view the console.
+            Console.WriteLine($"{DateTime.Now}: Error: {e.Message}");
+            throw e;
+        }
     }
 
 }
