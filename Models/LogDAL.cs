@@ -100,7 +100,6 @@ namespace labMonitor.Models
                 }
             }
         }
-
         public List<Log> GetAllLogs(int dept)
         {
             List<Log> results = new List<Log>();
@@ -114,84 +113,108 @@ namespace labMonitor.Models
                     comm.CommandType = CommandType.Text;
                     comm.Parameters.AddWithValue("@paraDept", dept);
                     conn.Open();
-                    SqlDataReader rdr = comm.ExecuteReader();
 
-                    while (rdr.Read())
+                    using (SqlDataReader rdr = comm.ExecuteReader())
                     {
-                        UserDAL getUser = new UserDAL();
-                        Log temp = new Log();
-                        temp.logID = Convert.ToInt32(rdr["logID"]);
-                        temp.studentID = Convert.ToInt32(rdr["studentID"].ToString());
-                        var test = temp.studentID;
-                        User grabbed = getUser.GetOneUser(temp.studentID);
-                        string tempNameContainer = grabbed.userFName + " " + grabbed.userLName;
-                        temp.studentName = tempNameContainer;
-                        temp.deptID = Convert.ToInt32(rdr["deptID"].ToString());
-                        temp.timeIn = Convert.ToDateTime(rdr["timeIn"].ToString());
-                        if (rdr["timeOut"].ToString() != "")
+                        while (rdr.Read())
                         {
-                            temp.timeOut = Convert.ToDateTime(rdr["timeOut"].ToString());
-                        }
-                        temp.itemsBorrowed = rdr["itemsBorrowed"].ToString();
+                            UserDAL getUser = new UserDAL();
+                            Log temp = new Log();
+                            temp.logID = Convert.ToInt32(rdr["logID"]);
+                            temp.studentID = Convert.ToInt32(rdr["studentID"].ToString());
+                            var test = temp.studentID;
 
-                        results.Add(temp);
+                            User grabbed = getUser.GetOneUser(temp.studentID);
+                            string tempNameContainer = grabbed.userFName + " " + grabbed.userLName;
+                            temp.studentName = tempNameContainer;
+                            temp.deptID = Convert.ToInt32(rdr["deptID"].ToString());
+                            temp.timeIn = Convert.ToDateTime(rdr["timeIn"].ToString());
+
+                            if (rdr["timeOut"] != DBNull.Value && !string.IsNullOrEmpty(rdr["timeOut"].ToString()))
+                            {
+                                temp.timeOut = Convert.ToDateTime(rdr["timeOut"].ToString());
+                            }
+
+                            temp.itemsBorrowed = rdr["itemsBorrowed"].ToString();
+
+                            results.Add(temp);
+                        }
                     }
                 }
-
+            }
+            catch (SqlException e)
+            {
+                // Log SQL-specific exceptions
+                Helpers.LogError(new ApplicationException($"A database error occurred while fetching logs for department {dept}.", e));
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
+                // Log generic exceptions
+                Helpers.LogError(new ApplicationException($"An error occurred while fetching logs for department {dept}.", e));
             }
+
             return results;
         }
 
-        public List<Log> GetLogsBetween(DateTime start, DateTime end, int dept)
+
+public List<Log> GetLogsBetween(DateTime start, DateTime end, int dept)
+{
+    List<Log> results = new List<Log>();
+
+    try
+    {
+        using (SqlConnection conn = new SqlConnection(GetConnected()))
         {
-            List<Log> results = new List<Log>();
+            string sql = "SELECT logID, studentID, deptID, timeIn, timeOut, itemsBorrowed FROM Log WHERE (timeIn BETWEEN @paraStart AND @paraEnd) AND deptID = @paraDept";
+            SqlCommand comm = new SqlCommand(sql, conn);
+            comm.CommandType = CommandType.Text;
+            comm.Parameters.AddWithValue("@paraDept", dept);
+            comm.Parameters.AddWithValue("@paraStart", start);
+            comm.Parameters.AddWithValue("@paraEnd", end);
+            conn.Open();
 
-            try
+            using (SqlDataReader rdr = comm.ExecuteReader())
             {
-                using (SqlConnection conn = new SqlConnection(GetConnected()))
+                while (rdr.Read())
                 {
-                    string sql = "SELECT logID, studentID, deptID, timeIn, timeOut, itemsBorrowed FROM Log WHERE (timeIn BETWEEN @paraStart AND @paraEnd) AND deptID = @paraDept";
-                    SqlCommand comm = new SqlCommand(sql, conn);
-                    comm.CommandType = CommandType.Text;
-                    comm.Parameters.AddWithValue("@paraDept", dept);
-                    comm.Parameters.AddWithValue("@paraStart", start);
-                    comm.Parameters.AddWithValue("@paraEnd", end);
-                    conn.Open();
-                    SqlDataReader rdr = comm.ExecuteReader();
+                    UserDAL getUser = new UserDAL();
+                    Log temp = new Log();
+                    temp.logID = Convert.ToInt32(rdr["logID"]);
+                    temp.studentID = Convert.ToInt32(rdr["studentID"].ToString());
+                    var test = temp.studentID;
+                    
+                    User grabbed = getUser.GetOneUser(temp.studentID);
+                    string tempNameContainer = grabbed.userFName + " " + grabbed.userLName;
+                    temp.studentName = tempNameContainer;
+                    temp.deptID = Convert.ToInt32(rdr["deptID"].ToString());
+                    temp.timeIn = Convert.ToDateTime(rdr["timeIn"].ToString());
 
-                    while (rdr.Read())
+                    if (rdr["timeOut"] != DBNull.Value && !string.IsNullOrEmpty(rdr["timeOut"].ToString()))
                     {
-                        UserDAL getUser = new UserDAL();
-                        Log temp = new Log();
-                        temp.logID = Convert.ToInt32(rdr["logID"]);
-                        temp.studentID = Convert.ToInt32(rdr["studentID"].ToString());
-                        var test = temp.studentID;
-                        User grabbed = getUser.GetOneUser(temp.studentID);
-                        string tempNameContainer = grabbed.userFName + " " + grabbed.userLName;
-                        temp.studentName = tempNameContainer;
-                        temp.deptID = Convert.ToInt32(rdr["deptID"].ToString());
-                        temp.timeIn = Convert.ToDateTime(rdr["timeIn"].ToString());
-                        if (rdr["timeOut"].ToString() != "")
-                        {
-                            temp.timeOut = Convert.ToDateTime(rdr["timeOut"].ToString());
-                        }
-                        temp.itemsBorrowed = rdr["itemsBorrowed"].ToString();
-
-                        results.Add(temp);
+                        temp.timeOut = Convert.ToDateTime(rdr["timeOut"].ToString());
                     }
-                }
 
+                    temp.itemsBorrowed = rdr["itemsBorrowed"].ToString();
+
+                    results.Add(temp);
+                }
             }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine(e);
-            }
-            return results;
         }
+    }
+    catch (SqlException e)
+    {
+        // Log SQL-specific exceptions
+        Helpers.LogError(new ApplicationException($"A database error occurred while fetching logs between {start} and {end} for department {dept}.", e));
+    }
+    catch (Exception e)
+    {
+        // Log generic exceptions
+        Helpers.LogError(new ApplicationException($"An error occurred while fetching logs between {start} and {end} for department {dept}.", e));
+    }
+
+    return results;
+}
+
 
         public Log GetALog(int id)
         {
@@ -205,27 +228,45 @@ namespace labMonitor.Models
                     comm.CommandType = CommandType.Text;
                     comm.Parameters.AddWithValue("@logID", id);
                     conn.Open();
-                    SqlDataReader rdr = comm.ExecuteReader();
-                    while (rdr.Read())
+
+                    using (SqlDataReader rdr = comm.ExecuteReader())
                     {
-                        result.logID = Convert.ToInt32(rdr["logID"]);
-                        result.studentID = Convert.ToInt32(rdr["studentID"].ToString());
-                        //result.studentName = rdr["studentName"].ToString();
-                        result.deptID = Convert.ToInt32(rdr["deptID"].ToString());
-                        result.timeIn = Convert.ToDateTime(rdr["timeIn"].ToString());
-                        result.timeOut = Convert.ToDateTime(rdr["timeOut"].ToString());
-                        result.itemsBorrowed = rdr["itemsBorrowed"].ToString();
+                        while (rdr.Read())
+                        {
+                            result.logID = Convert.ToInt32(rdr["logID"]);
+                            result.studentID = Convert.ToInt32(rdr["studentID"].ToString());
+
+                            UserDAL getUser = new UserDAL();
+                            User grabbed = getUser.GetOneUser(result.studentID);
+                            string tempNameContainer = grabbed.userFName + " " + grabbed.userLName;
+                            result.studentName = tempNameContainer;
+
+                            result.deptID = Convert.ToInt32(rdr["deptID"].ToString());
+                            result.timeIn = Convert.ToDateTime(rdr["timeIn"].ToString());
+
+                            if (rdr["timeOut"] != DBNull.Value && !string.IsNullOrEmpty(rdr["timeOut"].ToString()))
+                            {
+                                result.timeOut = Convert.ToDateTime(rdr["timeOut"].ToString());
+                            }
+
+                            result.itemsBorrowed = rdr["itemsBorrowed"].ToString();
+                        }
                     }
                 }
             }
+            catch (SqlException e)
+            {
+                // Log SQL-specific exceptions
+                Helpers.LogError(new ApplicationException($"A database error occurred while fetching log with ID {id}.", e));
+            }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine("----EXCEPTION----");
-                System.Diagnostics.Debug.WriteLine(e);
-                System.Diagnostics.Debug.WriteLine("----END EXCEPTION----");
+                // Log generic exceptions
+                Helpers.LogError(new ApplicationException($"An error occurred while fetching log with ID {id}.", e));
             }
             return result;
         }
+
     }
 
 
